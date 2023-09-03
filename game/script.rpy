@@ -134,7 +134,7 @@ label changetostore(transition = None):
 screen map():
     zorder 2
     image "map.jpg"
-    #imagebutton circle action Call(changeto...) sensitive if "..." in locationsvisited and canMove xcenter... ycenter...
+    imagebutton idle "door_idle.png" action [Hide("map"), Call("changetobeach")] sensitive ("beach" in locationsvisited and canMove) xcenter 0.1 ycenter 0.5
     key "m" action Hide("map")
 
 screen mapicon():
@@ -148,7 +148,7 @@ label intro:
     pause(0.5)
     scene cabin with Fade(0.1,0.0,0.5,color="#fff")
     "{size=+20}BLAM" with vpunch
-    "oh crap oh crap oh crap oh crap"
+    "Crap! Oh crap oh crap oh crap!"
     scene cabin window:
         fit "scale-up"                          #image cabin window = im.FactorScale("cabin window.jpg", 2)
     #Show tentacle
@@ -199,7 +199,7 @@ label mizuIntro:
         "Is there a reason why you're not answering my questions":
             m "..."
     
-    "Why are you the only person I've seen on this island"
+    "Why are you the only person I've seen on this island?"
 
     m "...I.. have to complete something."
     m "You can around the city to see if you can find a way to contact the nearest municipality. I think there is a broadcasting station in the {color=#0000ffff}school{/color}."

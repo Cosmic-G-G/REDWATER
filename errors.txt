@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 48: reached end of line when expecting ':'.
-    if False hour = 101
-                       ^
+File "game/script.rpy", line 137: the sensitive keyword argument was not given a value.
+    imagebutton idle "door_idle.png" action Call(changetobeach) sensitive if beach in locationsvisited and canMove xcenter 0.1 ycenter 0.5
+                                                                          ^
 
-Ren'Py Version: Ren'Py 8.0.3.22090809
-Sat Sep  2 14:35:55 2023
+Ren'Py Version: Ren'Py 8.1.1.23060707
+Sun Sep  3 08:43:40 2023

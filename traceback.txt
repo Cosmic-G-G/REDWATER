@@ -1,24 +1,33 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 46, in script call
-    call mizuIntro
-  File "game/script.rpy", line 195, in script
-    menu:
-IndexError: list index out of range
+  File "game/script.rpy", line 48, in script
+    $ renpy.block_rollback()
+  File "game/script.rpy", line 48, in script
+    $ renpy.block_rollback()
+Exception: Possible infinite loop.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 46, in script call
-    call mizuIntro
-  File "game/script.rpy", line 195, in script
-    menu:
-  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 1906, in execute
-    next_node(self.items[choice][2][0])
-IndexError: list index out of range
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\bootstrap.py", line 275, in bootstrap
+    renpy.main.main()
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\main.py", line 670, in main
+    run(restart)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\main.py", line 144, in run
+    renpy.execution.run_context(True)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\execution.py", line 953, in run_context
+    context.run()
+  File "game/script.rpy", line 48, in script
+    $ renpy.block_rollback()
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 444, in raise_
+  File "game/script.rpy", line 48, in script
+    $ renpy.block_rollback()
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\execution.py", line 61, in check_infinite_loop
+    raise Exception("Possible infinite loop.")
+Exception: Possible infinite loop.
 
 Windows-10-10.0.22621 AMD64
-Ren'Py 8.0.3.22090809
+Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
-Sat Sep  2 16:10:07 2023
+Sun Sep  3 08:48:54 2023
