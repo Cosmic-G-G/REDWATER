@@ -141,6 +141,29 @@ screen mapicon():
     zorder 1
     imagebutton idle "map icon_idle.webp" action Show("map") xcenter 0.8 yalign 0.0
 
+#Characters
+python:
+    """
+$ mizuPose = ""
+image mizu_pose = "[mizuPose].png"
+
+$ mizuClothes = ""
+image mizu_clothes = "[mizuClothes].png"
+
+image mizu_expression = ShowingSwitch(
+    "mizu happy", "mizu_expression happy",
+    None, "mizu_expression default"
+)
+
+image mizu = Composite(
+    (500, 700),
+    (0,0), "mizu_pose",
+    (0,0), "mizu_clothes",
+    (50,50), "mizu_expression"
+
+)
+    """
+
 ##STORIES
 label intro:
                     #INTRO SCENE
