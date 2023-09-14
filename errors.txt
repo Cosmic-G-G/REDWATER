@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 137: the sensitive keyword argument was not given a value.
-    imagebutton idle "door_idle.png" action Call(changetobeach) sensitive if beach in locationsvisited and canMove xcenter 0.1 ycenter 0.5
-                                                                          ^
+File "game/script.rpy", line 43: expected statement.
+    condition = True
+              ^
+
+File "game/script.rpy", line 46: expected statement.
+    condition = True
+              ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Sun Sep  3 08:43:40 2023
+Thu Sep 14 08:51:51 2023

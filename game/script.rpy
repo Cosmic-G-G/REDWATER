@@ -42,9 +42,12 @@ label start:
     
     while True:
         pause(0.5)
+        python:
+            print("hi")
         if location == 'beach' and hour == 0: 
             call mizuIntro
             #if exit or block the exit with mizu
+
         $ renpy.block_rollback()
 
     return
@@ -58,10 +61,10 @@ label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0):
         while location != args[0]:
             pause(0.5)
         if len(args) > 1:
-            show expression "[person].png" as person onlayer screens zorder -1:
+            show expression "[person]" as person onlayer screens zorder -1:
                 function ondoor(to=args[1])
         else:                                                                                   # Even though whatever is shown here will be hidden, needed for the split second before the function returns.
-            show expression "[person].png" as person onlayer screens zorder -1:
+            show expression "[person]" as person onlayer screens zorder -1:
                 xcenter finalxcenter
                 yalign finalyalign
         pause(0.5)
@@ -142,27 +145,24 @@ screen mapicon():
     imagebutton idle "map icon_idle.webp" action Show("map") xcenter 0.8 yalign 0.0
 
 #Characters
-python:
-    """
-$ mizuPose = ""
-image mizu_pose = "[mizuPose].png"
+layeredimage mizu:
+    attribute only null
 
-$ mizuClothes = ""
-image mizu_clothes = "[mizuClothes].png"
+    group standing multiple variant "standing": #Anything layered onto the standing pose (weapons, accessories etc)
+        #Furthest
+        attribute pose1 default if_not "pose2"                                                             
+        attribute pose2                                                                            #mizu_standing_pose2 <=> show mizu standing pose2 or show mizu pose2 until sitting/other implemented
 
-image mizu_expression = ShowingSwitch(
-    "mizu happy", "mizu_expression happy",
-    None, "mizu_expression default"
-)
+        attribute robes default if_not "only"                                                      #show mizu (robes) mizu sweater (robes+sweater) mizu sweater only (sweater)
+        attribute sweater pos(100,0)
+    
+    #group sitting multiple:
+    #    attribute robes
 
-image mizu = Composite(
-    (500, 700),
-    (0,0), "mizu_pose",
-    (0,0), "mizu_clothes",
-    (50,50), "mizu_expression"
-
-)
-    """
+    group face auto:
+        pos(50,50)
+        attribute neutral default                                                                   #mizu_face_neutral
+    
 
 ##STORIES
 label intro:
@@ -180,7 +180,10 @@ label intro:
     return
 
 label mizuIntro:
+    $ mizu_pose = "standing"
+    $ mizu_clothes = "robes"
     $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
+    
     show mizu onlayer screens zorder -1 with fade:
         function ondoor(to="forest")
 
