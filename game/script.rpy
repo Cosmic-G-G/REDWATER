@@ -1,6 +1,8 @@
 ﻿init python:
     import functools
     import csv
+
+                        #FUNCTIONS
     def has_exited(event, interact=True, targetbg = None, **kwargs):
         if not interact:
             return
@@ -28,22 +30,20 @@
         return None
     ondoor = renpy.curry(uncurried_ondoor)
 
+                        #FLAGS
+    hour = 0                                  # counter for each loop to not repeat stories
+    canMove = False                           # disables movement
+    locationsvisited = []
+
 #START
 label start:
-                    #FLAGS
-    $ hour = 0                                  # counter for each loop to not repeat stories
-    $ canMove = False                           # disables movement
-    $ locationsvisited = []
-    
     call intro
     
     call changetobeach(transition = Fade(0.1,1.0,0.5,color="#000"))
     pause(1.0)
-    
+
     while True:
-        pause(0.5)
-        python:
-            print("hi")
+        $ renpy.pause()
         if location == 'beach' and hour == 0: 
             call mizuIntro
             #if exit or block the exit with mizu
@@ -59,7 +59,7 @@ label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0):
     if len(args) > 0:
         hide person onlayer screens zorder -1 with dissolve
         while location != args[0]:
-            pause(0.5)
+            $ renpy.pause()
         if len(args) > 1:
             show expression "[person]" as person onlayer screens zorder -1:
                 function ondoor(to=args[1])
