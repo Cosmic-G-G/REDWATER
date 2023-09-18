@@ -180,8 +180,6 @@ label intro:
     return
 
 label mizuIntro:
-    $ mizu_pose = "standing"
-    $ mizu_clothes = "robes"
     $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
     
     show mizu onlayer screens zorder -1 with fade:
@@ -197,11 +195,12 @@ label mizuIntro:
 
     m "Heh.. We must first sate the appetite of that monster in your belly!" #FORESHADOWING???? crazy
     m "Follow me!"
+    
     window hide
-    
-    
     hide mizu onlayer screens with dissolve         # Please hide sprite before using MoveTo, and show sprite after (the sprite used in MoveTo is nonreferencable outside MoveTo)
+
     call MoveTo("mizu", "forest","town","store")    # name, locations in order, finalxcenter, finalyalign for last pos. May need to change canMove in function (William)
+    
     show mizu onlayer screens zorder -1
 
     m "Here we are! Take anything you want... after all..."
