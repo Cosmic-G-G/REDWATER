@@ -243,3 +243,4 @@ label mizuIntro:
     $ canMove = True
     hide mizu onlayer screens zorder -1
     $ hour += 1
+    return
