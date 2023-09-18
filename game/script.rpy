@@ -30,24 +30,25 @@
         return None
     ondoor = renpy.curry(uncurried_ondoor)
 
-                        #FLAGS
-    hour = 0                                  # counter for each loop to not repeat stories
-    canMove = False                           # disables movement
-    locationsvisited = []
-
 #START
 label start:
-    call intro
+                            #FLAGS
+    $ hour = 0                                  # counter for each loop to not repeat stories
+    $ canMove = False                           # disables movement
+    $ locationsvisited = []
     
+                            #INTRO SCENE
+    call intro
     call changetobeach(transition = Fade(0.1,1.0,0.5,color="#000"))
     pause(1.0)
 
+                            #MAIN GAME LOOP
     while True:
-        $ renpy.pause()
         if location == 'beach' and hour == 0: 
             call mizuIntro
             #if exit or block the exit with mizu
-
+        
+        $ renpy.pause()
         $ renpy.block_rollback()
 
     return
