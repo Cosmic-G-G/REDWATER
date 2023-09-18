@@ -1,4 +1,5 @@
-﻿init python:
+﻿#merci beau cul
+init python:
     import functools
     import csv
 
@@ -172,12 +173,20 @@ label intro:
     pause(0.5)
     scene cabin with Fade(0.1,0.0,0.5,color="#fff")
     "{size=+20}BLAM" with vpunch
-    "Crap! Oh crap oh crap oh crap!"
+    "Woah!"
     scene cabin window:
         fit "scale-up"                          #image cabin window = im.FactorScale("cabin window.jpg", 2)
     #Show tentacle
     "What the heck is that?"
-    #Tentacle break window ciniematic
+    #Tentacle approaching
+    "Oh... {nw}"
+    #Tentacle approaching faster
+    "Oh...{fast}no...{nw}"
+    #Tentacle approaches closer
+    "Oh...no...{fast}{w=0.5}That can't be good"
+    #Tentacle breaking window
+    "Oh sh--!"
+
     return
 
 label mizuIntro:
