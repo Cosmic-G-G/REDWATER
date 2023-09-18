@@ -1,41 +1,40 @@
-Mon Sep 18 17:06:22 2023
+Mon Sep 18 17:23:51 2023
 Windows-10-10.0.22621
 Ren'Py 8.1.1.23060707
  
 
-Bootstrap to the start of init.init. took 0.09s
-Early init. took 0.01s
-Loader init. took 0.18s
-Loading error handling. took 0.08s
-Loading script. took 0.41s
-Loading save slot metadata. took 0.11s
+Bootstrap to the start of init.init. took 0.08s
+Early init. took 0.00s
+Loader init. took 0.09s
+Loading error handling. took 0.07s
+Loading script. took 0.24s
+Loading save slot metadata. took 0.10s
 Loading persistent. took 0.00s
-Running init code. took 0.16s
-Loading analysis data. took 0.04s
+Running init code. took 0.12s
+Loading analysis data. took 0.03s
 Analyze and compile ATL. took 0.01s
-Reloading save slot metadata. took 0.11s
+Reloading save slot metadata. took 0.06s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\willj\\AppData\\Roaming/RenPy/backups\\P4 R4 D1 S3':
-Dump and make backups. took 0.14s
+Dump and make backups. took 0.11s
 Cleaning cache. took 0.00s
 Making clean stores. took 0.00s
 Initial gc. took 0.03s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object. took 0.70s
+Creating interface object. took 0.66s
 Cleaning stores took 0.00s
-Init translation took 0.06s
+Init translation took 0.07s
 Build styles took 0.01s
-Load screen analysis took 0.02s
-Analyze screens took 0.02s
-Save screen analysis took 0.04s
-Prepare screens took 0.14s
-Save pyanalysis. took 0.03s
-Save bytecode. took 0.05s
+Load screen analysis took 0.05s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.13s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
 Running _start took 0.00s
 Performance test:
-Interface start. took 0.16s
+Interface start. took 0.17s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -49,13 +48,3 @@ Screen sizes: virtual=(1920, 1080) physical=(1585, 892) drawable=(1585, 892)
 Maximum texture size: 4096x4096
 From,beach,To,forest
 beach,beach,forest,forest
-From,forest,To,town
-beach,forest,forest,town
-forest,forest,beach,town
-forest,forest,town,town
-From,town,To,store
-beach,town,forest,store
-forest,town,beach,store
-forest,town,town,store
-town,town,forest,store
-town,town,store,store

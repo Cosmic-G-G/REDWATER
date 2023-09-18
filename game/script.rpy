@@ -1,5 +1,4 @@
-﻿#merci beau cul
-init python:
+﻿init python:
     import functools
     import csv
 
