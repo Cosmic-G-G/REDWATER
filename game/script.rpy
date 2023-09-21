@@ -36,7 +36,10 @@ label start:
     $ hour = 0                                  # counter for each loop to not repeat stories
     $ canMove = False                           # disables movement
     $ locationsvisited = []
-    
+    $ mProgress = 0
+    $ lProgress = 0
+    $ miProgress = 0
+
                             #INTRO SCENE
     call intro
     call changetobeach(transition = Fade(0.1,1.0,0.5,color="#000"))
@@ -44,9 +47,11 @@ label start:
 
                             #MAIN GAME LOOP
     while True:
-        if location == 'beach' and hour == 0: 
+        if location == 'beach' and mProgress == 0: 
             call mizuIntro
             #if exit or block the exit with mizu
+        #if location == 'school' and lProgress == 0:
+        #    call laelaIntro
         
         $ renpy.pause()
         $ renpy.block_rollback()
@@ -191,7 +196,7 @@ label intro:
 label mizuIntro:
     $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
     
-    show mizu onlayer screens zorder -1 with fade:
+    show mizu onlayer screens zorder -1:
         function ondoor(to="forest")
 
     m "...You're sure that's all you remember?"
@@ -242,5 +247,19 @@ label mizuIntro:
 
     $ canMove = True
     hide mizu onlayer screens zorder -1
+
     $ hour += 1
+    $ mProgess += 1
+    return
+
+label laelaIntro:
+
+    $ hour += 1
+    $ lProgress += 1
+    return
+
+label mikaylaIntro:
+
+    $ hour += 1
+    $ miProgress += 1
     return
