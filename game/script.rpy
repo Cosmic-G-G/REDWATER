@@ -17,7 +17,7 @@
             return
 
     def uncurried_ondoor(trans, st, at, to):
-        with open(renpy.loader.transfn("doors.txt"), "r") as doors:
+        with open(renpy.loader.transfn("doors.csv"), "r") as doors:
             reader = csv.reader(doors, delimiter = '\t')
             for row in reader:
                 print(row[0]+ ","+location+","+row[1]+","+to)
@@ -39,6 +39,7 @@ label start:
     $ mProgress = 0
     $ lProgress = 0
     $ miProgress = 0
+    $ mirProgress = 0
 
                             #INTRO SCENE
     call intro
@@ -52,6 +53,9 @@ label start:
             #if exit or block the exit with mizu
         #if location == 'school' and lProgress == 0:
         #    call laelaIntro
+
+        if location == "classroom" and mirProgress == 0:
+            call miraiIntro
         
         $ renpy.pause()
         $ renpy.block_rollback()
@@ -117,7 +121,6 @@ screen bg_town():
     zorder -2
     imagebutton auto "door_%s.png" action Call("changetoforest",from_current=False) sensitive canMove xcenter 0.5 ycenter 1.0
     imagebutton auto "door_%s.png" action Call("changetostore",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetoschool",from_current=False) sensitive canMove xcenter 0.5 ycenter 0.5
 
 label changetotown(transition = None):
     $ location = 'town'
@@ -138,47 +141,6 @@ label changetostore(transition = None):
         $ locationsvisited.append('store')
     scene store with transition
     show screen bg_store
-    return
-
-screen bg_school():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
-
-label changetoschool(transition = None):
-    $ location = 'school'
-    if 'school' not in locationsvisited:
-        $ locationsvisited.append('school')
-    scene school with transition
-    show screen bg_school
-    return
-
-screen bg_hallway():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetoschool",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetoclassroom",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
-
-label changetohallway(transition = None):
-    $ location = 'hallway'
-    if 'hallway' not in locationsvisited:
-        $ locationsvisited.append('hallway')
-    scene hallway with transition
-    show screen bg_hallway
-    return
-
-screen bg_classroom():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-
-label changetoclassroom(transition = None):
-    $ location = 'classroom'
-    if 'classroom' not in locationsvisited:
-        $ locationsvisited.append('classroom')
-    scene classroom with transition
-    show screen bg_classroom
     return
 
 #MAP
@@ -304,4 +266,36 @@ label mikaylaIntro:
 
     $ hour += 1
     $ miProgress += 1
+    return
+
+label miraiIntro:
+    $ m = Character("???")
+    
+    show mirai onlayer screens zorder -1:
+        function ondoor(to="hallway")
+
+    "{i}You walk stumble into the abandoned classroom, falling onto the floor, and as you look up you're met with the cool gaze of the girl standing by the window.{/i}"
+
+    m "What business do you have with me?"
+
+    "Sorry for the intrusion, I was searching for Laela. Welp, I'll be on my way then."
+
+    m "W-wait! I don't remember seeing you around here. Who are you?"
+
+    menu: 
+        "I'm an individual lost to the unpredictable forces of the sea.":
+            m "I'm sorry to hear that."
+        "I'm here to meet you.":
+            m "But you were just about to leave."
+
+    "Well there's no point dwelling on the past. Nice to meet you."
+
+    m "I'm Mirai."
+
+    $ m = Character("Mirai")
+
+
+
+    $ hour += 1
+    $ mirProgress += 1
     return
