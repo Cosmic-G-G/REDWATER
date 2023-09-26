@@ -17,7 +17,7 @@
             return
 
     def uncurried_ondoor(trans, st, at, to):
-        with open(renpy.loader.transfn("doors.csv"), "r") as doors:
+        with open(renpy.loader.transfn("doors.txt"), "r") as doors:
             reader = csv.reader(doors, delimiter = '\t')
             for row in reader:
                 print(row[0]+ ","+location+","+row[1]+","+to)
@@ -121,6 +121,7 @@ screen bg_town():
     zorder -2
     imagebutton auto "door_%s.png" action Call("changetoforest",from_current=False) sensitive canMove xcenter 0.5 ycenter 1.0
     imagebutton auto "door_%s.png" action Call("changetostore",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
+    imagebutton auto "door_%s.png" action Call("changetoschool",from_current=False) sensitive canMove xcenter 0.5 ycenter 0.5
 
 label changetotown(transition = None):
     $ location = 'town'
@@ -141,6 +142,47 @@ label changetostore(transition = None):
         $ locationsvisited.append('store')
     scene store with transition
     show screen bg_store
+    return
+
+screen bg_school():
+    tag current
+    zorder -2
+    imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
+    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
+
+label changetoschool(transition = None):
+    $ location = 'school'
+    if 'school' not in locationsvisited:
+        $ locationsvisited.append('school')
+    scene school with transition
+    show screen bg_school
+    return
+
+screen bg_hallway():
+    tag current
+    zorder -2
+    imagebutton auto "door_%s.png" action Call("changetoschool",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
+    imagebutton auto "door_%s.png" action Call("changetoclassroom",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
+
+label changetohallway(transition = None):
+    $ location = 'hallway'
+    if 'hallway' not in locationsvisited:
+        $ locationsvisited.append('hallway')
+    scene hallway with transition
+    show screen bg_hallway
+    return
+
+screen bg_classroom():
+    tag current
+    zorder -2
+    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
+
+label changetoclassroom(transition = None):
+    $ location = 'classroom'
+    if 'classroom' not in locationsvisited:
+        $ locationsvisited.append('classroom')
+    scene classroom with transition
+    show screen bg_classroom
     return
 
 #MAP
