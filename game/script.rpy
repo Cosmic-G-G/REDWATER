@@ -295,7 +295,7 @@ label mizuIntro:
     hide mizu onlayer screens zorder -1
 
     $ hour += 1
-    $ mProgess += 1
+    $ mProgress += 1
     return
 
 label laelaIntro:
