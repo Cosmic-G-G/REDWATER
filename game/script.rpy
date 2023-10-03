@@ -327,16 +327,43 @@ label miraiIntro:
     menu: 
         "I'm an individual lost to the unpredictable forces of the sea.":
             m "I'm sorry to hear that."
-        "I'm here to meet you.":
+        "I'm here for you.":
             m "But you were just about to leave."
 
     "Well there's no point dwelling on the past. Nice to meet you."
 
-    m "I'm Mirai."
+    m "I'm Mirai, nice to meet you too."
 
     $ m = Character("Mirai")
 
+    "Would you happen to know how I can get off this island? I have places i need to be."
 
+    m "It seems you've met some of the others already. More company is always welcome to our town. Why dpn't you stay a bit and meet the rest of the other?"
+
+    menu: 
+    "I'd prefer to get out of here as soon as possible.":
+        m "What's the rush? I'm sure you're tired after the shipwreck. Why not stay a while first?"
+
+        "...You're right. I guess I could stay for a while."
+
+        m "Well I'd like to stay and talk but I've got places I need to be."
+
+    "If the others are like you, I wouldn't be against the idea.":
+        m "{i}She averts her eye contact.{/i}"
+
+        m "W-well excuse me, but I've got things to do. I'll see you later."
+
+    "Sure, but before that I'm a bit famished. Any idea where I could get some food?"
+
+    m "Yes! I think the convenience store might have some food. Since the town is quite small, they're quite willing to help newcomers out."
+
+    m "Be careful with the store clerk though. {fast}{nw}"
+
+    hide mirai onlayer screens with dissolve
+
+    "Wait what do you mean?{nw}"
+
+    "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}}"
 
     $ hour += 1
     $ mirProgress += 1
