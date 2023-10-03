@@ -13,7 +13,6 @@
                 renpy.return_statement()
     
     def default(event, interact=True, **kwargs):
-        if not interact:
             return
 
     def uncurried_ondoor(trans, st, at, to):
@@ -29,6 +28,7 @@
         doors.close()
         return None
     ondoor = renpy.curry(uncurried_ondoor)
+
 
 #START
 label start:
@@ -51,8 +51,8 @@ label start:
         if location == 'beach' and mProgress == 0: 
             call mizuIntro
             #if exit or block the exit with mizu
-        #if location == 'school' and lProgress == 0:
-        #    call laelaIntro
+        if location == 'school' and lProgress == 0:
+            call laelaIntro
 
         if location == "classroom" and mirProgress == 0:
             call miraiIntro
@@ -299,6 +299,17 @@ label mizuIntro:
     return
 
 label laelaIntro:
+    hide screen bg_school with Dissolve(0.5)
+    show school: # This type of transition is simple enough that does not need a function
+        linear 2.0 zoom 2.0
+        pause 0.5
+        linear 1.0 xalign 0.2
+        pause 0.5
+        linear 1.0 xalign 0.8
+    pause(5.0)
+    "... Is that a person over there?"
+    show school:
+        linear 2.0 zoom 1.0
 
     $ hour += 1
     $ lProgress += 1

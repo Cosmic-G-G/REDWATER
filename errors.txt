@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 44: expected statement.
-    NullAction()
-                ^
+File "game/script.rpy", line 37: expected 'comma or end of line' not found.
+    index += 1
+           ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Sun Sep 17 17:48:46 2023
+Tue Oct  3 08:54:15 2023
