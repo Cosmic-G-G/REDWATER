@@ -29,7 +29,6 @@
         return None
     ondoor = renpy.curry(uncurried_ondoor)
 
-
 #START
 label start:
                             #FLAGS
@@ -310,7 +309,8 @@ label laelaIntro:
     "... Is that a person over there?"
     show school:
         linear 2.0 zoom 1.0
-
+    show screen bg_school with Dissolve(1.0)
+    
     $ hour += 1
     $ lProgress += 1
     return
@@ -352,17 +352,17 @@ label miraiIntro:
     m "It seems you've met some of the others already. More company is always welcome to our town. Why dpn't you stay a bit and meet the rest of the other?"
 
     menu: 
-    "I'd prefer to get out of here as soon as possible.":
-        m "What's the rush? I'm sure you're tired after the shipwreck. Why not stay a while first?"
+        "I'd prefer to get out of here as soon as possible.":
+            m "What's the rush? I'm sure you're tired after the shipwreck. Why not stay a while first?"
 
-        "...You're right. I guess I could stay for a while."
+            "...You're right. I guess I could stay for a while."
 
-        m "Well I'd like to stay and talk but I've got places I need to be."
+            m "Well I'd like to stay and talk but I've got places I need to be."
 
-    "If the others are like you, I wouldn't be against the idea.":
-        m "{i}She averts her eye contact.{/i}"
+        "If the others are like you, I wouldn't be against the idea.":
+            m "{i}She averts her eye contact.{/i}"
 
-        m "W-well excuse me, but I've got things to do. I'll see you later."
+            m "W-well excuse me, but I've got things to do. I'll see you later."
 
     "Sure, but before that I'm a bit famished. Any idea where I could get some food?"
 
