@@ -19,7 +19,7 @@
         with open(renpy.loader.transfn("doors.txt"), "r") as doors:
             reader = csv.reader(doors, delimiter = '\t')
             for row in reader:
-                print(row[0]+ ","+location+","+row[1]+","+to)
+                #print(row[0]+ ","+location+","+row[1]+","+to)
                 if row[0] == location and row[1] == to:
                     trans.xcenter = float(row[4])
                     trans.yalign =1.0
@@ -28,6 +28,44 @@
         doors.close()
         return None
     ondoor = renpy.curry(uncurried_ondoor)
+
+init:
+                        #OVERRIDE
+    screen choice(items):
+
+        window:
+            style "menu_window"
+
+            vbox:
+                style "menu"
+
+                for i in items:
+                    
+                    if i.caption[:3] == "<L>":
+                        textbutton i.caption[3:] action None
+
+                    elif i.action:
+
+                        button:
+                            action i.action
+                            style "menu_choice_button"
+
+                            text i.caption style "menu_choice"
+                        
+                    else:
+                        text i.caption style "menu_caption"
+                    
+                        #TRANSFORMS
+    transform bounce (height, seconds = 0.1, bwait = 0.0, afwait = 0.0):
+        pause(bwait)
+        linear seconds/2.0 yoffset -height
+        linear seconds/2.0 yoffset height
+        pause(afwait)
+
+    transform left_right(screenpos, seconds = 1.0, bwait = 0.0, afwait = 0.0):
+        pause(bwait)
+        linear seconds xalign screenpos
+        pause(afwait)
 
 #START
 label start:
@@ -62,11 +100,11 @@ label start:
     return
 
 #FUNCTIONS
-label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0):
+label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0,dissolvetime=0.5):
     $ canMove = True
     $ renpy.block_rollback()
     if len(args) > 0:
-        hide person onlayer screens zorder -1 with dissolve
+        hide person onlayer screens zorder -1 with Dissolve(dissolvetime)
         while location != args[0]:
             $ renpy.pause()
         if len(args) > 1:
@@ -80,9 +118,9 @@ label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0):
         python:
             args = list(args)
             args.pop(0)
-        call MoveTo(person, *tuple(args))
+        call MoveTo(person, *tuple(args),finalxcenter=finalxcenter,finalyalign=finalyalign,dissolvetime=dissolvetime)
     else:
-        hide person onlayer screens zorder -1
+        hide person onlayer screens zorder -1 with Dissolve(dissolvetime)
         $ canMove = False
         return
     return
@@ -195,6 +233,14 @@ screen mapicon():
     zorder 1
     imagebutton idle "map icon_idle.webp" action Show("map") xcenter 0.8 yalign 0.0
 
+#TIMER
+screen timer(step, tolabel):
+    zorder 2
+    timer step repeat If(time > 0, true=True, false=False) action If(time >= step, true=SetVariable('time',time-step), false=Jump(tolabel))
+    text "{ctime:.2f}".format(ctime = time) size 100
+
+
+
 #Characters
 layeredimage mizu:
     attribute only null
@@ -298,21 +344,141 @@ label mizuIntro:
     return
 
 label laelaIntro:
+    $ l = Character("Laela")
+    $ canMove = False
+
     hide screen bg_school with Dissolve(0.5)
     show school: # This type of transition is simple enough that does not need a function
         linear 2.0 zoom 2.0
-        pause 0.5
-        linear 1.0 xalign 0.2
-        pause 0.5
-        linear 1.0 xalign 0.8
+        left_right(0.2, 1.0, 0.5)
+        left_right(0.8, 1.0, 0.5)
     pause(5.0)
     "... Is that a person over there?"
-    show school:
-        linear 2.0 zoom 1.0
-    show screen bg_school with Dissolve(1.0)
+
+    # maybe hide her behind a rock or something
+    show laela onlayer screens zorder -1 with dissolve:
+        xysize (247,341)
+        align (0.6, 0.8)
+
+        # should change expression when she sees you to flustered
+        bounce(50, afwait=0.5)
+        left_right(0.35, 0.5, 0.5)
+        left_right(0.7, 0.5)
     
+    "Timid girl" "awawawawawa..."
+
+    #show laela sighing
+    pause(1.0)
+    hide laela onlayer screens zorder -1 with dissolve
+
+    show school:
+        linear 0.4 zoom 1.0
+        pause(0.2)
+    show screen bg_school with Dissolve(0.2)
+
+    show laela onlayer screens zorder -1 with Dissolve(0.2)
+
+    "Timid girl" "hello...{w}{cps=2}...{/cps}"
+    # her eyes shift
+    "Timid girl" "{cps=2}......."
+
+    $ c1, c2 = False, False
+    menu laelaMeeting01:
+        "...And you are?" if not c1:
+            if c2:
+                $ l = Character("Laela")
+            
+            "Timid girl" "Um...{w=0.2}{nw}"
+            # show blush, embarassed
+            "Timid girl" "{cps=50}Y-you first!"
+            # hide blush
+            "I was just asking your name?"
+            "{i}Precious{/i}" "I'm great, thanks for asking!{w=1.0}"
+            # eyes shift
+            # Show blush
+            # show sweet smile
+            l "No wait!! I'm pleasure, it's a Laela to make your acquantance."
+            $ c1 = True
+            jump laelaMeeting01
+        "<L>...And you are?" if c1:
+            pass
+
+        "I was told to come to the school to investigate..." if not c2:
+            if not c1:
+                $ l = "Timid girl"
+
+            "{cps=30}I was told to come to the school to investigate how to get off this island. A woman named Mizu told me there was{nw}"
+            # show dizzy
+            extend " a broadcasting station in this school and I was wondering if you could help me reach it. {nw}"
+            "I wanted to contact the nearest municipality or nearest governor of this prefecture. Would you happen to know?"
+            l "Governor..? No... I'm an engineer. Though, if you're trying to find Mizu, I could probably help."
+            "Um... nevermind. {w}Let's talk about you."
+            "You know mizu?"
+            # Brightens up
+            l "Yes! {w}Mizu is super nice{cps=5}...{/cps}{nw}"
+            # eyes lower
+            extend "{size=*0.5} Even to someone like me..."
+            # eyes look back up
+            l "We were best friends! She, her and my dear sister..."
+            l "{cps=10}I wish we could go back to those days..."
+            $ c2 = True
+            jump laelaMeeting01
+        "<L>I was told to come to the school to investigate..." if c2:
+            pass
+
+        "<L>???" if not c1 or not c2:
+            pass
+        "So... did something happen between you and Mizu?" if c1 and c2: #Final choice
+            l "My sister was really kind and caring, with a bright smile and demeanour whose light would rival the sun."
+            #Show sister silouette (BLOND btw)
+            l"""
+            I think... Because of me, because of something I did... I hurt my sister and well,
+
+            Mizu abhored what I did and it's pretty obvious that she never forgave me for what I did... 
+            
+            That's what caused our fallout, I think.
+
+            Anyways, I'd rather not depress you with my sad story. \"Let's focus on what we can do right now\", that's what she used to say.
+
+            Except finding the broadcasting station, I can't help you with that. {w}Or the governor... 
+            """
+            # show eyes shift, mouth flat
+            extend "And I don't really know if it is even possible to leave this island."
+            "Um... Is there anything you {i}could{/i} do for me?"
+            # show sad smile
+
+    l "I always do this don't I?"
+    l "I'm sorry for being so useless!"
+
+    pause(0.5)
+    show laela onlayer screens zorder -1:
+        linear 0.5 xcenter 0.1
+    l "I'm sorry, {size=*0.8}I'm sorry, {size=*0.6}I'm sorry, {size=*0.4}I'm sorry, {size=*0.2}I'm sorry,"
+    hide laela onlayer screens zorder -1
+
+    "Hey wait!"
+    pause(0.5)
+    l "I'm just a water flea!"
+    pause(1.0)
+    
+    $ time = 15.00
+    show screen timer(0.1,'laelaIntro.endtimegame')
+    
+    call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom",finalxcenter = -1.0, finalyalign = 1.0, dissolvetime=0.1)
+    hide laela onlayer screens zorder -
+    if time > 0.0 and location == "classroom":
+        call laelaIntro.endtimegame
+
     $ hour += 1
     $ lProgress += 1
+    return
+label .endtimegame:
+    hide screen timer
+    $ time = -1.0
+    if location == "classroom":
+        "Dang... she's fast. Where did she go?"
+    else:
+        "Lost her... Maybe, I should head back to the {color=#0000ffff}school{/color} and keep exploring. Hopefully I can run into her there. "
     return
 
 label mikaylaIntro:
@@ -360,7 +526,7 @@ label miraiIntro:
             m "Well I'd like to stay and talk but I've got places I need to be."
 
         "If the others are like you, I wouldn't be against the idea.":
-            m "{i}She averts her eye contact.{/i}"
+            "{i}She averts her eye contact.{/i}"
 
             m "W-well excuse me, but I've got things to do. I'll see you later."
 

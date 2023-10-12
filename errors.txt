@@ -2,17 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 353: menu statement expects a non-empty block.
-    menu: 
-        ^
-
-File "game/script.rpy", line 354: expected statement.
-    "I'd prefer to get out of here as soon as possible.":
-                                                        ^
-
-File "game/script.rpy", line 361: expected statement.
-    "If the others are like you, I wouldn't be against the idea.":
-                                                                 ^
+File "game/script.rpy", line 476: expected statement.
+    Hide('timer')
+                 ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Tue Oct  3 09:31:52 2023
+Thu Oct 12 10:57:36 2023
