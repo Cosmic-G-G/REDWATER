@@ -32,29 +32,15 @@
 init:
                         #OVERRIDE
     screen choice(items):
+        style_prefix "choice"
 
-        window:
-            style "menu_window"
-
-            vbox:
-                style "menu"
-
-                for i in items:
-                    
-                    if i.caption[:3] == "<L>":
-                        textbutton i.caption[3:] action None
-
-                    elif i.action:
-
-                        button:
-                            action i.action
-                            style "menu_choice_button"
-
-                            text i.caption style "menu_choice"
-                        
-                    else:
-                        text i.caption style "menu_caption"
-                    
+        vbox:
+            for i in items:
+                if i.caption[:3] == "<L>":
+                    textbutton i.caption[3:] action None
+                else:
+                    textbutton i.caption action i.action
+    
                         #TRANSFORMS
     transform bounce (height, seconds = 0.1, bwait = 0.0, afwait = 0.0):
         pause(bwait)
