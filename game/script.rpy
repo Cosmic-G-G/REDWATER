@@ -91,6 +91,8 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call MikaylaIntro
+        if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
+            call chishikiIntro
 
         $ renpy.pause()
         $ renpy.block_rollback()
@@ -500,7 +502,7 @@ label mikaylaIntro:
     return
 
 label miraiIntro:
-    $ m = "???"
+    $ m = "Girl by the window"
     
     show mirai onlayer screens zorder -1:
         function ondoor(to="hallway")
@@ -525,9 +527,9 @@ label miraiIntro:
 
     $ m = Mirai
 
-    "Would you happen to know how I can get off this island? I have places i need to be."
+    "Would you happen to know how I can get off this island? I have places I need to be."
 
-    m "It seems you've met some of the others already. More company is always welcome to our town. Why dpn't you stay a bit and meet the rest of the other?"
+    m "It seems you've met some of the others already. More company is always welcome to our town. Why don't you stay a bit and meet the rest of the others?"
 
     menu: 
         "I'd prefer to get out of here as soon as possible.":
@@ -538,15 +540,15 @@ label miraiIntro:
             m "Well I'd like to stay and talk but I've got places I need to be."
 
         "If the others are like you, I wouldn't be against the idea.":
-            "{i}She averts her eye contact.{/i}"
+            "{i}She averts her eyes.{/i}"
 
             m "W-well excuse me, but I've got things to do. I'll see you later."
 
     "Sure, but before that I'm a bit famished. Any idea where I could get some food?"
 
-    m "Yes! I think the convenience store might have some food. Since the town is quite small, they're quite willing to help newcomers out."
+    m "Yes! I think the convenience store might have some food. Since the town is quite small, they're quite willing to help those in need."
 
-    m "Be careful with the store clerk though. {fast}{nw}"
+    m "Be careful with the store clerk though."
 
     hide mirai onlayer screens with dissolve
 
@@ -556,4 +558,25 @@ label miraiIntro:
 
     $ hour += 1
     $ Mirai.progress += 1
+    return
+
+label chishikiIntro:
+    show chishiki onlayer screens zorder -1:
+    $ c = "Girl reading in the park"
+
+    "{i}You arrive at the park and notice a girl reading to herself. All ambient noises have suddenly ceased. {/i}"
+
+    "{i}You take in the calmness of the scene before you. {/i}"
+
+    "{i}You start to slowly walk away, making as little noise as possible as to not disturb the serenity. {/i}"
+
+    c "Aren't you gonna talk to me?"
+
+    "{i}She startles you, as you jump back around to face her. {/i}"
+
+
+
+
+    $ c = Chishiki
+
     return
