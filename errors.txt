@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 57: end of line expected.
-    init::
-         ^
+File "game/script.rpy", line 44: f-string: unmatched '('
+    Mizu = UCharacter(f"{Character("Mizu")}")
+                                     ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Thu Oct 12 12:07:36 2023
+Mon Oct 16 11:28:17 2023

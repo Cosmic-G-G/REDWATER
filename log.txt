@@ -1,49 +1,49 @@
-Thu Oct 12 12:43:35 2023
+Mon Oct 16 14:22:34 2023
 Windows-10-10.0.22621
 Ren'Py 8.1.1.23060707
  
 
-Bootstrap to the start of init.init. took 0.10s
+Bootstrap to the start of init.init. took 0.15s
 Early init. took 0.01s
-Loader init. took 0.08s
-Loading error handling. took 0.07s
-Loading script. took 0.59s
-Loading save slot metadata. took 0.10s
+Loader init. took 0.23s
+Loading error handling. took 0.13s
+Loading script. took 0.98s
+Loading save slot metadata. took 0.19s
 Loading persistent. took 0.00s
-Running init code. took 0.12s
-Loading analysis data. took 0.03s
+Running init code. took 0.20s
+Loading analysis data. took 0.05s
 Analyze and compile ATL. took 0.01s
-Reloading save slot metadata. took 0.07s
+Reloading save slot metadata. took 0.14s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\willj\\AppData\\Roaming/RenPy/backups\\P4 R4 D1 S3':
-Dump and make backups. took 0.12s
+Dump and make backups. took 0.29s
 Cleaning cache. took 0.00s
 Making clean stores. took 0.00s
-Initial gc. took 0.03s
+Initial gc. took 0.06s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object. took 0.63s
+Creating interface object. took 1.06s
 Cleaning stores took 0.00s
-Init translation took 0.06s
+Init translation took 0.14s
 Build styles took 0.01s
 Load screen analysis took 0.00s
-Analyze screens took 0.02s
-Save screen analysis took 0.04s
-Prepare screens took 0.14s
-Save pyanalysis. took 0.03s
-Save bytecode. took 0.06s
+Analyze screens took 0.07s
+Save screen analysis took 0.08s
+Prepare screens took 0.31s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.08s
 Running _start took 0.00s
 Performance test:
-Interface start. took 0.18s
+Interface start. took 0.16s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
 swap interval: 1 frames
 Windowed mode.
-Vendor: "b'Intel'"
-Renderer: b'Intel(R) UHD Graphics'
-Version: b'4.6.0 - Build 27.20.100.9664'
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX250/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 532.09'
 Display Info: None
 Screen sizes: virtual=(1920, 1080) physical=(1580, 889) drawable=(1580, 889)
 Maximum texture size: 4096x4096

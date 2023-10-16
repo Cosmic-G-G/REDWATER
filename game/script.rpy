@@ -19,7 +19,6 @@
         with open(renpy.loader.transfn("doors.txt"), "r") as doors:
             reader = csv.reader(doors, delimiter = '\t')
             for row in reader:
-                #print(row[0]+ ","+location+","+row[1]+","+to)
                 if row[0] == location and row[1] == to:
                     trans.xcenter = float(row[4])
                     trans.yalign =1.0
@@ -28,6 +27,22 @@
         doors.close()
         return None
     ondoor = renpy.curry(uncurried_ondoor)
+
+                        # Classes
+    class UCharacter(ADVCharacter): # May need to check if persistent data is saved
+        def __init__(self, name, kind=None, **properties):
+            super().__init__(name, kind, **properties)
+            self.progress = 0
+            self.affection = 0
+    
+    Mizu = UCharacter("Mizu")
+
+    Laela = UCharacter("Laela")
+
+    Mirai = UCharacter("Mirai")
+
+    Mikayla = UCharacter("Mikayla")
+
 
 init:
                         #OVERRIDE
@@ -59,10 +74,6 @@ label start:
     $ hour = 0                                  # counter for each loop to not repeat stories
     $ canMove = False                           # disables movement
     $ locationsvisited = []
-    $ mProgress = 0
-    $ lProgress = 0
-    $ miProgress = 0
-    $ mirProgress = 0
 
                             #INTRO SCENE
     call intro
@@ -71,22 +82,23 @@ label start:
 
                             #MAIN GAME LOOP
     while True:
-        if location == 'beach' and mProgress == 0: 
+        if location == 'beach' and Mizu.progress == 0: 
             call mizuIntro
             #if exit or block the exit with mizu
-        if location == 'school' and lProgress == 0:
+        if location == 'school' and Laela.progress == 0:
             call laelaIntro
-
-        if location == "classroom" and mirProgress == 0:
+        if location == "classroom" and Mirai.progress == 0:
             call miraiIntro
-        
+        if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
+            call MikaylaIntro
+
         $ renpy.pause()
         $ renpy.block_rollback()
 
     return
 
 #FUNCTIONS
-label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0,dissolvetime=0.5):
+label MoveTo(person, *args,dissolvetime=0.5): #if you can figure out how to pass by reference here, it might be better then have else: final x final y
     $ canMove = True
     $ renpy.block_rollback()
     if len(args) > 0:
@@ -96,17 +108,12 @@ label MoveTo(person, *args, finalxcenter=0.5, finalyalign=1.0,dissolvetime=0.5):
         if len(args) > 1:
             show expression "[person]" as person onlayer screens zorder -1:
                 function ondoor(to=args[1])
-        else:                                                                                   # Even though whatever is shown here will be hidden, needed for the split second before the function returns.
-            show expression "[person]" as person onlayer screens zorder -1:
-                xcenter finalxcenter
-                yalign finalyalign
         pause(0.5)
         python:
             args = list(args)
             args.pop(0)
-        call MoveTo(person, *tuple(args),finalxcenter=finalxcenter,finalyalign=finalyalign,dissolvetime=dissolvetime)
+        call MoveTo(person, *tuple(args),dissolvetime=dissolvetime)
     else:
-        hide person onlayer screens zorder -1 with Dissolve(dissolvetime)
         $ canMove = False
         return
     return
@@ -171,7 +178,8 @@ screen bg_school():
     tag current
     zorder -2
     imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
+    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.5 ycenter 0.5
+    imagebutton auto "door_%s.png" action Call("changetopark",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
 
 label changetoschool(transition = None):
     $ location = 'school'
@@ -206,6 +214,19 @@ label changetoclassroom(transition = None):
         $ locationsvisited.append('classroom')
     scene classroom with transition
     show screen bg_classroom
+    return
+
+screen bg_park():
+    tag current
+    zorder -2
+    imagebutton auto "door_%s.png" action Call ("changetoschool",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
+
+label changetopark(transition = None):
+    $ location = 'park'
+    if 'park' not in locationsvisited:
+        $ locationsvisited.append('park')
+    scene park with transition
+    show screen bg_park
     return
 
 #MAP
@@ -271,7 +292,8 @@ label intro:
     return
 
 label mizuIntro:
-    $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
+    $ m = Mizu
+    # $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
     
     show mizu onlayer screens zorder -1:
         function ondoor(to="forest")
@@ -290,7 +312,7 @@ label mizuIntro:
     window hide
     hide mizu onlayer screens with dissolve         # Please hide sprite before using MoveTo, and show sprite after (the sprite used in MoveTo is nonreferencable outside MoveTo)
 
-    call MoveTo("mizu", "forest","town","store")    # name, locations in order, finalxcenter, finalyalign for last pos. May need to change canMove in function (William)
+    call MoveTo("mizu", "forest","town","store")    # May need to change canMove in function (William)
     
     show mizu onlayer screens zorder -1
 
@@ -317,20 +339,24 @@ label mizuIntro:
     
     "Why are you the only person I've seen on this island?"
 
-    m "...I.. have to complete something."
-    m "You can around the city to see if you can find a way to contact the nearest municipality. I think there is a broadcasting station in the {color=#0000ffff}school{/color}."
-    m "Here is the lightrail map. I have to go now. Bye."
+    m """
+    ...I.. have to complete something.
+    
+    You can around the city to see if you can find a way to contact the nearest municipality. I think there is a broadcasting station in the {color=#0000ffff}school{/color}.
+    
+    Here is the lightrail map. I have to go now. Bye.
+    """
     show screen mapicon
 
     $ canMove = True
     hide mizu onlayer screens zorder -1
 
     $ hour += 1
-    $ mProgress += 1
+    $ Mizu.progress += 1
     return
 
 label laelaIntro:
-    $ l = Character("Laela")
+    $ l = Laela
     $ canMove = False
 
     hide screen bg_school with Dissolve(0.5)
@@ -372,7 +398,7 @@ label laelaIntro:
     menu laelaMeeting01:
         "...And you are?" if not c1:
             if c2:
-                $ l = Character("Laela")
+                $ l = Laela
             
             "Timid girl" "Um...{w=0.2}{nw}"
             # show blush, embarassed
@@ -450,13 +476,12 @@ label laelaIntro:
     $ time = 15.00
     show screen timer(0.1,'laelaIntro.endtimegame')
     
-    call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom",finalxcenter = -1.0, finalyalign = 1.0, dissolvetime=0.1)
-    hide laela onlayer screens zorder -
+    call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom", dissolvetime=0.1)
     if time > 0.0 and location == "classroom":
         call laelaIntro.endtimegame
 
     $ hour += 1
-    $ lProgress += 1
+    $ Laela.progress += 1
     return
 label .endtimegame:
     hide screen timer
@@ -468,13 +493,14 @@ label .endtimegame:
     return
 
 label mikaylaIntro:
+    $ m = Mikayla
 
     $ hour += 1
-    $ miProgress += 1
+    $ Mikayla.progress += 1
     return
 
 label miraiIntro:
-    $ m = Character("???")
+    $ m = "???"
     
     show mirai onlayer screens zorder -1:
         function ondoor(to="hallway")
@@ -497,7 +523,7 @@ label miraiIntro:
 
     m "I'm Mirai, nice to meet you too."
 
-    $ m = Character("Mirai")
+    $ m = Mirai
 
     "Would you happen to know how I can get off this island? I have places i need to be."
 
@@ -529,5 +555,5 @@ label miraiIntro:
     "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}}"
 
     $ hour += 1
-    $ mirProgress += 1
+    $ Mirai.progress += 1
     return
