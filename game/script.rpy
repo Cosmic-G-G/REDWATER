@@ -68,6 +68,11 @@ init:
         linear seconds xalign screenpos
         pause(afwait)
 
+    transform top_bottom(screenpos, seconds = 1.0, bwait = 0.0, afwait = 0.0):
+        pause(bwait)
+        linear seconds yalign screenpos
+        pause(afwait)
+
 #START
 label start:
                             #FLAGS
@@ -90,9 +95,13 @@ label start:
         if location == "classroom" and Mirai.progress == 0:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
+<<<<<<< Updated upstream
             call MikaylaIntro
         if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
             call chishikiIntro
+=======
+            call mikaylaIntro
+>>>>>>> Stashed changes
 
         $ renpy.pause()
         $ renpy.block_rollback()
@@ -495,7 +504,98 @@ label .endtimegame:
     return
 
 label mikaylaIntro:
-    $ m = Mikayla
+    $ m = "Punk"
+    
+    show store:
+        linear 2.0 zoom 1.5
+        top_bottom(0.9)
+    
+    show mikayla onlayer screens zorder -1: 
+        xalign 0.5 yalign 3.0
+        top_bottom(1.0)
+
+    # mean face
+    m "What're you gawkin' at punk? Never seen a cute girl before?"
+
+    menu:
+        "My breath was simply stolen by your beauty, my dear. ":
+            "My sincerest apologies my dearest, my breath was simply stolen by your beauty."
+            #show her disgusted
+            m "Gross..."
+            m "What the hell d'ya want?"
+            "Your name, milady"
+            #roll eyes
+            $ m = Mikayla
+            m "Mikayla. No need to remember it."
+            # Eyes shift
+            m "I guess the gang needs water-fetchers{cps=10}........"
+            # Eyes shift back
+            m """
+            Heya pal, I'm offerin' ya a once in a lifetime opportunity to be my personal slave{cps=10}........{/cps}
+
+            Actually I ain't offerin', I'm tellin'
+
+            Forest. Shrine. There'll be a showdown. Bring water 'n bandages. Get me somethin' good too. 
+
+            Be there or be square.
+            """
+            jump dontlikeyourstyle
+        
+        "You got a problem? You can take it up with my fists!":
+            #show surprised, then smile
+            m "I like your style brat."
+            $ m = Mikayla
+            m "I'm Mikayla. How about you become my underling and we'll paint the town red!"
+            jump ilikeyourstylebrat
+            
+    menu ilikeyourstylebrat:
+        "How about you prove your strength first?":
+            m "Alright big shot. Think you can take me? Let's go."
+            #Game
+            m "Not bad kiddo. You've got guts."
+            #Thinking
+            m """
+            I think you've got what it takes{cps=10}.........{/cps} Yea I ain't losin' a talent like yourself.
+            
+            Alright I got one more person in mind for my big plan.
+
+            Meet me at the forest shrine. If we're lucky we'll have a third member for our posse soon. 
+
+            There'll be a fight you don't wanna miss. Bring some food 'n water just in case. 
+            """
+        
+        "How about you prove your merit first?":
+            # Smug eyes closed
+            m "The name \'Yellow Oni\' ring any bells?"
+            "{cps=10}.......{/cps}"
+            # open eyes blue top of head - worried look
+            m "You {i}have{/i} heard of me{cps=10}...{/cps} right?"
+            m "Y'know, that demon gang led by that terrible dilenquent?"
+            "{cps=10}.......{/cps}"
+            # back to smug
+            m """
+            Well, I promise I'm a big deal! 
+            
+            My mission is to uncover the truth and expose the dark conspiracies of this world. 
+
+            It goes without saying that any bad guys who stand on the side of darkness get beaten up!
+            """
+            #looks down, maybe a bit embarassed
+            m "But uhh... {w}Seems like my squad disbanded a while ago when I started {size=17}prea{size=15}chin' {size=12}'em {size=10}these {size=5}ideas..."
+            show mikayla onlayer screens zorder -1:
+                bounce(50)
+            # maybe show like smug or happy
+            m "I mean! {w=0.5}I just so happen to have an opening that fits your particular set of skills."
+            m "In fact, I know just one more person who might agree to be our partner in crime..."
+            # Big toothy smile
+            m "Meet me at the forest shrine and we'll have a nice friendly 'negotiation' with her."
+            m "{w=1.0}You might wanna bring some bandages"
+
+    hide mikayla onlayer screens
+
+    label dontlikeyourstyle:
+        "What a character..."
+
 
     $ hour += 1
     $ Mikayla.progress += 1

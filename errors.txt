@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 44: f-string: unmatched '('
-    Mizu = UCharacter(f"{Character("Mizu")}")
-                                     ^
+File "game/script.rpy", line 515: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
+    "My breath was simply stolen by your beauty, my dear. "
+                                                           ^
+
+File "game/script.rpy", line 534: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
+    "How about you prove your strength first?"
+                                              ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Mon Oct 16 11:28:17 2023
+Mon Oct 16 19:53:04 2023
