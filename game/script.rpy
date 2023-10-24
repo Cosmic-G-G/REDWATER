@@ -28,21 +28,6 @@
         return None
     ondoor = renpy.curry(uncurried_ondoor)
 
-    def uncurried_fstorebuy(drop, drags, citems):
-        drags[0].draggable = False
-        citems.remove(drags[0].drag_name)
-        dbg.latest = drags[0].drag_name
-
-        if drop == "cart":
-            inventory.append(drags[0].drag_name)
-
-        if not citems:
-            renpy.hide_screen("screenbuy")
-        
-        renpy.restart_interaction()
-        return
-    fstorebuy = renpy.curry(uncurried_fstorebuy)
-
                         # Classes
     class UCharacter(ADVCharacter): # May need to check if persistent data is saved
         def __init__(self, name, kind=None, **properties):
@@ -58,10 +43,6 @@
 
     Mikayla = UCharacter("Mikayla")
 
-    class Debug():
-        def __init__(self):
-            self.latest = None
-    dbg = Debug()
 
 init:
                         #OVERRIDE
@@ -98,7 +79,6 @@ label start:
     $ hour = 0                                  # counter for each loop to not repeat stories
     $ canMove = False                           # disables movement
     $ locationsvisited = []
-    $ inventory = []
 
                             #INTRO SCENE
     call intro
@@ -116,13 +96,7 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
-<<<<<<< Updated upstream
-        if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
-            call chishikiIntro
-        
-=======
 
->>>>>>> Stashed changes
         $ renpy.pause()
         $ renpy.block_rollback()
 
@@ -277,40 +251,7 @@ screen timer(step, tolabel):
     timer step repeat If(time > 0, true=True, false=False) action If(time >= step, true=SetVariable('time',time-step), false=Jump(tolabel))
     text "{ctime:.2f}".format(ctime = time) size 100
 
-screen storebuy(items, rlst): #randomize items before calling, rlist is a list of [(rx,ry)1, (rx,ry)2] of length of items
-    default citems = items.copy()
-    tag storebuy
-    zorder 10
-    on "hide" action Hide("storebuy")
 
-    showif citems:
-        add "black"
-        draggroup:
-            drag:
-                xycenter (0.1, 0.9)
-                child "cart"
-                draggable False
-                droppable True
-                dropped fstorebuy(citems = citems)
-            drag:
-                xycenter (0.9, 0.9)
-                child "bin"
-                draggable False
-                droppable True
-                dropped fstorebuy(citems = citems)
-            for i, item in enumerate(items):
-                if item in citems:
-                    drag:
-                        xycenter (rlst[i][0], rlst[i][1])
-                        child item
-                        drag_name item
-                        draggable True
-                        droppable False
-    python:
-        if dbg.latest in citems:
-            citems.remove(dbg.latest)
-            dbg.latest = None
-            renpy.restart_interaction()
 
 #Characters
 layeredimage mizu:
@@ -642,18 +583,13 @@ label mikaylaIntro:
             m "In fact, I know just one more person who might agree to be our partner in crime..."
             # Big toothy smile
             m "Meet me at the forest shrine and we'll have a nice friendly 'negotiation' with her."
-            pause(1.0)
-            m "You might wanna bring some bandages"
+            m "{w=1.0}You might wanna bring some bandages"
+
+    hide mikayla onlayer screens
 
     label dontlikeyourstyle:
         "What a character..."
-        "Whatever.. I guess I'll get her things..."
 
-    $ ilst = ["waterbottle","greentea","melonpan","onigiri","bandage"]
-    $ rlst = [(renpy.random.random()*0.7+0.1, renpy.random.random()*0.7+0.1) for x in range(len(ilst))]
-    show screen storebuy(ilst, rlst)
-
-    hide mikayla onlayer screens zorder -1
 
     $ hour += 1
     $ Mikayla.progress += 1
@@ -745,11 +681,14 @@ label chishikiIntro:
 
     $ c = Chishiki
 
-    "Nice to meet you too. Why are you doing out here all by yourself?"
+    "Nice to meet you too. What are you doing out here all by yourself? Why aren't you with the others?"
     c "I was waiting for you to come here. Now that you've arrived on this island, there's lots to learn and little time to explain."
     "What are you talking about?"
-    c "You'll see in due time. For now, we should focus on getting you prepared and well acquainted with the others for when the time comes."
+    c "You'll see in due time. I'll see you again soon..."
     
-    
+    hide Chishiki onlayer screens with dissolve
+
+    "Huh? Wait!"
+    "{i}How peculiar. I wonder what her deal is.{/i}"
 
     return
