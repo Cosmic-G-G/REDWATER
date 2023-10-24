@@ -116,9 +116,13 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
+<<<<<<< Updated upstream
         if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
             call chishikiIntro
         
+=======
+
+>>>>>>> Stashed changes
         $ renpy.pause()
         $ renpy.block_rollback()
 
@@ -719,18 +723,33 @@ label chishikiIntro:
     $ c = "Girl reading in the park"
 
     "{i}You arrive at the park and notice a girl reading to herself. All ambient noises have suddenly ceased. {/i}"
-
     "{i}You take in the calmness of the scene before you. {/i}"
-
     "{i}You start to slowly walk away, making as little noise as possible as to not disturb the serenity. {/i}"
 
     c "Aren't you gonna talk to me?"
 
     "{i}She startles you, as you jump back around to face her. {/i}"
 
-
-
+    menu:
+        "Sorry, I didn't see you there.":
+            c "Hey, lying isn't very nice."
+        "How did you know I was here?":
+            c "There are few things I don't know."
+        
+    c "I know you fell off the ship right?"
+    "Yes... I presume you heard from the others?"
+    c "Sure. Let's got with that."
+    "Uhh...ok..."
+    "What's your name?"
+    c "I'm Chishiki. Nice to meet you."
 
     $ c = Chishiki
+
+    "Nice to meet you too. Why are you doing out here all by yourself?"
+    c "I was waiting for you to come here. Now that you've arrived on this island, there's lots to learn and little time to explain."
+    "What are you talking about?"
+    c "You'll see in due time. For now, we should focus on getting you prepared and well acquainted with the others for when the time comes."
+    
+    
 
     return
