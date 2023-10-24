@@ -96,6 +96,11 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
+<<<<<<< Updated upstream
+=======
+        if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
+            call chishikiIntro
+>>>>>>> Stashed changes
 
         $ renpy.pause()
         $ renpy.block_rollback()
