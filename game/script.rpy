@@ -95,11 +95,20 @@ label start:
         if location == "classroom" and Mirai.progress == 0:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
+<<<<<<< HEAD
             call mikaylaIntro
 <<<<<<< Updated upstream
 =======
         if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
             call chishikiIntro
+=======
+<<<<<<< Updated upstream
+            call MikaylaIntro
+        if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
+            call chishikiIntro
+=======
+            call mikaylaIntro
+>>>>>>> parent of 016c924 (Store got)
 >>>>>>> Stashed changes
 
         $ renpy.pause()
