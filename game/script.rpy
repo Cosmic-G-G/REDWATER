@@ -1,8 +1,9 @@
 ﻿init python:
     import functools
     import csv
-
-                        #FUNCTIONS
+    import pygame
+    import math
+                        #region FUNCTIONS
     def has_exited(event, interact=True, targetbg = None, **kwargs):
         if not interact:
             return
@@ -42,8 +43,9 @@
         renpy.restart_interaction()
         return
     fstorebuy = renpy.curry(uncurried_fstorebuy)
+                        #endregion
 
-                        # Classes
+                        #region CLASSES
     class UCharacter(ADVCharacter): # May need to check if persistent data is saved
         def __init__(self, name, kind=None, **properties):
             super().__init__(name, kind, **properties)
@@ -63,9 +65,120 @@
             self.latest = None
     dbg = Debug()
 
+    class CircularBar(renpy.Displayable):
+        def __init__(self, color, center: tuple, dimension: tuple, barWidth, angle, colorBorder = 0, widthBorder = 0, **kwargs): #TODO priority-low: colorBorder widthBorder
+            super(CircularBar, self).__init__(**kwargs)
+            self.center = center
+            self.dimension = dimension
+            self.barWidth = barWidth
+
+            self.angle = angle
+
+            self.color = color
+            self.colorBorder = colorBorder
+            self.widthBorder = widthBorder
+        
+        def arc(self, surface, color, rect, angle_start, angle_stop, width=1): #TODO priority-mid: Make into module
+            x = rect.x
+            y = rect.y
+            radius1 = rect.w
+            radius2 = rect.h
+
+            if (radius1 < radius2):
+                if radius1 < 1.0e-4:
+                    aStep = 1.0
+                else:
+                    aStep = math.asin(2.0 / radius1)
+            else:
+                if radius2 < 1.0e-4:
+                    aStep = 1.0
+                else:
+                    aStep = math.asin(2.0 / radius2)
+            
+            if (aStep < 0.05):
+                aStep = 0.05
+            
+            x_last = int( x + math.cos(angle_start) * radius1)
+            y_last = int( y - math.sin(angle_start) * radius2)
+
+            a = float ( angle_start + aStep )
+            while a < aStep + angle_stop:
+                a += aStep
+
+                points = [0,0,0,0]
+                x_next = int ( x + math.cos(min(a, angle_stop)) * radius1)
+                y_next = int ( y - math.sin(min(a, angle_stop)) * radius2)
+                points[0] = x_last
+                points[1] = y_last
+                points[2] = x_next
+                points[3] = y_next
+
+                pygame.draw.line(surface, color, (points[0], points[1]), (points[2], points[3]), width)
+                x_last = x_next
+                y_last = y_next
+
+        def render(self, width, height, st, at):
+            rv = renpy.Render(width, height)
+            surface = renpy.display.pgrender.surface((width, height), True)
+
+            self.arc(surface, self.color, pygame.rect.Rect(*self.center, *self.dimension), 0, self.angle, width = self.barWidth)
+            rv.blit(surface, (0,0))
+
+            return rv  
+
+    class CombatManager():
+        def __init__(self):
+            self.allies: list = [ ]
+            self.enemies: list = [ ]
+
+        def add(self, c: Combatant):
+            if c.bAlly:
+                self.allies.append ( c )
+            else:
+                self.enemies.append ( c )
+        
+        def remove(self, *combatants):
+            if args == ("all"):
+                self.allies.clear()
+                self.enemies.clear()
+                return
+
+            for combatant in combatants:
+                try:
+                    self.allies.remove(combatant)
+                except:
+                    self.enemies.remove(combatant)
+    combatManager = CombatManager()
+
+    class Combatant():
+        def __init__(self, name, hp, atk, bAlly = True, *displayables):
+            self.name = name
+            self.hp = hp
+            self.atk = atk
+            self.bAlly = bAlly 
+
+            self.initializeSpriteManager(*displayables)
+
+        def initializeSpriteManager(self, *displayables):
+            self._spriteManager = SpriteManager(update = self.tick, event = None)
+            self._spriteManager.create ( d for d in displayables ) #Base, NA, SA, Particle
+            
+            self._spriteManager[0].x , self._spriteManager[0].y = 0 , 0
+            self._spriteManager[1].x , self._spriteManager[1].y = -10 , -10
+            self._spriteManager[2].x , self._spriteManager[2].y = 10 , 10
+
+        @property
+        def spriteManager(self):
+            return self._spriteManager
+
+        def tick(self): #Called every update
+            pass
+    
+                        #endregion
 
 init:
-                        #OVERRIDE
+    
+                        #region OVERRIDE
     screen choice(items):
         style_prefix "choice"
 
@@ -75,8 +188,9 @@ init:
                     textbutton i.caption[3:] action None
                 else:
                     textbutton i.caption action i.action
-    
-                        #TRANSFORMS
+                        #endregion
+
+                        #region TRANSFORMS
     transform bounce (height, seconds = 0.1, bwait = 0.0, afwait = 0.0):
         pause(bwait)
         linear seconds/2.0 yoffset -height
@@ -92,7 +206,7 @@ init:
         pause(bwait)
         linear seconds yalign screenpos
         pause(afwait)
-
+                        #endregion
 #START
 label start:
                             #FLAGS
@@ -125,7 +239,7 @@ label start:
 
     return
 
-#FUNCTIONS
+#region LABEL FUNCTIONS
 label MoveTo(person, *args,dissolvetime=0.5): #if you can figure out how to pass by reference here, it might be better then have else: final x final y
     $ canMove = True
     $ renpy.block_rollback()
@@ -145,8 +259,9 @@ label MoveTo(person, *args,dissolvetime=0.5): #if you can figure out how to pass
         $ canMove = False
         return
     return
+#endregion
 
-##LOCATIONS
+#region LOCATIONS
 screen bg_beach():
     tag current
     zorder -2
@@ -256,6 +371,7 @@ label changetopark(transition = None):
     scene park with transition
     show screen bg_park
     return
+#endregion
 
 #MAP
 screen map():
@@ -274,6 +390,7 @@ screen timer(step, tolabel):
     timer step repeat If(time > 0, true=True, false=False) action If(time >= step, true=SetVariable('time',time-step), false=Jump(tolabel))
     text "{ctime:.2f}".format(ctime = time) size 100
 
+#region SCREEN MINIGAMES
 screen storebuy(items, rlst): #randomize items before calling, rlist is a list of [(rx,ry)1, (rx,ry)2] of length of items
     default citems = items.copy()
     tag storebuy
@@ -308,6 +425,14 @@ screen storebuy(items, rlst): #randomize items before calling, rlist is a list o
             citems.remove(dbg.latest)
             dbg.latest = None
             renpy.restart_interaction()
+
+screen combat():
+    for ally, index in enumerate(combatManager.allies):
+        add ally.spriteManager xalign (i+1) / ( len(combatManager.allies) + 1 ) * renpy.get_physical_size()[0] yalign 0.8
+    
+    for enemy in combatManager.enemies:
+        add enemy.spriteManager xalign (i+1) / ( len(combatManager.allies) + 1 ) * renpy.get_physical_size()[0] yalign 0.2
+#endregion
 
 #Characters
 layeredimage mizu:
@@ -600,7 +725,7 @@ label mikaylaIntro:
     menu ilikeyourstylebrat:
         "How about you prove your strength first?":
             m "Alright big shot. Think you can take me? Let's go."
-            #Game
+            show screen combat
             m "Not bad kiddo. You've got guts."
             #Thinking
             m """

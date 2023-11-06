@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 515: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
-    "My breath was simply stolen by your beauty, my dear. "
-                                                           ^
-
-File "game/script.rpy", line 534: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
-    "How about you prove your strength first?"
-                                              ^
+File "game/script.rpy", line 182: expected statement.
+    cMikayla = Combatant("Mikayla", 200, 30, False, chibi_mikayla, normalattack, normalattack)
+             ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Mon Oct 16 19:53:04 2023
+Mon Nov  6 15:45:41 2023
