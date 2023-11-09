@@ -1,6 +1,7 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
+<<<<<<< Updated upstream
   File "game/script.rpy", line 1, in script
     init python:
   File "game/script.rpy", line 193, in <module>
@@ -10,16 +11,34 @@ While running game code:
   File "game/script.rpy", line 170, in initialImages
     self._saBar = CircularBar( )
 TypeError: __init__() missing 5 required positional arguments: 'color', 'center', 'dimension', 'barWidth', and 'angle'
+=======
+  File "game/script.rpy", line 250, in script call
+    call endOfDay
+  File "game/script.rpy", line 901, in script
+    $ day1Entry = Journal()
+  File "game/script.rpy", line 901, in <module>
+    $ day1Entry = Journal()
+TypeError: __init__() missing 2 required positional arguments: 'day' and 'entry'
+>>>>>>> Stashed changes
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
+<<<<<<< Updated upstream
   File "game/script.rpy", line 1, in script
     init python:
   File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
+=======
+  File "game/script.rpy", line 250, in script call
+    call endOfDay
+  File "game/script.rpy", line 901, in script
+    $ day1Entry = Journal()
+  File "C:\Users\jaden\Downloads\renpy-8.1.1-sdk\renpy\ast.py", line 1138, in execute
+>>>>>>> Stashed changes
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
+  File "C:\Users\jaden\Downloads\renpy-8.1.1-sdk\renpy\python.py", line 1122, in py_exec_bytecode
     exec(bytecode, globals, locals)
+<<<<<<< Updated upstream
   File "game/script.rpy", line 193, in <module>
     User = Combatant("Player", 300, 30)
   File "game/script.rpy", line 162, in __init__
@@ -27,8 +46,17 @@ Full traceback:
   File "game/script.rpy", line 170, in initialImages
     self._saBar = CircularBar( )
 TypeError: __init__() missing 5 required positional arguments: 'color', 'center', 'dimension', 'barWidth', and 'angle'
+=======
+  File "game/script.rpy", line 901, in <module>
+    $ day1Entry = Journal()
+TypeError: __init__() missing 2 required positional arguments: 'day' and 'entry'
+>>>>>>> Stashed changes
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
+<<<<<<< Updated upstream
 Thu Nov  9 09:08:54 2023
+=======
+Mon Nov  6 17:56:55 2023
+>>>>>>> Stashed changes

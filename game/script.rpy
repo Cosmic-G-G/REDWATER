@@ -190,7 +190,21 @@
                 return self._dSprites["specialattack"]
             return self._lspriteManager
     
+<<<<<<< Updated upstream
     User = Combatant("Player", 300, 30)
+=======
+    class Journal():
+        def __init__(self, entry = []):
+            self.entry
+
+        def addEntry(newEntry):
+            self.entry.append(newEntry)
+
+        def getEntry():
+            fullEntry = join(self.entry)
+            return fullEntry
+
+>>>>>>> Stashed changes
                         #endregion
 
 init:
@@ -247,8 +261,11 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
-        if location == "park" and (Mizu.progress and Laela.progress and Mirai.progress and Mikayla.progress) > 0:
+        if location == "park" and hour == 4:
             call chishikiIntro
+
+        if location == "park" and hour == 5:
+            call endOfDay
 
         $ renpy.pause()
         $ renpy.block_rollback()
@@ -887,13 +904,51 @@ label chishikiIntro:
     $ c = Chishiki
 
     "Nice to meet you too. What are you doing out here all by yourself? Why aren't you with the others?"
-    c "I was waiting for you to come here. Now that you've arrived on this island, there's lots to learn and little time to explain."
-    "What are you talking about?"
     c "You'll see in due time. I'll see you again soon..."
     
     hide Chishiki onlayer screens with dissolve
 
     "Huh? Wait!"
     "{i}How peculiar. I wonder what her deal is.{/i}"
+    "{i}I should probably hurry and return to the shrine.{/i}"
 
+    $ Chishiki.progress += 1
     return
+
+label endOfDay:
+    "{i}I should document my daily events in case I need to refer to them.{/i}"
+    show journal onlayer screens zorder -1:
+
+    $ day1Entry = Journal()
+
+    "{i}Day 1: Today I _____.{/i}"
+    menu: 
+        "fell off a boat and met strange people inhabiting this island.":
+            $ day1Entry.addEntry("Today I fell off a boat and met strange people inhabiting this island.")
+        "fell off a boat and met a handful of maidens. I think I like them.":
+            $ day1Entry.addEntry("Today I fell off a boat and met a handful of maidens.")
+    "{i}I think it will take time before I can _____.{/i}"
+    menu:
+        "get off this island and return home.":
+            $ day1Entry.addEntry("I think it will take time before I can get off this island and return home.")
+        "get closer to the people on this island.":
+            $ day1Entry.addEntry("I think it will take time before I can get closer to the people on this island.")
+    "{i}I think tomorrow, I will try to get closer to _____.{/i}"
+    menu:
+        "Mizu.":
+            $ day1Entry.addEntry("I think tomorrow, I will try to get closer to Mizu.")
+        "Laela":
+            $ day1Entry.addEntry("I think tomorrow, I will try to get closer to Laela.")
+        "Mirai":
+            $ day1Entry.addEntry("I think tomorrow, I will try to get closer to Mirai.")
+        "Mikayla":
+            $ day1Entry.addEntry("I think tomorrow, I will try to get closer to Mikayla.")
+        "Chishiki":
+            $ day1Entry.addEntry("I think tomorrow, I will try to get closer to Chishiki.")
+    
+    screen displayJournal:
+
+        text "[day1Entry.getEntry()]": 
+            xcenter 0.5
+            ycenter 0.3 
+    show screen displayJournal         
