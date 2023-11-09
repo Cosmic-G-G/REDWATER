@@ -2,17 +2,17 @@
 errors listed below, and try again.
 
 
-<<<<<<< Updated upstream
-File "game/script.rpy", line 446: 'zorder' is not a keyword argument or valid child of the add statement.
-    zorder 10
+File "game/script.rpy", line 193: expected statement.
+    <<<<<<< Updated upstream
+                            ^
+
+File "game/script.rpy", line 195: expected statement.
+    =======
           ^
 
-Ren'Py Version: Ren'Py 8.1.1.23060707
-Thu Nov  9 08:41:58 2023
-=======
-File "game/script.rpy", line 177: invalid syntax
-    class Journal()
+File "game/script.rpy", line 207: expected statement.
+    >>>>>>> Stashed changes
+                           ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Mon Nov  6 17:53:51 2023
->>>>>>> Stashed changes
+Thu Nov  9 09:14:10 2023

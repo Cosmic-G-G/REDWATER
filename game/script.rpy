@@ -166,8 +166,8 @@
                 reader = csv.reader(cstyle, delimiter = '\t')
                 for row in reader:
                     if row[0] == self.name:
-                        self._naBar = CircularBar( int( row[3] ), (0,0), (50,50), 0, 2*math.pi, 10)
-                        self._saBar = CircularBar( )
+                        # self._naBar = CircularBar( int( row[3] ), (0,0), (50,50), 0, 2*math.pi, 10)
+                        # self._saBar = CircularBar( )
 
 
                         self._dSprites["normalattack"] = self._lspriteManager.create(row[2] + ".jpg")
@@ -190,9 +190,8 @@
                 return self._dSprites["specialattack"]
             return self._lspriteManager
     
-<<<<<<< Updated upstream
     User = Combatant("Player", 300, 30)
-=======
+
     class Journal():
         def __init__(self, entry = []):
             self.entry
@@ -204,7 +203,6 @@
             fullEntry = join(self.entry)
             return fullEntry
 
->>>>>>> Stashed changes
                         #endregion
 
 init:
@@ -261,10 +259,10 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
-        if location == "park" and hour == 4:
+        if location == "park":
             call chishikiIntro
 
-        if location == "park" and hour == 5:
+        if location == "beach" and hour >= 4:
             call endOfDay
 
         $ renpy.pause()
