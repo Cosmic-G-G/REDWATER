@@ -1,62 +1,82 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-<<<<<<< Updated upstream
-  File "game/script.rpy", line 1, in script
-    init python:
-  File "game/script.rpy", line 193, in <module>
-    User = Combatant("Player", 300, 30)
-  File "game/script.rpy", line 162, in __init__
-    self.initialImages()
-  File "game/script.rpy", line 170, in initialImages
-    self._saBar = CircularBar( )
-TypeError: __init__() missing 5 required positional arguments: 'color', 'center', 'dimension', 'barWidth', and 'angle'
-=======
-  File "game/script.rpy", line 250, in script call
-    call endOfDay
-  File "game/script.rpy", line 901, in script
-    $ day1Entry = Journal()
-  File "game/script.rpy", line 901, in <module>
-    $ day1Entry = Journal()
-TypeError: __init__() missing 2 required positional arguments: 'day' and 'entry'
->>>>>>> Stashed changes
+  File "game/script.rpy", line 265, in script call
+    call mikaylaIntro
+  File "game/script.rpy", line 767, in script
+    m "Not bad kiddo. You've got guts."
+  File "game/script.rpy", line 124, in render
+    self.arc(surface, self.color, pygame.rect.Rect(*self.center, *self.dimension), 0, self.angle, width = self.barWidth)
+  File "game/script.rpy", line 116, in arc
+    pygame.draw.line(surface, color, (points[0], points[1]), (points[2], points[3]), width)
+TypeError: an integer is required
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-<<<<<<< Updated upstream
-  File "game/script.rpy", line 1, in script
-    init python:
-  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
-=======
-  File "game/script.rpy", line 250, in script call
-    call endOfDay
-  File "game/script.rpy", line 901, in script
-    $ day1Entry = Journal()
-  File "C:\Users\jaden\Downloads\renpy-8.1.1-sdk\renpy\ast.py", line 1138, in execute
->>>>>>> Stashed changes
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\jaden\Downloads\renpy-8.1.1-sdk\renpy\python.py", line 1122, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-<<<<<<< Updated upstream
-  File "game/script.rpy", line 193, in <module>
-    User = Combatant("Player", 300, 30)
-  File "game/script.rpy", line 162, in __init__
-    self.initialImages()
-  File "game/script.rpy", line 170, in initialImages
-    self._saBar = CircularBar( )
-TypeError: __init__() missing 5 required positional arguments: 'color', 'center', 'dimension', 'barWidth', and 'angle'
-=======
-  File "game/script.rpy", line 901, in <module>
-    $ day1Entry = Journal()
-TypeError: __init__() missing 2 required positional arguments: 'day' and 'entry'
->>>>>>> Stashed changes
+  File "game/script.rpy", line 265, in script call
+    call mikaylaIntro
+  File "game/script.rpy", line 767, in script
+    m "Not bad kiddo. You've got guts."
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 930, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\exports.py", line 1473, in say
+    who(what, *args, **kwargs)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\character.py", line 1352, in __call__
+    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\character.py", line 1003, in do_display
+    display_say(who,
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\character.py", line 693, in display_say
+    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\core.py", line 3579, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\core.py", line 4172, in interact_core
+    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\core.py", line 2779, in draw_screen
+    surftree = renpy.display.render.render_screen(
+  File "render.pyx", line 492, in renpy.display.render.render_screen
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\layout.py", line 886, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\layout.py", line 886, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\layout.py", line 886, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\screen.py", line 731, in render
+    child = renpy.display.render.render(self.child, w, h, st, at)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\layout.py", line 886, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\transform.py", line 909, in render
+    return RenderTransform(self).render(width, height, st, at)
+  File "accelerator.pyx", line 979, in renpy.display.accelerator.RenderTransform.render
+  File "accelerator.pyx", line 404, in renpy.display.accelerator.RenderTransform.render_child
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\display\particle.py", line 298, in render
+    cache.render = r = render(cache.child_copy, width, height, cst, cst)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "game/script.rpy", line 124, in render
+    self.arc(surface, self.color, pygame.rect.Rect(*self.center, *self.dimension), 0, self.angle, width = self.barWidth)
+  File "game/script.rpy", line 116, in arc
+    pygame.draw.line(surface, color, (points[0], points[1]), (points[2], points[3]), width)
+  File "src/pygame_sdl2/draw.pyx", line 80, in pygame_sdl2.draw.line
+  File "src/pygame_sdl2/gfxdraw.pyx", line 74, in pygame_sdl2.gfxdraw.thick_line
+  File "src/pygame_sdl2/color.pyx", line 130, in pygame_sdl2.color.Color.__init__
+TypeError: an integer is required
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
-<<<<<<< Updated upstream
-Thu Nov  9 09:08:54 2023
-=======
-Mon Nov  6 17:56:55 2023
->>>>>>> Stashed changes
+Thu Nov  9 09:29:51 2023

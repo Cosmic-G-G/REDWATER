@@ -166,19 +166,23 @@
                 reader = csv.reader(cstyle, delimiter = '\t')
                 for row in reader:
                     if row[0] == self.name:
-                        self._naBar = CircularBar( int( row[3] ), (0,0), (50,50), 0, 2*math.pi, 10)
-                        self._saBar = CircularBar( )
+                        self._naBar = CircularBar( tuple(map(int, (row[3], row[4], row[5], row[6]))), (0,0), (86,86), 0, 2*math.pi, int(row[7]) )
+                        self._saBar = CircularBar( tuple(map(int, (row[9], row[10], row[11], row[12]))), (0,0), (86,86), 0, 2*math.pi, int(row[13]) )
 
 
                         self._dSprites["normalattack"] = self._lspriteManager.create(row[2] + ".jpg")
-                        self._dSprites["specialattack"] = self._lspriteManager.create(row[3] + ".jpg")
+                        self._dSprites["natimer"] = self._lspriteManager.create(self._naBar)
+                        self._dSprites["specialattack"] = self._lspriteManager.create(row[8] + ".jpg")
+                        self._dSprites["satimer"] = self._lspriteManager.create(self._saBar)
                         self._dSprites["base"] = self._lspriteManager.create(row[1] + ".jpg")
                         break
             cstyle.close()
 
             self._dSprites["base"].x , self._dSprites["base"].y = -86 , 0
             self._dSprites["normalattack"].x , self._dSprites["normalattack"].y = -86 , 50
+            self._dSprites["natimer"].x , self._dSprites["natimer"].y = -86, 50
             self._dSprites["specialattack"].x , self._dSprites["specialattack"].y = 0 , 50
+            self._dSprites["satimer"].x , self._dSprites["satimer"].y = 0, 50
         
         @property
         def sprites(self):
@@ -190,9 +194,8 @@
                 return self._dSprites["specialattack"]
             return self._lspriteManager
     
-<<<<<<< Updated upstream
     User = Combatant("Player", 300, 30)
-=======
+
     class Journal():
         def __init__(self, entry = []):
             self.entry
@@ -204,7 +207,6 @@
             fullEntry = join(self.entry)
             return fullEntry
 
->>>>>>> Stashed changes
                         #endregion
 
 init:
