@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 182: expected statement.
-    cMikayla = Combatant("Mikayla", 200, 30, False, chibi_mikayla, normalattack, normalattack)
-             ^
+File "game/script.rpy", line 446: 'zorder' is not a keyword argument or valid child of the add statement.
+    zorder 10
+          ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Mon Nov  6 15:45:41 2023
+Thu Nov  9 08:41:58 2023

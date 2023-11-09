@@ -151,33 +151,49 @@
     combatManager = CombatManager()
 
     class Combatant():
-        def __init__(self, name, hp, atk, bAlly = True, *displayables):
+        def __init__(self, name, hp, atk, bAlly = True):
             self.name = name
             self.hp = hp
             self.atk = atk
-            self.bAlly = bAlly 
+            self.bAlly = bAlly
 
-            self.initializeSpriteManager(*displayables)
+            self._dSprites: dict = { }
+            self._lspriteManager = SpriteManager()
+            self.initialImages()
+        
+        def initialImages(self): #Override this function in inherited classes if different styling
+            with open(renpy.loader.transfn("combatant_styling.txt"), "r") as cstyle:
+                reader = csv.reader(cstyle, delimiter = '\t')
+                for row in reader:
+                    if row[0] == self.name:
+                        self._naBar = CircularBar( int( row[3] ), (0,0), (50,50), 0, 2*math.pi, 10)
+                        self._saBar = CircularBar( )
 
-        def initializeSpriteManager(self, *displayables):
-            self._spriteManager = SpriteManager(update = self.tick, event = None)
-            self._spriteManager.create ( d for d in displayables ) #Base, NA, SA, Particle
-            
-            self._spriteManager[0].x , self._spriteManager[0].y = 0 , 0
-            self._spriteManager[1].x , self._spriteManager[1].y = -10 , -10
-            self._spriteManager[2].x , self._spriteManager[2].y = 10 , 10
 
+                        self._dSprites["normalattack"] = self._lspriteManager.create(row[2] + ".jpg")
+                        self._dSprites["specialattack"] = self._lspriteManager.create(row[3] + ".jpg")
+                        self._dSprites["base"] = self._lspriteManager.create(row[1] + ".jpg")
+                        break
+            cstyle.close()
+
+            self._dSprites["base"].x , self._dSprites["base"].y = -86 , 0
+            self._dSprites["normalattack"].x , self._dSprites["normalattack"].y = -86 , 50
+            self._dSprites["specialattack"].x , self._dSprites["specialattack"].y = 0 , 50
+        
         @property
-        def spriteManager(self):
-            return self._spriteManager
-
-        def tick(self): #Called every update
-            pass
+        def sprites(self):
+            def base():
+                return self._dSprites["base"]
+            def normalattack():
+                return self._dSprites["normalattack"]
+            def specialattack():
+                return self._dSprites["specialattack"]
+            return self._lspriteManager
     
+    User = Combatant("Player", 300, 30)
                         #endregion
 
 init:
-    
                         #region OVERRIDE
     screen choice(items):
         style_prefix "choice"
@@ -427,11 +443,13 @@ screen storebuy(items, rlst): #randomize items before calling, rlist is a list o
             renpy.restart_interaction()
 
 screen combat():
-    for ally, index in enumerate(combatManager.allies):
-        add ally.spriteManager xalign (i+1) / ( len(combatManager.allies) + 1 ) * renpy.get_physical_size()[0] yalign 0.8
+    for i, ally in enumerate(combatManager.allies, 1):
+        add ally.sprites:
+            pos ( i / ( len(combatManager.allies) + 1 ) , 0.6)
     
-    for enemy in combatManager.enemies:
-        add enemy.spriteManager xalign (i+1) / ( len(combatManager.allies) + 1 ) * renpy.get_physical_size()[0] yalign 0.2
+    for i, enemy in enumerate(combatManager.enemies , 1):
+        add enemy.sprites:
+            pos ( i / ( len(combatManager.allies) + 1 ) - 0.044796, 0.2)
 #endregion
 
 #Characters
@@ -725,6 +743,7 @@ label mikaylaIntro:
     menu ilikeyourstylebrat:
         "How about you prove your strength first?":
             m "Alright big shot. Think you can take me? Let's go."
+            $ combatManager.add(User)
             show screen combat
             m "Not bad kiddo. You've got guts."
             #Thinking

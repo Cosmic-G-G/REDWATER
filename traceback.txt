@@ -1,26 +1,34 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 182, in script
-    $ cMikayla = Combatant("Mikayla", 200, 30, False, chibi_mikayla, normalattack, normalattack)
-  File "game/script.rpy", line 182, in <module>
-    $ cMikayla = Combatant("Mikayla", 200, 30, False, chibi_mikayla, normalattack, normalattack)
-NameError: name 'chibi_mikayla' is not defined
+  File "game/script.rpy", line 1, in script
+    init python:
+  File "game/script.rpy", line 193, in <module>
+    User = Combatant("Player", 300, 30)
+  File "game/script.rpy", line 162, in __init__
+    self.initialImages()
+  File "game/script.rpy", line 170, in initialImages
+    self._saBar = CircularBar( )
+TypeError: __init__() missing 5 required positional arguments: 'color', 'center', 'dimension', 'barWidth', and 'angle'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 182, in script
-    $ cMikayla = Combatant("Mikayla", 200, 30, False, chibi_mikayla, normalattack, normalattack)
+  File "game/script.rpy", line 1, in script
+    init python:
   File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 182, in <module>
-    $ cMikayla = Combatant("Mikayla", 200, 30, False, chibi_mikayla, normalattack, normalattack)
-NameError: name 'chibi_mikayla' is not defined
+  File "game/script.rpy", line 193, in <module>
+    User = Combatant("Player", 300, 30)
+  File "game/script.rpy", line 162, in __init__
+    self.initialImages()
+  File "game/script.rpy", line 170, in initialImages
+    self._saBar = CircularBar( )
+TypeError: __init__() missing 5 required positional arguments: 'color', 'center', 'dimension', 'barWidth', and 'angle'
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
-Mon Nov  6 16:38:05 2023
+Thu Nov  9 09:08:54 2023

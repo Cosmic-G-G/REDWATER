@@ -1,0 +1,2 @@
+NAME	BASE_IMAGE	NORMALIMAGE:	BAR_R	BAR_G	BAR_B	BAR_A	BAR_W	SPECIALIMAGE:	BAR_R	BAR_G	BAR_B	BAR_A	BAR_W
+Player	chibi_mikayla	normalattack	255	0	0	1	10	normalattack	255	0	0	1	10
