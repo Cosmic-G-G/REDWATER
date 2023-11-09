@@ -60,6 +60,8 @@
 
     Mikayla = UCharacter("Mikayla")
 
+    Chishiki = UCharacter("Chishiki")
+
     class Debug():
         def __init__(self):
             self.latest = None
@@ -263,7 +265,7 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
-        if location == "park":
+        if location == "park" and Chishiki.progress == 0:
             call chishikiIntro
 
         if location == "beach" and hour >= 4:
@@ -908,7 +910,7 @@ label chishikiIntro:
     "Nice to meet you too. What are you doing out here all by yourself? Why aren't you with the others?"
     c "You'll see in due time. I'll see you again soon..."
     
-    hide Chishiki onlayer screens with dissolve
+    hide chishiki onlayer screens with dissolve
 
     "Huh? Wait!"
     "{i}How peculiar. I wonder what her deal is.{/i}"
