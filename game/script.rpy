@@ -3,244 +3,7 @@
     import csv
     import pygame
     import math
-                        #region FUNCTIONS
-    def has_exited(event, interact=True, targetbg = None, **kwargs):
-        if not interact:
-            return
 
-        if event == "show":
-            print(targetbg, location)
-            if location != targetbg:
-                renpy.return_statement()
-    
-    def default(event, interact=True, **kwargs):
-            return
-
-    def uncurried_ondoor(trans, st, at, to):
-        with open(renpy.loader.transfn("doors.txt"), "r") as doors:
-            reader = csv.reader(doors, delimiter = '\t')
-            for row in reader:
-                if row[0] == location and row[1] == to:
-                    trans.xcenter = float(row[4])
-                    trans.yalign =1.0
-                    doors.close()
-                    return None
-        doors.close()
-        return None
-    ondoor = renpy.curry(uncurried_ondoor)
-
-    def uncurried_fstorebuy(drop, drags, citems):
-        drags[0].draggable = False
-        citems.remove(drags[0].drag_name)
-        dbg.latest = drags[0].drag_name
-
-        if drop == "cart":
-            inventory.append(drags[0].drag_name)
-
-        if not citems:
-            renpy.hide_screen("screenbuy")
-        
-        renpy.restart_interaction()
-        return
-    fstorebuy = renpy.curry(uncurried_fstorebuy)
-                        #endregion
-
-                        #region CLASSES
-    class UCharacter(ADVCharacter): # May need to check if persistent data is saved
-        def __init__(self, name, kind=None, **properties):
-            super().__init__(name, kind, **properties)
-            self.progress = 0
-            self.affection = 0
-    
-    Mizu = UCharacter("Mizu")
-
-    Laela = UCharacter("Laela")
-
-    Mirai = UCharacter("Mirai")
-
-    Mikayla = UCharacter("Mikayla")
-
-    Chishiki = UCharacter("Chishiki")
-
-    class Debug():
-        def __init__(self):
-            self.latest = None
-    dbg = Debug()
-
-    class CircularBar(renpy.Displayable):
-        def __init__(self, color, center: tuple, dimension: tuple, barWidth, angle, colorBorder = 0, widthBorder = 0, **kwargs): #TODO priority-low: colorBorder widthBorder
-            super(CircularBar, self).__init__(**kwargs)
-            self.center = center
-            self.dimension = dimension
-            self.barWidth = barWidth
-
-            self.angle = angle
-
-            self.color = color
-            self.colorBorder = colorBorder
-            self.widthBorder = widthBorder
-        
-        def arc(self, surface, color, rect, angle_start, angle_stop, width=1): #TODO priority-mid: Make into module
-            x = rect.x
-            y = rect.y
-            radius1 = rect.w
-            radius2 = rect.h
-
-            if (radius1 < radius2):
-                if radius1 < 1.0e-4:
-                    aStep = 1.0
-                else:
-                    aStep = math.asin(2.0 / radius1)
-            else:
-                if radius2 < 1.0e-4:
-                    aStep = 1.0
-                else:
-                    aStep = math.asin(2.0 / radius2)
-            
-            if (aStep < 0.05):
-                aStep = 0.05
-            
-            x_last = int( x + math.cos(angle_start) * radius1)
-            y_last = int( y - math.sin(angle_start) * radius2)
-
-            a = float ( angle_start + aStep )
-            while a < aStep + angle_stop:
-                a += aStep
-
-                points = [0,0,0,0]
-                x_next = int ( x + math.cos(min(a, angle_stop)) * radius1)
-                y_next = int ( y - math.sin(min(a, angle_stop)) * radius2)
-                points[0] = x_last
-                points[1] = y_last
-                points[2] = x_next
-                points[3] = y_next
-
-                pygame.draw.line(surface, color, (points[0], points[1]), (points[2], points[3]), width)
-                x_last = x_next
-                y_last = y_next
-
-        def render(self, width, height, st, at):
-            rv = renpy.Render(width, height)
-            surface = renpy.display.pgrender.surface((width, height), True)
-
-            self.arc(surface, self.color, pygame.rect.Rect(*self.center, *self.dimension), 0, self.angle, width = self.barWidth)
-            rv.blit(surface, (0,0))
-
-            return rv  
-
-    class CombatManager():
-        def __init__(self):
-            self.allies: list = [ ]
-            self.enemies: list = [ ]
-
-        def add(self, c: Combatant):
-            if c.bAlly:
-                self.allies.append ( c )
-            else:
-                self.enemies.append ( c )
-        
-        def remove(self, *combatants):
-            if args == ("all"):
-                self.allies.clear()
-                self.enemies.clear()
-                return
-
-            for combatant in combatants:
-                try:
-                    self.allies.remove(combatant)
-                except:
-                    self.enemies.remove(combatant)
-    combatManager = CombatManager()
-
-    class Combatant():
-        def __init__(self, name, hp, atk, bAlly = True):
-            self.name = name
-            self.hp = hp
-            self.atk = atk
-            self.bAlly = bAlly
-
-            self._dSprites: dict = { }
-            self._lspriteManager = SpriteManager()
-            self.initialImages()
-        
-        def initialImages(self): #Override this function in inherited classes if different styling
-            with open(renpy.loader.transfn("combatant_styling.txt"), "r") as cstyle:
-                reader = csv.reader(cstyle, delimiter = '\t')
-                for row in reader:
-                    if row[0] == self.name:
-                        self._naBar = CircularBar( tuple(map(int, (row[3], row[4], row[5], row[6]))), (0,0), (86,86), 0, 2*math.pi, int(row[7]) )
-                        self._saBar = CircularBar( tuple(map(int, (row[9], row[10], row[11], row[12]))), (0,0), (86,86), 0, 2*math.pi, int(row[13]) )
-
-
-                        self._dSprites["normalattack"] = self._lspriteManager.create(row[2] + ".jpg")
-                        self._dSprites["natimer"] = self._lspriteManager.create(self._naBar)
-                        self._dSprites["specialattack"] = self._lspriteManager.create(row[8] + ".jpg")
-                        self._dSprites["satimer"] = self._lspriteManager.create(self._saBar)
-                        self._dSprites["base"] = self._lspriteManager.create(row[1] + ".jpg")
-                        break
-            cstyle.close()
-
-            self._dSprites["base"].x , self._dSprites["base"].y = -86 , 0
-            self._dSprites["normalattack"].x , self._dSprites["normalattack"].y = -86 , 50
-            self._dSprites["natimer"].x , self._dSprites["natimer"].y = -86, 50
-            self._dSprites["specialattack"].x , self._dSprites["specialattack"].y = 0 , 50
-            self._dSprites["satimer"].x , self._dSprites["satimer"].y = 0, 50
-        
-        @property
-        def sprites(self):
-            def base():
-                return self._dSprites["base"]
-            def normalattack():
-                return self._dSprites["normalattack"]
-            def specialattack():
-                return self._dSprites["specialattack"]
-            return self._lspriteManager
-    
-    User = Combatant("Player", 300, 30)
-
-    class Journal():
-        def __init__(self, entry = []):
-            self.entry
-
-        def addEntry(newEntry):
-            self.entry.append(newEntry)
-
-        def getEntry():
-            fullEntry = join(self.entry)
-            return fullEntry
-
-                        #endregion
-
-init:
-                        #region OVERRIDE
-    screen choice(items):
-        style_prefix "choice"
-
-        vbox:
-            for i in items:
-                if i.caption[:3] == "<L>":
-                    textbutton i.caption[3:] action None
-                else:
-                    textbutton i.caption action i.action
-                        #endregion
-
-                        #region TRANSFORMS
-    transform bounce (height, seconds = 0.1, bwait = 0.0, afwait = 0.0):
-        pause(bwait)
-        linear seconds/2.0 yoffset -height
-        linear seconds/2.0 yoffset height
-        pause(afwait)
-
-    transform left_right(screenpos, seconds = 1.0, bwait = 0.0, afwait = 0.0):
-        pause(bwait)
-        linear seconds xalign screenpos
-        pause(afwait)
-
-    transform top_bottom(screenpos, seconds = 1.0, bwait = 0.0, afwait = 0.0):
-        pause(bwait)
-        linear seconds yalign screenpos
-        pause(afwait)
-                        #endregion
 #START
 label start:
                             #FLAGS
@@ -265,232 +28,19 @@ label start:
             call miraiIntro
         if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
             call mikaylaIntro
+        if location == "forest" and Mikayla.progress == 1:
+            call mikaylaStory1
         if location == "park" and Chishiki.progress == 0:
             call chishikiIntro
 
         if location == "beach" and hour >= 4:
             call endOfDay
 
+        $ canMove = True
         $ renpy.pause()
         $ renpy.block_rollback()
 
     return
-
-#region LABEL FUNCTIONS
-label MoveTo(person, *args,dissolvetime=0.5): #if you can figure out how to pass by reference here, it might be better then have else: final x final y
-    $ canMove = True
-    $ renpy.block_rollback()
-    if len(args) > 0:
-        hide person onlayer screens zorder -1 with Dissolve(dissolvetime)
-        while location != args[0]:
-            $ renpy.pause()
-        if len(args) > 1:
-            show expression "[person]" as person onlayer screens zorder -1:
-                function ondoor(to=args[1])
-        pause(0.5)
-        python:
-            args = list(args)
-            args.pop(0)
-        call MoveTo(person, *tuple(args),dissolvetime=dissolvetime)
-    else:
-        $ canMove = False
-        return
-    return
-#endregion
-
-#region LOCATIONS
-screen bg_beach():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetoforest",from_current=False) sensitive canMove xcenter 0.5 ycenter 0.5
-
-label changetobeach(transition = None):
-    $ location = 'beach'
-    if 'beach' not in locationsvisited: 
-        $ locationsvisited.append('beach') 
-    scene beach with transition
-    show screen bg_beach
-    return
-
-screen bg_forest():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetobeach",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
-
-label changetoforest(transition = None):
-    $ location = 'forest'
-    if 'forest' not in locationsvisited:
-        $ locationsvisited.append('forest')
-    scene forest with transition
-    show screen bg_forest
-    return
-
-screen bg_town():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetoforest",from_current=False) sensitive canMove xcenter 0.5 ycenter 1.0
-    imagebutton auto "door_%s.png" action Call("changetostore",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetoschool",from_current=False) sensitive canMove xcenter 0.5 ycenter 0.5
-
-label changetotown(transition = None):
-    $ location = 'town'
-    if 'town' not in locationsvisited:
-        $ locationsvisited.append('town')
-    scene town with transition
-    show screen bg_town
-    return
-
-screen bg_store():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-
-label changetostore(transition = None):
-    $ location = 'store'
-    if 'store' not in locationsvisited:
-        $ locationsvisited.append('store')
-    scene store with transition
-    show screen bg_store
-    return
-
-screen bg_school():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.5 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetopark",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
-
-label changetoschool(transition = None):
-    $ location = 'school'
-    if 'school' not in locationsvisited:
-        $ locationsvisited.append('school')
-    scene school with transition
-    show screen bg_school
-    return
-
-screen bg_hallway():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetoschool",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-    imagebutton auto "door_%s.png" action Call("changetoclassroom",from_current=False) sensitive canMove xcenter 0.9 ycenter 0.5
-
-label changetohallway(transition = None):
-    $ location = 'hallway'
-    if 'hallway' not in locationsvisited:
-        $ locationsvisited.append('hallway')
-    scene hallway with transition
-    show screen bg_hallway
-    return
-
-screen bg_classroom():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call("changetohallway",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-
-label changetoclassroom(transition = None):
-    $ location = 'classroom'
-    if 'classroom' not in locationsvisited:
-        $ locationsvisited.append('classroom')
-    scene classroom with transition
-    show screen bg_classroom
-    return
-
-screen bg_park():
-    tag current
-    zorder -2
-    imagebutton auto "door_%s.png" action Call ("changetoschool",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
-
-label changetopark(transition = None):
-    $ location = 'park'
-    if 'park' not in locationsvisited:
-        $ locationsvisited.append('park')
-    scene park with transition
-    show screen bg_park
-    return
-#endregion
-
-#MAP
-screen map():
-    zorder 2
-    image "map.jpg"
-    imagebutton idle "door_idle.png" action [Hide("map"), Call("changetobeach")] sensitive ("beach" in locationsvisited and canMove) xcenter 0.1 ycenter 0.5
-    key "m" action Hide("map")
-
-screen mapicon():
-    zorder 1
-    imagebutton idle "map icon_idle.webp" action Show("map") xcenter 0.8 yalign 0.0
-
-#TIMER
-screen timer(step, tolabel):
-    zorder 2
-    timer step repeat If(time > 0, true=True, false=False) action If(time >= step, true=SetVariable('time',time-step), false=Jump(tolabel))
-    text "{ctime:.2f}".format(ctime = time) size 100
-
-#region SCREEN MINIGAMES
-screen storebuy(items, rlst): #randomize items before calling, rlist is a list of [(rx,ry)1, (rx,ry)2] of length of items
-    default citems = items.copy()
-    tag storebuy
-    zorder 10
-    on "hide" action Hide("storebuy")
-
-    showif citems:
-        add "black"
-        draggroup:
-            drag:
-                xycenter (0.1, 0.9)
-                child "cart"
-                draggable False
-                droppable True
-                dropped fstorebuy(citems = citems)
-            drag:
-                xycenter (0.9, 0.9)
-                child "bin"
-                draggable False
-                droppable True
-                dropped fstorebuy(citems = citems)
-            for i, item in enumerate(items):
-                if item in citems:
-                    drag:
-                        xycenter (rlst[i][0], rlst[i][1])
-                        child item
-                        drag_name item
-                        draggable True
-                        droppable False
-    python:
-        if dbg.latest in citems:
-            citems.remove(dbg.latest)
-            dbg.latest = None
-            renpy.restart_interaction()
-
-screen combat():
-    for i, ally in enumerate(combatManager.allies, 1):
-        add ally.sprites:
-            pos ( i / ( len(combatManager.allies) + 1 ) , 0.6)
-    
-    for i, enemy in enumerate(combatManager.enemies , 1):
-        add enemy.sprites:
-            pos ( i / ( len(combatManager.allies) + 1 ) - 0.044796, 0.2)
-#endregion
-
-#Characters
-layeredimage mizu:
-    attribute only null
-
-    group standing multiple variant "standing": #Anything layered onto the standing pose (weapons, accessories etc)
-        #Furthest
-        attribute pose1 default if_not "pose2"                                                             
-        attribute pose2                                                                            #mizu_standing_pose2 <=> show mizu standing pose2 or show mizu pose2 until sitting/other implemented
-
-        attribute robes default if_not "only"                                                      #show mizu (robes) mizu sweater (robes+sweater) mizu sweater only (sweater)
-        attribute sweater pos(100,0)
-    
-    #group sitting multiple:
-    #    attribute robes
-
-    group face auto:
-        pos(50,50)
-        attribute neutral default                                                                   #mizu_face_neutral
 
 ##STORIES
 label intro:
@@ -717,6 +267,7 @@ label .endtimegame:
     return
 
 label mikaylaIntro:
+    $ canMove = False
     $ m = "Punk"
     
     show store:
@@ -758,25 +309,32 @@ label mikaylaIntro:
             #show surprised, then smile
             m "I like your style brat."
             $ m = Mikayla
+            
+            $ combatManager.returnLabel = "ilikeyourstylebrat.doneBattle" #IDK screen prediction is supppppeeerrr weird -> declare combat parameters ~3 pauses before the combat may *potentially* show
+            $ combatManager.add(User)
+            $ combatManager.add(Enemy)
+
             m "I'm Mikayla. How about you become my underling and we'll paint the town red!"
             jump ilikeyourstylebrat
-            
+
     menu ilikeyourstylebrat:
         "How about you prove your strength first?":
             m "Alright big shot. Think you can take me? Let's go."
-            $ combatManager.add(User)
-            show screen combat
-            m "Not bad kiddo. You've got guts."
-            #Thinking
-            m """
-            I think you've got what it takes{cps=10}.........{/cps} Yea I ain't losin' a talent like yourself.
-            
-            Alright I got one more person in mind for my big plan.
+            show screen combat onlayer screens
+            jump Battle
 
-            Meet me at the forest shrine. If we're lucky we'll have a third member for our posse soon. 
+            label ilikeyourstylebrat.doneBattle:
+                m "Not bad kiddo. You've got guts."
+                #Thinking
+                m """
+                I think you've got what it takes{cps=10}.........{/cps} Yea I ain't losin' a talent like yourself.
+                
+                Alright I got one more person in mind for my big plan.
 
-            There'll be a fight you don't wanna miss. Bring some food 'n water just in case. 
-            """
+                Meet me at the forest shrine. If we're lucky we'll have a third member for our posse soon. 
+
+                There'll be a fight you don't wanna miss. Bring some food 'n water just in case. 
+                """
         
         "How about you prove your merit first?":
             # Smug eyes closed
@@ -816,10 +374,22 @@ label mikaylaIntro:
 
     hide mikayla onlayer screens zorder -1
 
+    $ canMove = True
+    $ hour += 1
+    $ Mikayla.progress += 1
+    return
+
+label mikaylaStory1:
+    $ canMove = False
+    $ m = "Mikayla"
+
+    show mikayla onlayer screens zorder -1
+    # looks at you, becomes happy
 
     $ hour += 1
     $ Mikayla.progress += 1
     return
+
 
 label miraiIntro:
     $ m = "Girl by the window"
@@ -872,7 +442,7 @@ label miraiIntro:
 
     hide mirai onlayer screens with dissolve
 
-    "Wait what do you mean?{nw}"
+    "Wait what do you mean?{w=0.1}"
 
     "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}}"
 

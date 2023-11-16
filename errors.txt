@@ -2,17 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 193: expected statement.
-    <<<<<<< Updated upstream
-                            ^
-
-File "game/script.rpy", line 195: expected statement.
-    =======
-          ^
-
-File "game/script.rpy", line 207: expected statement.
-    >>>>>>> Stashed changes
-                           ^
+File "game/script.rpy", line 894: expected 'label_name_declare' not found.
+    label ilikeyourstylebrat.doneBattle:
+         ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Thu Nov  9 09:14:10 2023
+Wed Nov 15 22:47:11 2023
