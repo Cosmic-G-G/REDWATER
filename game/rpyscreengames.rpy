@@ -11,12 +11,14 @@ screen storebuy(items, rlst): #randomize items before calling, rlist is a list o
             drag:
                 xycenter (0.1, 0.9)
                 child "cart"
+                drag_name "cart"
                 draggable False
                 droppable True
                 dropped fstorebuy(citems = citems)
             drag:
                 xycenter (0.9, 0.9)
                 child "bin"
+                drag_name "bin"
                 draggable False
                 droppable True
                 dropped fstorebuy(citems = citems)

@@ -30,7 +30,8 @@ init python:
         citems.remove(drags[0].drag_name)
         dbg.latest = drags[0].drag_name
 
-        if drop == "cart":
+        if drop.drag_name == "cart":
+            print(drags[0].drag_name)
             inventory.append(drags[0].drag_name)
 
         if not citems:

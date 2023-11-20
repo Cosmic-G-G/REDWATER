@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 894: expected 'label_name_declare' not found.
-    label ilikeyourstylebrat.doneBattle:
-         ^
+File "game/script.rpy", line 484: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
+    "Nevermind."
+                ^
+
+File "game/script.rpy", line 490: expected 'simple_expression' not found.
+    show mikayla onlayer screens zorder -1 with with moveinright 
+                                                ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Wed Nov 15 22:47:11 2023
+Sun Nov 19 21:16:15 2023

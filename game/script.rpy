@@ -362,7 +362,8 @@ label mikaylaIntro:
             # Big toothy smile
             m "Meet me at the forest shrine and we'll have a nice friendly 'negotiation' with her."
             pause(1.0)
-            m "You might wanna bring some bandages"
+            m "You... might wanna bring some bandages."
+            hide mikayla onlayer screens zorder -1
 
     label dontlikeyourstyle:
         "What a character..."
@@ -376,15 +377,165 @@ label mikaylaIntro:
 
     $ canMove = True
     $ hour += 1
-    $ Mikayla.progress += 1
+    $ Mikayla.progress = 1
     return
 
 label mikaylaStory1:
     $ canMove = False
     $ m = "Mikayla"
+    $ M = "Mizu"
 
     show mikayla onlayer screens zorder -1
     # looks at you, becomes happy
+    m "You made it!"
+    # smug, with hand wiping nose
+    m "I knew you'd come. "
+
+    "So I guess the person you were talking about was Mizu?"
+    #Neutral happy
+    m "Ya guessed correctly!"
+
+    $ c2 = False
+    $ c1 = "So how d'ya want to go about this?"
+    menu negotiations:
+        m "[c1]"
+
+        "Storm the front gates!":
+            #eyes open, then wait
+            #Really cute laugh
+            m """
+            Hahahaha! You're pretty awesome!
+
+            Allllriggghtt! Let's get this show started!
+            """
+            jump afterNegotiation
+        
+        "Apply diplomatic pressure." if not c2:
+            m "Nice thinkin'"
+
+            m "Mizu ya home, best?"
+
+            m "Found ourselves fresh meat. Real tough cookie."
+
+            "..."
+
+            #looks at you, then smiles
+
+            m "Not bad lookin either."
+
+            pause(1.0)
+
+            #sad, desperate expression
+
+            m """
+            Hey, com'on dude... ya still mad about {i}that{/i}? {size=10}Said I was sorry already...
+
+            How long are ya plannin' on givin' me the cold shoulder? It'll be different this time I promise!
+
+            I won't lose. I can't lose again.   
+
+            This time I'l-- no, {i}we'll{/i} win, together. 
+
+            ...
+
+            Any other ideas?
+            """
+            $ c1 = "Any other ideas?"
+            $ c2 = True
+            jump negotiations
+        "<L>Apply diplomatic pressure." if c2:
+            pass
+    
+    label afterNegotiation:
+        m "'ight, time to show ya how strong I've really become over these past years.."
+
+        show mikayla onlayer screens zorder -1 with vpunch #maybe angry
+
+        m "Nuff of this. Get out here ya wuss. Said it was time for a rematch." # would like to use the p-wordussy here
+    
+    show mizu onlayer screens zorder -1 at left
+    show mikayla onlayer screens zorder -1 at right
+
+    M "Oh hello, it's you. I hope you've found your way around?"
+
+    "Me?"
+
+    M "Why, who else would I be talkin', I mean {i}talking{/i} to?"
+
+    m "This b-"
+
+    "Suddenly Mikayla lashes forward and all you can see is the arch in her body as her fist hurtles through the air... and stops less than an inch before Mizu, who remains unflinched." #Maybe a background would be better here
+
+    M "Why the silence? Are you feeling unwell?"
+
+    # Mikayla very sad
+    m "Mizu... I'm really sorry. I should'nve done that without tellin' ya. But I've never once regretted what I've done 'n would do it again in a heartbeat."
+
+    m "Ya didn't deserve then to be hurtin' alone and you don't now. {size=17}Please...{size=15} Don't ignore me anymore..."
+
+    M "..."
+
+    "..."
+
+    show mikayla onlayer screens zorder -1 with vpunch # also darken her forhead and hide eyes (you know the anime face)
+    pause(0.5)
+    show mikayla onlayer screens zorder -1 with moveoutright
+    hide mikayla onlayer screens
+    
+
+    M "Well I appreciate the visit, but if you're just here to see me, I'm afraid I don't have much hospitality to offer you."
+
+    menu:
+        "Why are you so cold to her?":
+            #Confused
+            M "Huh?"
+            menu:
+                "Nevermind.":
+                    M "...Well, I have a few chores to do around the temple. Feel free to sit and enjoy the nice weather."
+    
+    show mizu onlayer screens zorder -1 with moveoutleft
+    hide mizu onlayer screens
+
+    show mikayla onlayer screens zorder -1 with moveinright #should be poofy eyed
+
+    menu:
+        "Hey, I'm really sorry...":
+            #show smile
+            m "Nah... I knew it would turn out like this..."
+
+        "Never yield. Those who surrender have already lost the battle of heart!":
+            #show smile
+            m "Damn right!"
+            m "Don't worry about it. I knew it would turn out like this..."
+    
+    $ narrator("Give her...", interact=False)
+    $ inventorylist = [(item, item) for item in inventory if item is not "bandage"]
+
+    if inventorylist:
+        $ present = renpy.display_menu(inventorylist)
+
+        # Surprised, sweet smile
+        m "Thanks ya really know just what do to get my spirits up huh?"
+        $ Mikayla.affection += 1
+        $ inventory.remove(present)
+
+        if "bandage" in inventory:
+            m "Haha... you even brought bandages. Don't worry, only my heart hurts a little."
+            $ Mikayla.affection += 1
+    else:
+        m "Well, ya know what always helps when you're down? A good meal!"
+
+        "..."
+
+        #Looks at you
+
+        m "Uhh... nevermind."
+    
+    #Wistful
+    m "You know it wasn't always like this..."
+    
+    # MIKAYLA STARTS TO REVEAL STORY
+    # INTERRUPTED BY MONSTER, fight scene
 
     $ hour += 1
     $ Mikayla.progress += 1
