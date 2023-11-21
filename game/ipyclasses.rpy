@@ -79,17 +79,19 @@ init python:
             self.allyTarget = None
             self.enemyTarget = None
 
-        def add(self, c: Combatant):
-            if c.bAlly:
-                self.allies.append ( c )
-                self.enemyTarget = c
-            else:
-                self.enemies.append ( c )
-                self.allyTarget = c
-            renpy.block_rollback()
+        def add(self, *combatants):
+            for c in combatants:
+                if c.bAlly:
+                    self.allies.append ( c )
+                    self.enemyTarget = c
+                else:
+                    self.enemies.append ( c )
+                    self.allyTarget = c
+                renpy.block_rollback()
         
         def remove(self, *combatants):
-            if combatants == ("all"):
+            if combatants == ("all",):
+                print('hi')
                 self.allies.clear()
                 self.enemies.clear()
                 return

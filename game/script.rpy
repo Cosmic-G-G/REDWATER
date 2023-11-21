@@ -13,38 +13,8 @@ label start:
     $ inventory = []
 
                             #INTRO SCENE
-    call intro
-    call changetobeach(transition = Fade(0.1,1.0,0.5,color="#000"))
-    pause(1.0)
-
-                            #MAIN GAME LOOP
-    while True:
-        if location == 'beach' and Mizu.progress == 0: 
-            call mizuIntro
-            #if exit or block the exit with mizu
-        if location == 'school' and Laela.progress == 0:
-            call laelaIntro
-        if location == "classroom" and Mirai.progress == 0:
-            call miraiIntro
-        if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
-            call mikaylaIntro
-        if location == "forest" and Mikayla.progress == 1:
-            call mikaylaStory1
-        if location == "park" and Chishiki.progress == 0:
-            call chishikiIntro
-
-        if location == "beach" and hour >= 4:
-            call endOfDay
-
-        $ canMove = True
-        $ renpy.pause()
-        $ renpy.block_rollback()
-
-    return
-
-##STORIES
-label intro:
-                    #INTRO SCENE
+    
+    #INTRO SCENE
     scene cabin
     pause(0.5)
     scene cabin with Fade(0.1,0.0,0.5,color="#fff")
@@ -63,8 +33,37 @@ label intro:
     #Tentacle breaking window
     "Oh sh--!"
 
+    call changetobeach(transition = Fade(0.1,1.0,0.5,color="#000"))
+    pause(1.0)
+                 
+    call MGL #MAIN GAME LOOP
+
     return
 
+label MGL:
+    if location == 'beach' and Mizu.progress == 0: 
+        jump mizuIntro
+        #if exit or block the exit with mizu
+    if location == 'school' and Laela.progress == 0:
+        jump laelaIntro
+    if location == "classroom" and Mirai.progress == 0:
+        jump miraiIntro
+    if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
+        jump mikaylaIntro
+    if location == "forest" and Mikayla.progress == 1:
+        jump mikaylaStory1 # Not added to call stack due to local label jump
+    if location == "park" and Chishiki.progress == 0:
+        jump chishikiIntro
+
+    if location == "beach" and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
+        call endOfDay
+
+    $ canMove = True
+    $ renpy.pause()
+    $ renpy.block_rollback()
+    jump MGL
+
+##STORIES
 label mizuIntro:
     $ m = Mizu
     # $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
@@ -126,8 +125,8 @@ label mizuIntro:
     hide mizu onlayer screens zorder -1
 
     $ hour += 1
-    $ Mizu.progress += 1
-    return
+    $ Mizu.progress = 1
+    jump MGL
 
 label laelaIntro:
     $ l = Laela
@@ -255,8 +254,8 @@ label laelaIntro:
         call laelaIntro.endtimegame
 
     $ hour += 1
-    $ Laela.progress += 1
-    return
+    $ Laela.progress = 1
+    jump MGL
 label .endtimegame:
     hide screen timer
     $ time = -1.0
@@ -378,7 +377,7 @@ label mikaylaIntro:
     $ canMove = True
     $ hour += 1
     $ Mikayla.progress = 1
-    return
+    jump MGL
 
 label mikaylaStory1:
     $ canMove = False
@@ -482,6 +481,7 @@ label mikaylaStory1:
     show mikayla onlayer screens zorder -1 with moveoutright
     hide mikayla onlayer screens
     
+    $ inventorylist = [(item, item) for item in inventory if item is not "bandage"] # screen prediction smh
 
     M "Well I appreciate the visit, but if you're just here to see me, I'm afraid I don't have much hospitality to offer you."
 
@@ -509,7 +509,6 @@ label mikaylaStory1:
             m "Don't worry about it. I knew it would turn out like this..."
     
     $ narrator("Give her...", interact=False)
-    $ inventorylist = [(item, item) for item in inventory if item is not "bandage"]
 
     if inventorylist:
         $ present = renpy.display_menu(inventorylist)
@@ -532,15 +531,97 @@ label mikaylaStory1:
         m "Uhh... nevermind."
     
     #Wistful
-    m "You know it wasn't always like this..."
+    m "Would you believe me if I said Mizu once had short hair?"
+
+    #Sad laugh
+    m """
+    We all thought she would be a pathetic little pushover. After all, what sane person would openly defy the Yellow Oni when she claimed her stomping grounds.
+
+    After all, nobody ever comes way out here in the sticks and her Pa was gone most of the time.
+
+    All alone, she could but acquiesce to the power in front of her.
+
+    So then, after she returned wither her head hung low. I leaned over her, real close...
+
+    'Heya girlie, just wonderin' what'cha guys were doin' with all our offerins over these years. Surely ya haven't been wastin around all day?'
+
+    Thought I'd play with her a bit... ruffle her feathers.
+
+    'Guess you could say we've come to collect our rightful dues.'
+
+    But before I could finish, she tilted her delicate face back and stared right through me. Then she landed a headbutt right on my shnoz.
+
+    Stumbled back n' realized-- my nose was bleedin'!
+
+    N' so we fought, all of us gang members 'gainst a little maiden... and got our asses handed to us on a silver platter!
+
+    ...My crewmates dropped one by one. But I never retreated. 
+
+    Every day I'd return for a rematch... and every day I'd get walloped!
+
+    Little by little, I'd learn more about Mizu. Her likes, her dislikes and her story.
+
+    I learned what she was fighting for... and I learned I didn't want her to fight alone.
+
+    That was when I vowed I'd get stronger for her sake. 
+
+    Then, on the day she determined would be her last, I decided I would fight on her behalf.
+
+    I just... just wanted to protect her. After all that training, I never thought I'd... d-
+
+    """ #background while leaning in
     
-    # MIKAYLA STARTS TO REVEAL STORY
-    # INTERRUPTED BY MONSTER, fight scene
+    "You'd...?"
 
-    $ hour += 1
-    $ Mikayla.progress += 1
+    #Scared
+    m "What... is that?"
+    
+    hide mikayla onlayer screens with moveoutbottom
+    show leviathan onlayer screens zorder -1 with vpunch
+
+    $ combatManager.returnLabel = "mikaylaStory1.doneBattle"
+    $ combatManager.remove("all")
+    $ combatManager.add(User,User,User,Enemy)
+
+    "{size=80}{i}GRROOOOAAAARRRR{/i}{/size}"
+
+    M "OUT OF THE WAY!"
+
+    show mizu onlayer screens zorder -1 at left
+    M "I'll hold it off."
+
+    show mikayla onlayer screens zorder -1 at right
+    m "Never again. We'll fight together."
+
+    show screen combat onlayer screens
+    jump Battle
     return
+label .doneBattle: #You must win this battle -> configure health such that you always win even by doing nothing
+        $ combatManager.remove(("all"))
+        "Sea monster" "{size=80}{i}SCREEECHHH{/i}{/size}"
+        hide leviathan onlayer screens with dissolve
 
+        m "Hah.. hah...I was... pretty good, don't'cha think?"
+        M "Looks like we fought it off, for now"
+        # mizu concerned
+        m "Come on... at least give me a little credit!"
+
+        M "I... need to check something immediately."
+
+        M "If you've already finished everything you need to do for today, head to the {color=#0000ffff}beach{/color}. I pitched a campsite there for you."
+
+        M "I'm sorry. I need to leave."
+
+        hide mizu onlayer screens with dissolve
+
+        m "Hey, sorry, but catch ya later?"
+
+        hide mikayla onlayer screens with dissolve
+
+        $ canMove = True
+        $ hour += 1
+        $ Mikayla.progress = 2
+        jump MGL
 
 label miraiIntro:
     $ m = "Girl by the window"
@@ -598,8 +679,8 @@ label miraiIntro:
     "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}}"
 
     $ hour += 1
-    $ Mirai.progress += 1
-    return
+    $ Mirai.progress = 1
+    jump MGL
 
 label chishikiIntro:
     show chishiki onlayer screens zorder -1:
@@ -637,8 +718,8 @@ label chishikiIntro:
     "{i}How peculiar. I wonder what her deal is.{/i}"
     "{i}I should probably hurry and return to the shrine.{/i}"
 
-    $ Chishiki.progress += 1
-    return
+    $ Chishiki.progress = 1
+    jump MGL
 
 label endOfDay:
     "{i}I should document my daily events in case I need to refer to them.{/i}"

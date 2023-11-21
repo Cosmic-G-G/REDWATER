@@ -2,13 +2,11 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 484: Line is followed by a block, despite not being a menu choice. Did you forget a colon at the end of the line?
-    "Nevermind."
-                ^
+The label mikaylaStory1 is defined twice, at File "game/script.rpy", line 383:
+label mikaylaStory1:
+and File "game/script.rpy", line 600:
+    label mikaylaStory1:
 
-File "game/script.rpy", line 490: expected 'simple_expression' not found.
-    show mikayla onlayer screens zorder -1 with with moveinright 
-                                                ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Sun Nov 19 21:16:15 2023
+Tue Nov 21 08:21:06 2023
