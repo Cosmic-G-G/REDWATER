@@ -243,13 +243,13 @@ init python:
 
     class Journal():
         def __init__(self, entry = []):
-            self.entry
+            self.entry = []
 
-        def addEntry(newEntry):
+        def addEntry(self, newEntry):
             self.entry.append(newEntry)
-
-        def getEntry():
-            fullEntry = join(self.entry)
+        
+        def getEntry(self):
+            fullEntry = " ".join(self.entry)
             return fullEntry
 
 default Mizu = UCharacter("Mizu")
