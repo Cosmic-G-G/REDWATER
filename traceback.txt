@@ -1,32 +1,56 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 39, in script call
-    call MGL #MAIN GAME LOOP
-  File "game/script.rpy", line 513, in script
-    if inventorylist:
-  File "game/script.rpy", line 513, in <module>
-    if inventorylist:
-NameError: name 'inventorylist' is not defined
+  File "renpy/common/00start.rpy", line 212, in script call
+    call _load_reload_game from _call__load_reload_game_1
+  File "renpy/common/00keymap.rpy", line 529, in script
+    python hide:
+  File "renpy/common/00keymap.rpy", line 529, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 540, in _execute_python_hide
+    renpy.load(renpy.session["_reload_slot"])
+  File "game/ipyclasses.rpy", line 290, in execute_default
+    default user = Combatant("Player", 300, 30)
+  File "game/ipyclasses.rpy", line 290, in <module>
+    default user = Combatant("Player", 300, 30)
+  File "game/ipyclasses.rpy", line 135, in __init__
+    self._target = combatManager.allyTarget if bAlly else combatManager.enemyTarget
+NameError: name 'combatManager' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 39, in script call
-    call MGL #MAIN GAME LOOP
-  File "game/script.rpy", line 513, in script
-    if inventorylist:
-  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 2133, in execute
-    if renpy.python.py_eval(condition):
-  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\python.py", line 1153, in py_eval
-    return py_eval_bytecode(code, globals, locals)
+  File "renpy/common/00start.rpy", line 212, in script call
+    call _load_reload_game from _call__load_reload_game_1
+  File "renpy/common/00keymap.rpy", line 529, in script
+    python hide:
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "renpy/common/00keymap.rpy", line 529, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 540, in _execute_python_hide
+    renpy.load(renpy.session["_reload_slot"])
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\loadsave.py", line 813, in load
+    log.unfreeze(roots, label="_after_load")
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\rollback.py", line 1108, in unfreeze
+    self.rollback(0, force=True, label=label, greedy=greedy, on_load=True)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\rollback.py", line 1006, in rollback
+    renpy.exports.execute_default_statement(False)
+  File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\exports.py", line 3972, in execute_default_statement
+    i.execute_default(start)
+  File "game/ipyclasses.rpy", line 290, in execute_default
+    default user = Combatant("Player", 300, 30)
   File "C:\Users\willj\Downloads\renpy-8.0.3-sdk\renpy\python.py", line 1146, in py_eval_bytecode
     return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 513, in <module>
-    if inventorylist:
-NameError: name 'inventorylist' is not defined
+  File "game/ipyclasses.rpy", line 290, in <module>
+    default user = Combatant("Player", 300, 30)
+  File "game/ipyclasses.rpy", line 135, in __init__
+    self._target = combatManager.allyTarget if bAlly else combatManager.enemyTarget
+NameError: name 'combatManager' is not defined
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
-Tue Nov 21 09:17:25 2023
+Mon Nov 27 13:55:32 2023

@@ -1,25 +1,10 @@
-<<<<<<< Updated upstream
 ﻿I'm sorry, but errors were detected in your script. Please correct the
 errors listed below, and try again.
 
 
-The label mikaylaStory1 is defined twice, at File "game/script.rpy", line 383:
-label mikaylaStory1:
-and File "game/script.rpy", line 600:
-    label mikaylaStory1:
-
+File "game/ipyclasses.rpy", line 290: expected '=' not found.
+    default combatManager
+                         ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Tue Nov 21 08:21:06 2023
-=======
-﻿I'm sorry, but errors were detected in your script. Please correct the
-errors listed below, and try again.
-
-
-File "game/script.rpy", line 682: 'zoom' is not a keyword argument or valid child of the frame statement.
-    background "journal.jpg" zoom 1.5
-                                 ^
-
-Ren'Py Version: Ren'Py 8.1.1.23060707
-Tue Nov 21 09:14:06 2023
->>>>>>> Stashed changes
+Mon Nov 27 13:46:37 2023

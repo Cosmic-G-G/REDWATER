@@ -1,4 +1,6 @@
 init python:
+    import random
+
     #region CLASSES
     class UCharacter(ADVCharacter): # May need to check if persistent data is saved
         def __init__(self, name, kind=None, **properties):
@@ -76,6 +78,7 @@ init python:
             self.allies: list = [ ]
             self.enemies: list = [ ]
             self.returnLabel = "ilikeyourstylebrat.doneBattle" #This just needs to be one that does exist to prevent screen prediction bugs
+            self.outcome = None
             self.allyTarget = None
             self.enemyTarget = None
 
@@ -91,7 +94,6 @@ init python:
         
         def remove(self, *combatants):
             if combatants == ("all",):
-                print('hi')
                 self.allies.clear()
                 self.enemies.clear()
                 return
@@ -113,6 +115,9 @@ init python:
                 self.enemyTarget = next(self.allies)
             except:
                 self.enemyTarget = self.allies[0] if self.allies else None
+        
+        def __str__():
+            return "for debugging"
 
     class Combatant():
         def __init__(self, name, hp, atk, bAlly = True, scale = 100):
@@ -135,8 +140,9 @@ init python:
 
         def initialImages(self): #Override this function in inherited classes if different styling
             with open(renpy.loader.transfn("combatant_styling.txt"), "r") as cstyle:
-                reader = csv.reader(cstyle, delimiter = '\t')
+                reader = csv.reader(cstyle, delimiter = ':')
                 for row in reader:
+                    print(row)
                     if row[0] == self.name:
                         self._naBar.update({
                             "color": tuple(map(int, (row[3], row[4], row[5], row[6]))),
@@ -144,8 +150,8 @@ init python:
                             "dimension": (self.scale,self.scale),
                             "width": int(row[7]),
                             "angle": 0,
-                            "maxtime": 2,
-                            "ctime": 2
+                            "maxtime": float(row[15]),
+                            "ctime": float(row[15])
                         })
                         self._saBar.update({
                             "color": tuple(map(int, (row[9], row[10], row[11], row[12]))),
@@ -153,9 +159,9 @@ init python:
                             "dimension": (self.scale,self.scale),
                             "width": int(row[13]),
                             "angle": 2*math.pi,
-                            "maxtime": 5,
-                            "ctime": 5,
-                            "key": "t",
+                            "maxtime": float(row[16]),
+                            "ctime": float(row[16]),
+                            "key": row[14],
                             "allowSA": True
                         })
 
@@ -212,6 +218,7 @@ init python:
 
         def Uevent(self, ev, x, y, st):
             if ev.type == 768:
+                print(self._saBar["allowSA"], ev.__dict__["unicode"], self._saBar["key"])
                 if self._saBar["allowSA"] and ev.__dict__["unicode"] == self._saBar["key"]:
                     self._saBar["allowSA"] = False
                     self.specialattack()
@@ -224,6 +231,10 @@ init python:
             if self._target is not None:
                 self._target.hp -= self.atk
                 self._target.tookDamage["val"] = True
+        
+        def safechange(self, bAlly = None):
+            self.bAlly = not self.bAlly if bAlly == None or bAlly != self.bAlly else self.bAlly
+            self._target = combatManager.allyTarget if bAlly else combatManager.enemyTarget
 
         @property
         def sprites(self):
@@ -241,6 +252,23 @@ init python:
         def tookDamage(self):
             return self._tookDamage
 
+    class MikaylaFighter(Combatant):
+        def __init__(self, name, hp, atk, bAlly = True, scale = 100):
+            super().__init__(name, hp, atk, bAlly, scale)
+
+        def specialattack(self):
+            if self._target is not None:
+                self._target.hp -= self.atk * round(random.uniform(1.5, 3.0), 2)
+                self._target.tookDamage["val"] = True
+
+    class MizuFighter(Combatant):
+        def __init__(self, name, hp, atk, bAlly = True, scale = 100):
+            super().__init__(name, hp, atk, bAlly, scale)
+        
+        def specialattack(self):
+            if combatManager.enemyTarget is not None:
+                combatManager.enemyTarget.hp += self.atk
+    
     class Journal():
         def __init__(self, entry = []):
             self.entry = []
@@ -259,6 +287,8 @@ default Mikayla = UCharacter("Mikayla")
 default Chishiki = UCharacter("Chishiki")
 default dbg = Debug()
 default combatManager = CombatManager()
-default User = Combatant("Player", 300, 30)
-default Enemy = Combatant("Player", 360, 30, bAlly = False)
+default user = Combatant("Player", 300, 30)
+default mikaylaFighter = MikaylaFighter("Mikayla", 400, 100)
+default mizuFighter = MizuFighter("Mizu", 350, 40)
+default enemy = Combatant("Player", 1500, 30, bAlly = False)
                         #endregion

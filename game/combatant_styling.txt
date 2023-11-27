@@ -1,2 +1,4 @@
-NAME	BASE_IMAGE	NORMALIMAGE:	BAR_R	BAR_G	BAR_B	BAR_A	BAR_W	SPECIALIMAGE:	BAR_R	BAR_G	BAR_B	BAR_A	BAR_W
-Player	chibi_mikayla	normalattack	255	0	0	255	10	normalattack	255	0	0	255	10
+NAME:BASE_IMAGE:NORMALIMAGE:BAR_R:BAR_G:BAR_B:BAR_A:BAR_W:SPECIALIMAGE:BAR_R:BAR_G:BAR_B:BAR_A:BAR_W:SPECIALKEY:NACOOLDOWN:SACOOLDOWN:
+Mikayla:chibi_mikayla:normalattack:250:240:190:255:10:brassknuckles:250:240:190:255:10:b:2:5
+Mizu:chibi_mizu:normalattack:255:0:0:255:10:toriigate:255:0:0:255:10:g:1.5:6
+Player:chibi_player:normalattack:0:0:0:255:10:normalattack:0:0:0:255:10:None:3:10

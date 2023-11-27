@@ -52,7 +52,7 @@ label MGL:
         jump mikaylaIntro
     if location == "forest" and Mikayla.progress == 1:
         jump mikaylaStory1 # Not added to call stack due to local label jump
-    if location == "park" and Chishiki.progress == 0:
+    if location == "park" and Chishiki.progress == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
         jump chishikiIntro
 
     if location == "beach" and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
@@ -310,8 +310,10 @@ label mikaylaIntro:
             $ m = Mikayla
             
             $ combatManager.returnLabel = "ilikeyourstylebrat.doneBattle" #IDK screen prediction is supppppeeerrr weird -> declare combat parameters ~3 pauses before the combat may *potentially* show
-            $ combatManager.add(User)
-            $ combatManager.add(Enemy)
+            $ combatManager.remove("all")
+            $ combatManager.add(user)
+            $ mikaylaFighter.safechange()
+            $ combatManager.add(mikaylaFighter)
 
             m "I'm Mikayla. How about you become my underling and we'll paint the town red!"
             jump ilikeyourstylebrat
@@ -323,6 +325,8 @@ label mikaylaIntro:
             jump Battle
 
             label ilikeyourstylebrat.doneBattle:
+                $ mikaylaFighter.safechange()
+                $ combatManager.remove("all")
                 m "Not bad kiddo. You've got guts."
                 #Thinking
                 m """
@@ -581,7 +585,7 @@ label mikaylaStory1:
 
     $ combatManager.returnLabel = "mikaylaStory1.doneBattle"
     $ combatManager.remove("all")
-    $ combatManager.add(User,User,User,Enemy)
+    $ combatManager.add(user,mikaylaFighter,mizuFighter,enemy)
 
     "{size=80}{i}GRROOOOAAAARRRR{/i}{/size}"
 
