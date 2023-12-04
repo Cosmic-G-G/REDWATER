@@ -8,8 +8,13 @@ label changetobeach(transition = None):
     $ location = 'beach'
     if 'beach' not in locationsvisited: 
         $ locationsvisited.append('beach') 
-    scene beach with transition
-    show screen bg_beach
+    if transition == None:
+        scene beach
+        show screen bg_beach
+    else:
+        scene beach
+        show screen bg_beach
+        with transition
     return
 
 screen bg_forest():
@@ -22,8 +27,13 @@ label changetoforest(transition = None):
     $ location = 'forest'
     if 'forest' not in locationsvisited:
         $ locationsvisited.append('forest')
-    scene forest with transition
-    show screen bg_forest
+    if transition == None:
+        scene forest
+        show screen bg_forest
+    else:
+        scene forest
+        show screen bg_forest
+        with transition
     return
 
 screen bg_town():
@@ -37,8 +47,13 @@ label changetotown(transition = None):
     $ location = 'town'
     if 'town' not in locationsvisited:
         $ locationsvisited.append('town')
-    scene town with transition
-    show screen bg_town
+    if transition == None:
+        scene town
+        show screen bg_town
+    else:
+        scene town
+        show screen bg_town
+        with transition
     return
 
 screen bg_store():
@@ -50,8 +65,13 @@ label changetostore(transition = None):
     $ location = 'store'
     if 'store' not in locationsvisited:
         $ locationsvisited.append('store')
-    scene store with transition
-    show screen bg_store
+    if transition == None:
+        scene store
+        show screen bg_store
+    else:
+        scene store
+        show screen bg_store
+        with transition
     return
 
 screen bg_school():
@@ -65,8 +85,13 @@ label changetoschool(transition = None):
     $ location = 'school'
     if 'school' not in locationsvisited:
         $ locationsvisited.append('school')
-    scene school with transition
-    show screen bg_school
+    if transition == None:
+        scene school
+        show screen bg_school
+    else:
+        scene school
+        show screen bg_school
+        with transition
     return
 
 screen bg_hallway():
@@ -79,8 +104,13 @@ label changetohallway(transition = None):
     $ location = 'hallway'
     if 'hallway' not in locationsvisited:
         $ locationsvisited.append('hallway')
-    scene hallway with transition
-    show screen bg_hallway
+    if transition == None:
+        scene hallway
+        show screen bg_hallway
+    else:
+        scene hallway
+        show screen bg_hallway
+        with transition
     return
 
 screen bg_classroom():
@@ -92,8 +122,13 @@ label changetoclassroom(transition = None):
     $ location = 'classroom'
     if 'classroom' not in locationsvisited:
         $ locationsvisited.append('classroom')
-    scene classroom with transition
-    show screen bg_classroom
+    if transition == None:
+        scene classroom
+        show screen bg_classroom
+    else:
+        scene classroom
+        show screen bg_classroom
+        with transition
     return
 
 screen bg_park():
@@ -105,7 +140,12 @@ label changetopark(transition = None):
     $ location = 'park'
     if 'park' not in locationsvisited:
         $ locationsvisited.append('park')
-    scene park with transition
-    show screen bg_park
+    if transition == None:
+        scene park
+        show screen bg_park
+    else:
+        scene park
+        show screen bg_park
+        with transition
     return
 #endregion

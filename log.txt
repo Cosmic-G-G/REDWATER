@@ -1,37 +1,37 @@
-Mon Nov 27 13:56:06 2023
+Mon Dec  4 15:23:06 2023
 Windows-10-10.0.22621
 Ren'Py 8.1.1.23060707
  
 
-Bootstrap to the start of init.init. took 0.06s
-Early init. took 0.00s
-Loader init. took 0.05s
-Loading error handling. took 0.04s
-Loading script. took 0.19s
-Loading save slot metadata. took 0.06s
+Bootstrap to the start of init.init. took 0.09s
+Early init. took 0.01s
+Loader init. took 0.12s
+Loading error handling. took 0.05s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.08s
 Loading persistent. took 0.00s
-Running init code. took 0.07s
+Running init code. took 0.10s
 Loading analysis data. took 0.02s
 Analyze and compile ATL. took 0.01s
 Reloading save slot metadata. took 0.06s
 Index archives took 0.00s
-Dump and make backups. took 0.08s
+Dump and make backups. took 0.11s
 Cleaning cache. took 0.00s
 Making clean stores. took 0.00s
-Initial gc. took 0.02s
+Initial gc. took 0.04s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object. took 0.47s
+Creating interface object. took 1.62s
 Cleaning stores took 0.00s
-Init translation took 0.04s
-Build styles took 0.00s
-Load screen analysis took 0.04s
+Init translation took 0.05s
+Build styles took 0.01s
+Load screen analysis took 0.06s
 Analyze screens took 0.00s
 Save screen analysis took 0.00s
 Prepare screens took 0.09s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
+Save bytecode. took 0.04s
 Running _start took 0.00s
 ['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
 ['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
@@ -47,7 +47,7 @@ Running _start took 0.00s
 ['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
 ['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
 Performance test:
-Interface start. took 0.11s
+Interface start. took 0.12s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)

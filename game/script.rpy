@@ -33,7 +33,7 @@ label start:
     #Tentacle breaking window
     "Oh sh--!"
 
-    call changetobeach(transition = Fade(0.1,1.0,0.5,color="#000"))
+    call changetobeach(transition = Fade(0.1,1.0,0.5))
     pause(1.0)
                  
     call MGL #MAIN GAME LOOP
@@ -54,9 +54,10 @@ label MGL:
         jump mikaylaStory1 # Not added to call stack due to local label jump
     if location == "park" and Chishiki.progress == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
         jump chishikiIntro
-
-    if location == "beach" and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
+    if location == "beach" and hour == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
         call endOfDay
+    if location == "beach" and Laela.progress == 1:
+        jump laelaStory1
 
     $ canMove = True
     $ renpy.pause()
@@ -70,6 +71,7 @@ label mizuIntro:
     
     show mizu onlayer screens zorder -1:
         function ondoor(to="forest")
+    with Fade(0.5,1.0,0.5)
 
     m "...You're sure that's all you remember?"
     m "You are indeed very far from home."
@@ -87,7 +89,7 @@ label mizuIntro:
 
     call MoveTo("mizu", "forest","town","store")    # May need to change canMove in function (William)
     
-    show mizu onlayer screens zorder -1
+    show mizu onlayer screens zorder -1 with dissolve
 
     m "Here we are! Take anything you want... after all..."
 
@@ -124,7 +126,6 @@ label mizuIntro:
     $ canMove = True
     hide mizu onlayer screens zorder -1
 
-    $ hour += 1
     $ Mizu.progress = 1
     jump MGL
 
@@ -253,7 +254,6 @@ label laelaIntro:
     if time > 0.0 and location == "classroom":
         call laelaIntro.endtimegame
 
-    $ hour += 1
     $ Laela.progress = 1
     jump MGL
 label .endtimegame:
@@ -264,6 +264,253 @@ label .endtimegame:
     else:
         "Lost her... Maybe, I should head back to the {color=#0000ffff}school{/color} and keep exploring. Hopefully I can run into her there. "
     return
+
+label laelaStory1:
+    $ canMove = False
+    $ l = "Laela"
+    $ a = "Asahi"
+    $ m = "Mikayla"
+    #Maybe show inventory, chishiki's timepiece is lost
+    
+    hide beach_night
+    show laela onlayer screens zorder -1:
+        align (0.5,0.5)
+        blur 100.0
+    with Fade(0.5,2.0,0.5)
+    pause(2.0)
+    show asahi onlayer screens zorder -1 with Fade(0.5,1.0,0.5):
+        align (0.5, 0.5)
+        blur 100.0
+        ease 3.0 blur 0
+    "???" "Hello down there~ Hellooo~"
+    hide laela onlayer screens
+    
+    menu:
+        "Ack.. So bright...": 
+            "..." "Sunshine as usual."
+            #show confused
+            "???" "Is that a... compliment?"
+            "..." "..."
+            #Smile
+            "???" "I appreciate it boss!"
+        "Laela... or was that...":
+            "..." "Mizu..?"
+            "???" "No-pe! Guess again!"
+
+    menu:
+        "Then... who?":
+            "..." "Ugh, my head... What happened?"
+
+    #Salute
+    a "Sir! Major Asahi Laurent reporting in!"
+    a "We found you lying on the beach and thought you would appreciate warm soup and a hot shower!"
+
+    menu:
+        "Good work Major. Lead me to your encampment.":
+            #Smile
+            a "This way, sir!"
+        
+        "What are you doing?":
+            #pout
+            a "Come on, play along a little!"
+    
+    #Background hand passing through other hand
+    "But as you reach for the girl's outstreched hand, your fingertips are only met with the chilling ocean breeze."
+
+    "What the..?"
+
+    show laela onlayer screens zorder -1 at right
+    show asahi onlayer screens zorder -1:
+        ease 0.5 xalign 0.0
+    with moveinbottom
+
+    l "Five more minutes... doesn't matter anyways."
+
+    a "Laela Laurent, you wake up right now! We've got a big day ahead; lots of neighbours to greet and people that need our help!"
+
+    #Smile
+    l "Okay sis, I'll be right there. {size=15}Don't ever change.{/size}"
+
+    #smile
+    a "Attagirl! Today's the day everything changes, I promise."
+
+    l "Sure will."
+
+    hide laela onlayer screens
+    hide asahi onlayer screens
+    with dissolve
+
+    $ canMove = True
+    while location != 'forest':
+        $ renpy.pause()
+        $ renpy.block_rollback()
+    
+    $ canMove = False
+    
+    show villager onlayer screens zorder -1 at right
+    show asahi onlayer screens zorder -1:
+        align (0.4, 1.0)
+    show laela onlayer screens zorder -2 at left
+
+    "Villager" "Why if it isn't little Asahi. {w=1.0}As well as the other Laurent! {w=1.0}So nice to see you, Asahi."
+
+    a "G'morning Jane!"
+
+    #show laela shy, blush
+
+    extend " Sis and I were wondering if you need any extra hands?"
+
+    "Villager" "Eagar to help as always, dear. Well thanks to your visit the other day, most of the chores have already been taken care of {cps=10}...{/cps}"
+    "Villager" "If you'd like, could you deliver this letter to my son? He's teaching at the {color=#0000ffff}school classroom{/color}."
+
+    a "You got it! Here, can you hold it sis? I'm pretty clumsy with important things."
+
+    hide asahi onlayer screens with dissolve
+
+    "Villager" "Try not to lose it or damage it."
+    l "..."
+
+    hide laela onlayer screens
+    hide villager onlayer screens
+    with dissolve
+
+    a "But first, let's get you that hot shower, sis..." #fanservice scene
+
+    call changetoclassroom()
+
+    show villager_teacher onlayer screens zorder -1 at left
+    show asahi onlayer screens zorder -1:
+        xalign 0.6
+    show laela onlayer screens zorder -2 at right
+    with Fade(0.5,1.0,0.5)
+
+    a "Heya Jon, got a letter here from your ma."
+
+    "Jon" "Asahi does delivery service now? Well thanks, I'll be sure to leave a good review."
+
+    a "Asahi and Laela Express! Come rain or snow, we'll get your package where it needs to be. 24/7 no shipping costs!"
+
+    a "Jokes aside, anything you need help with Jon?"
+
+    "Jon" "Hmmm... I'm having a hard time with these two students..."
+
+    a "Remedial classes? Fret not, XXXX Valedictorian Laela and her trusty assistant Asahi are on the case!"
+
+    "Jon" "You're a lifesaver, Asahi."
+
+    hide villager_teacher onlayer screens with dissolve
+
+    show asahi onlayer screens zorder -1:
+        ease 0.8 xalign 0.4
+    show laela onlayer screens zorder -2:
+        ease 0.8 xalign 0.0
+    
+    pause(0.8)
+    show villager_youngstudent onlayer screens zorder -1 at right
+
+    show asahi onlayer screens zorder -1:
+        left_right(0.4, 0.7)
+
+    #show grossed
+    a "Ughhh maths... Math master Laela, I request thy wisdom..."
+
+    "Young student" "Big sis Asahi! Are you here to play with me?"
+
+    a "Haha, we can play together, but only after you finish your homework!"
+
+    "Young student" "Ehhhh... But I'm stuck on this question..."
+
+    menu:
+        "Solve the differential equation x'-x+3=0"
+
+        "a) x(t)=ln(x-3)+C":
+            a "This one, obviously! (total guess)"
+
+            l "Uhh. Maybe the correct answer is b..?"
+
+            l "I'm sorry..."
+        
+        "b) x(t)=Aexp(t)+3":
+            l "If you differentiate this and plug it back into the equation, you will arrive at zero."
+
+            $ Laela.affection += 1
+
+        "c) x(t)=Ax+B":
+            a "Well if you count the number of c's its probably this one."
+
+            l "Sister... maybe we shouldn't encourage that behavior..."
+
+            l "The answer probably includes a natural exponential component since they equal themselves when differentiated..."
+
+            l "...sorry..."
+
+    "Young student" "..."
+
+    a "Well, you heard it here from the master engineer herself, my most trust worthy study buddy!"
+
+    "Young student" "Well, if you say so Asahi, then I believe you."
+
+    "Young student" "Thanks Asahi! Let's play tomorrow, I think my mom is waiting for me at home."
+
+    a "Toodles!"
+
+    a "One more to go!"
+
+    hide villager_youngstudent onlayer screens with dissolve
+    
+    show asahi onlayer screens zorder -1:
+        ease 0.8 xalign 0.4
+    show laela onlayer screens zorder -2:
+        ease 0.8 xalign 0.0
+    
+    pause(0.8)
+    show mikayla_young onlayer screens zorder -1 at right with dissolve
+
+    "Girl" "So you gonna help me or just gonna stare?"
+
+    m "{fast}So you gonna help me or just gonna stare?"
+
+    a "Ah! Sorry! Please listen to Laela, she knows more than me."
+
+    m "Sure, I don't care."
+
+    show laela onlayer screens zorder -1
+
+    l "R-really? Everyone seems to have... reservations."
+
+    m "Just lemme outa here. Stupid four-eyes can't see a prodigy when she's right in front of him. "
+
+    m "'Sides, I always notice you here from late at night to early morning. In the garage 'n chem lab, making... things."
+
+    l "Wow, aren't you a very observant child{cps=10}... {/cps} Wait shouldn't you be sleeping at that time?"
+
+    m "Nevermind, just help me out."
+
+    show laela onlayer screens zorder -1:
+        left_right(0.7)
+    # show laela like toriel suspicious face
+
+    l "I don't think 'cuz the sea collectin debts, ya see' is a grammatically correct sentence{cps=10}... {/cps} What the heck is this report even on?"
+
+    #show mikayla frustrated, maybe with a bounce or someting, or vpunch
+    show mikayla_young onlayer screens zorder -3 with vpunch
+    m "AHHHH I DON'T FRIGGIN CARE ABOUT THIS STUPID ESSAY!"
+
+    m "THAT FOUR EYES CAN TAKE MY PAPER AND SHOVE IT NEXT TO THE STICK UP HIS A----"
+
+    hide mikayla_young with moveoutleft
+
+    a "WOAH...!!! Haha... sorry Jon, no luck... Should we chase her?"
+
+    "Jon" "No use... That child is a dead end. Thanks anyways Asahi. Take care."
+
+    # talk with mizu, reveal how laela thinks people wont respect her, btw is asahi going to that party (her send off), mizu does not like
+    #Chishiki shows up, says we are running out of time
+    # speeds up to party then below
+
+    # Somethin bad is suggested at the end of the story: grape? ends in sea monster battel
+    $ Laela.progress = 2
+    jump MGL
 
 label mikaylaIntro:
     $ canMove = False
@@ -379,7 +626,6 @@ label mikaylaIntro:
     hide mikayla onlayer screens zorder -1
 
     $ canMove = True
-    $ hour += 1
     $ Mikayla.progress = 1
     jump MGL
 
@@ -623,11 +869,11 @@ label .doneBattle: #You must win this battle -> configure health such that you a
         hide mikayla onlayer screens with dissolve
 
         $ canMove = True
-        $ hour += 1
         $ Mikayla.progress = 2
         jump MGL
 
 label miraiIntro:
+    $ canMove = False
     $ m = "Girl by the window"
     
     show mirai onlayer screens zorder -1:
@@ -682,11 +928,11 @@ label miraiIntro:
 
     "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}}"
 
-    $ hour += 1
     $ Mirai.progress = 1
     jump MGL
 
 label chishikiIntro:
+    $ canMove = False
     show chishiki onlayer screens zorder -1:
     $ c = "Girl reading in the park"
 
@@ -720,12 +966,15 @@ label chishikiIntro:
 
     "Huh? Wait!"
     "{i}How peculiar. I wonder what her deal is.{/i}"
-    "{i}I should probably hurry and return to the shrine.{/i}"
+    "{i}I should probably hurry and return to the beach.{/i}"
 
     $ Chishiki.progress = 1
     jump MGL
 
 label endOfDay:
+    $ hour = 1
+    $ canMove = False
+    show beach_night
     "{i}I should document my daily events in case I need to refer to them.{/i}"
 
     $ day1Entry = Journal()
@@ -768,4 +1017,8 @@ label endOfDay:
             vbox:
                 text "{color=#000000} [displayText] {/color}" 
 
-    show screen displayJournal      
+    show screen displayJournal
+    
+    "Guess I'm getting a little sleepy. I'll just... doze off here..."
+    hide screen displayJournal
+    return
