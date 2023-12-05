@@ -1,36 +1,39 @@
-Mon Dec  4 15:23:06 2023
+Mon Dec  4 17:06:13 2023
 Windows-10-10.0.22621
 Ren'Py 8.1.1.23060707
  
 
-Bootstrap to the start of init.init. took 0.09s
-Early init. took 0.01s
-Loader init. took 0.12s
-Loading error handling. took 0.05s
-Loading script. took 0.39s
-Loading save slot metadata. took 0.08s
+Bootstrap to the start of init.init. took 0.06s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.04s
+game/script.rpy:738: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+  $ inventorylist = [(item, item) for item in inventory if item is not "bandage"] # screen prediction smh
+Loading script. took 0.33s
+Loading save slot metadata. took 0.07s
 Loading persistent. took 0.00s
-Running init code. took 0.10s
+Running init code. took 0.08s
 Loading analysis data. took 0.02s
 Analyze and compile ATL. took 0.01s
-Reloading save slot metadata. took 0.06s
+Reloading save slot metadata. took 0.05s
 Index archives took 0.00s
-Dump and make backups. took 0.11s
+Backing up script files to 'C:\\Users\\willj\\AppData\\Roaming/RenPy/backups\\P4 R4 D1 S3':
+Dump and make backups. took 0.10s
 Cleaning cache. took 0.00s
 Making clean stores. took 0.00s
-Initial gc. took 0.04s
+Initial gc. took 0.02s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object. took 1.62s
+Creating interface object. took 0.44s
 Cleaning stores took 0.00s
 Init translation took 0.05s
-Build styles took 0.01s
-Load screen analysis took 0.06s
-Analyze screens took 0.00s
-Save screen analysis took 0.00s
-Prepare screens took 0.09s
-Save pyanalysis. took 0.00s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.02s
 Save bytecode. took 0.04s
 Running _start took 0.00s
 ['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
@@ -47,7 +50,7 @@ Running _start took 0.00s
 ['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
 ['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
 Performance test:
-Interface start. took 0.12s
+Interface start. took 0.17s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -59,3 +62,113 @@ Version: b'4.6.0 - Build 27.20.100.9664'
 Display Info: None
 Screen sizes: virtual=(1920, 1080) physical=(1739, 978) drawable=(1739, 978)
 Maximum texture size: 4096x4096
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+
+Full traceback:
+  File "game/script.rpy", line 39, in script call
+    call MGL #MAIN GAME LOOP
+  File "game/script.rpy", line 63, in script
+    $ renpy.pause()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 63, in <module>
+    $ renpy.pause()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\exports.py", line 1637, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 3579, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 4052, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 683, in visit_all
+    callback(self)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 4052, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\image.py", line 793, in per_interact
+    self.find_target()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\image.py", line 669, in find_target
+    raise Exception("In DynamicImage %r: Could not find substitution '%s'." % (self.name, str(ke.args[0])))
+Exception: In DynamicImage '[person]': Could not find substitution 'person'.
+
+While running game code:
+  File "game/script.rpy", line 39, in script call
+    call MGL #MAIN GAME LOOP
+  File "game/script.rpy", line 63, in script
+    $ renpy.pause()
+  File "game/script.rpy", line 63, in <module>
+    $ renpy.pause()
+Exception: In DynamicImage '[person]': Could not find substitution 'person'.
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
+['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
+['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
+['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']

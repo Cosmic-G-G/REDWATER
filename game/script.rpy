@@ -117,7 +117,7 @@ label mizuIntro:
     m """
     ...I.. have to complete something.
     
-    You can around the city to see if you can find a way to contact the nearest municipality. I think there is a broadcasting station in the {color=#0000ffff}school{/color}.
+    You can go around the city to see if you can find a way to contact the nearest municipality. I think there is a broadcasting station in the {color=#0000ffff}school{/color}.
     
     Here is the lightrail map. I have to go now. Bye.
     """
@@ -164,7 +164,7 @@ label laelaIntro:
 
     show laela onlayer screens zorder -1 with Dissolve(0.2)
 
-    "Timid girl" "hello...{w}{cps=2}...{/cps}"
+    "Timid girl" "H-hello...{w}{cps=2}...{/cps}"
     # her eyes shift
     "Timid girl" "{cps=2}......."
 
@@ -183,7 +183,7 @@ label laelaIntro:
             # eyes shift
             # Show blush
             # show sweet smile
-            l "No wait!! I'm pleasure, it's a Laela to make your acquantance."
+            l "No wait!! I'm pleasure, it's a Laela to make your acquaintance."
             $ c1 = True
             jump laelaMeeting01
         "<L>...And you are?" if c1:
@@ -199,7 +199,7 @@ label laelaIntro:
             "I wanted to contact the nearest municipality or nearest governor of this prefecture. Would you happen to know?"
             l "Governor..? No... I'm an engineer. Though, if you're trying to find Mizu, I could probably help."
             "Um... nevermind. {w}Let's talk about you."
-            "You know mizu?"
+            "You know Mizu?"
             # Brightens up
             l "Yes! {w}Mizu is super nice{cps=5}...{/cps}{nw}"
             # eyes lower
@@ -218,7 +218,7 @@ label laelaIntro:
             l "My sister was really kind and caring, with a bright smile and demeanour whose light would rival the sun."
             #Show sister silouette (BLOND btw)
             l"""
-            I think... Because of me, because of something I did... I hurt my sister and well,
+            I think... because of me, because of something I did... I hurt my sister and well,
 
             Mizu abhored what I did and it's pretty obvious that she never forgave me for what I did... 
             
@@ -251,12 +251,15 @@ label laelaIntro:
     show screen timer(0.1,'laelaIntro.endtimegame')
     
     call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom", dissolvetime=0.1)
+    $ person = 'laela'
+    
     if time > 0.0 and location == "classroom":
         call laelaIntro.endtimegame
 
     $ Laela.progress = 1
     jump MGL
 label .endtimegame:
+    hide 
     hide screen timer
     $ time = -1.0
     if location == "classroom":
@@ -500,9 +503,13 @@ label laelaStory1:
 
     hide mikayla_young with moveoutleft
 
-    a "WOAH...!!! Haha... sorry Jon, no luck... Should we chase her?"
+    a "WOAH...Hey!!! Haha... sorry Jon, no luck... Should we chase her?"
 
-    "Jon" "No use... That child is a dead end. Thanks anyways Asahi. Take care."
+    "Jon" "No use... That child is a dead end. Thanks anyways Asahi. Take care now."
+
+    hide laela onlayer screens
+    hide mikayla onlayer screens
+    with dissolve
 
     # talk with mizu, reveal how laela thinks people wont respect her, btw is asahi going to that party (her send off), mizu does not like
     #Chishiki shows up, says we are running out of time
@@ -718,7 +725,7 @@ label mikaylaStory1:
     M "Why the silence? Are you feeling unwell?"
 
     # Mikayla very sad
-    m "Mizu... I'm really sorry. I should'nve done that without tellin' ya. But I've never once regretted what I've done 'n would do it again in a heartbeat."
+    m "Mizu... I'm really sorry. I shouldn've done that without tellin' ya. But I've never once regretted what I've done 'n would do it again in a heartbeat."
 
     m "Ya didn't deserve then to be hurtin' alone and you don't now. {size=17}Please...{size=15} Don't ignore me anymore..."
 
@@ -926,7 +933,7 @@ label miraiIntro:
 
     "Wait what do you mean?{w=0.1}"
 
-    "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}}"
+    "{i}She rushes out the classroom before you can finish your thought. She must have urgent matters to attend to.{/i}"
 
     $ Mirai.progress = 1
     jump MGL

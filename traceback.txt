@@ -3,24 +3,51 @@
 While running game code:
   File "game/script.rpy", line 39, in script call
     call MGL #MAIN GAME LOOP
-  File "game/rpylocations.rpy", line 104, in script
-    return
-Exception: Could not find return label ('game/script.rpy', 1701723678, 46).
+  File "game/script.rpy", line 63, in script
+    $ renpy.pause()
+  File "game/script.rpy", line 63, in <module>
+    $ renpy.pause()
+Exception: In DynamicImage '[person]': Could not find substitution 'person'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "game/script.rpy", line 39, in script call
     call MGL #MAIN GAME LOOP
-  File "game/rpylocations.rpy", line 104, in script
-    return
-  File "C:\Program Files\renpy-8.0.3-sdk\renpy\ast.py", line 1801, in execute
-    next_node(renpy.game.context().lookup_return(pop=True))
-  File "C:\Program Files\renpy-8.0.3-sdk\renpy\execution.py", line 741, in lookup_return
-    raise Exception("Could not find return label {!r}.".format(self.return_stack[-1]))
-Exception: Could not find return label ('game/script.rpy', 1701723678, 46).
+  File "game/script.rpy", line 63, in script
+    $ renpy.pause()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 63, in <module>
+    $ renpy.pause()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\exports.py", line 1637, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 3579, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 4052, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 683, in visit_all
+    callback(self)
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 4052, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\image.py", line 793, in per_interact
+    self.find_target()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\image.py", line 669, in find_target
+    raise Exception("In DynamicImage %r: Could not find substitution '%s'." % (self.name, str(ke.args[0])))
+Exception: In DynamicImage '[person]': Could not find substitution 'person'.
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
-Mon Dec  4 15:15:56 2023
+Mon Dec  4 17:07:11 2023
