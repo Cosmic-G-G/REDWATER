@@ -280,6 +280,10 @@ init python:
             fullEntry = " ".join(self.entry)
             return fullEntry
 
+    class SecretVariables():
+        def __init__(self):
+            self.showStoreBackDoor = False
+
 default Mizu = UCharacter("Mizu")
 default Laela = UCharacter("Laela")
 default Mirai = UCharacter("Mirai")
@@ -291,4 +295,5 @@ default user = Combatant("Player", 300, 30)
 default mikaylaFighter = MikaylaFighter("Mikayla", 400, 100)
 default mizuFighter = MizuFighter("Mizu", 350, 40)
 default enemy = Combatant("Player", 1500, 30, bAlly = False)
+default secretVariables = SecretVariables()
                         #endregion

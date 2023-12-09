@@ -60,6 +60,13 @@ screen bg_store():
     tag current
     zorder -2
     imagebutton auto "door_%s.png" action Call("changetotown",from_current=False) sensitive canMove xcenter 0.1 ycenter 0.5
+    if secretVariables.showStoreBackDoor:
+        imagebutton auto "door_%s.png" action [SetVariable("location","backstore"), Return()] sensitive canMove xcenter 0.5 ycenter 0.5
+
+screen bg_backstore:
+    tag current
+    zorder -2
+    add "freezer.jpg"
 
 label changetostore(transition = None):
     $ location = 'store'
@@ -147,5 +154,5 @@ label changetopark(transition = None):
         scene park
         show screen bg_park
         with transition
-    return
+    return 
 #endregion

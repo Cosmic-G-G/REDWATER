@@ -251,28 +251,31 @@ label laelaIntro:
     show screen timer(0.1,'laelaIntro.endtimegame')
     
     call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom", dissolvetime=0.1)
-    $ person = 'laela'
-    
-    if time > 0.0 and location == "classroom":
-        call laelaIntro.endtimegame
 
-    $ Laela.progress = 1
-    jump MGL
+    if time > 0.0 and location == "classroom":
+        jump laelaIntro.endtimegame
+    jump MGL #Should not be here
 label .endtimegame:
-    hide 
+    $ renpy.block_rollback()
     hide screen timer
+    hide expression "[person]" onlayer screens with Dissolve(0.1)
     $ time = -1.0
     if location == "classroom":
         "Dang... she's fast. Where did she go?"
     else:
         "Lost her... Maybe, I should head back to the {color=#0000ffff}school{/color} and keep exploring. Hopefully I can run into her there. "
-    return
+    $ Laela.progress = 1
+    jump MGL
 
 label laelaStory1:
     $ canMove = False
     $ l = "Laela"
     $ a = "Asahi"
     $ m = "Mikayla"
+    if Chishiki.progress == 1:
+        $ c = "Chishiki"
+    else:
+        $ c = "???"
     #Maybe show inventory, chishiki's timepiece is lost
     
     hide beach_night
@@ -347,7 +350,6 @@ label laelaStory1:
     while location != 'forest':
         $ renpy.pause()
         $ renpy.block_rollback()
-    
     $ canMove = False
     
     show villager onlayer screens zorder -1 at right
@@ -471,7 +473,7 @@ label laelaStory1:
 
     "Girl" "So you gonna help me or just gonna stare?"
 
-    m "{fast}So you gonna help me or just gonna stare?"
+    "Clearly Mikayla" "{fast}So you gonna help me or just gonna stare?"
 
     a "Ah! Sorry! Please listen to Laela, she knows more than me."
 
@@ -492,6 +494,7 @@ label laelaStory1:
     show laela onlayer screens zorder -1:
         left_right(0.7)
     # show laela like toriel suspicious face
+    pause(1.0)
 
     l "I don't think 'cuz the sea collectin debts, ya see' is a grammatically correct sentence{cps=10}... {/cps} What the heck is this report even on?"
 
@@ -499,23 +502,201 @@ label laelaStory1:
     show mikayla_young onlayer screens zorder -3 with vpunch
     m "AHHHH I DON'T FRIGGIN CARE ABOUT THIS STUPID ESSAY!"
 
+    show laela onlayer screens zorder -1:
+        left_right(0.55, 0.1)
     m "THAT FOUR EYES CAN TAKE MY PAPER AND SHOVE IT NEXT TO THE STICK UP HIS A----"
 
-    hide mikayla_young with moveoutleft
+    hide mikayla_young onlayer screens with moveoutleft
 
     a "WOAH...Hey!!! Haha... sorry Jon, no luck... Should we chase her?"
 
     "Jon" "No use... That child is a dead end. Thanks anyways Asahi. Take care now."
 
     hide laela onlayer screens
-    hide mikayla onlayer screens
+    hide asahi onlayer screens
     with dissolve
 
-    # talk with mizu, reveal how laela thinks people wont respect her, btw is asahi going to that party (her send off), mizu does not like
-    #Chishiki shows up, says we are running out of time
-    # speeds up to party then below
+    call WaitUntil("hallway")
 
-    # Somethin bad is suggested at the end of the story: grape? ends in sea monster battel
+    show chishiki onlayer screens zorder -1
+
+    c "We're running out of time..."
+
+    if Chishiki.progress < 1:
+        "Who are you?"
+
+        $ c = "Chishiki"
+        # show frustrated
+        c "Chishiki... We don't have time for this..."
+
+    $ items = ("What's going on?", "Why can't anyone see me?", "Where am I?", "Why is Mikayla a child?", "What are you hiding?", "How do I go home?")
+    call screen mundanechoice(items, 5.0)
+
+    if not _return:
+        c "I know you have plenty of burning questions, but we must progress this story. "
+    elif _return == "What's going on?":
+        c "Your duty is to play the part of the 'hero.'"
+    elif _return  == "Why can't anyone see me?":
+        c "Indeed, an ironic contradiction of reality."
+    elif _return == "Where am I?":
+        c "A place that should not exist."
+    elif _return == "Why is Mikayla a child?":
+        c "Perhaps you've realized this is not the same time dimension you are from."
+    elif _return == "What are you hiding?":
+        c "All will be revealed in time."
+    elif _return == "How do I go home?":
+        c "I apologize, but your story is not yet finished."
+
+    $ renpy.block_rollback()
+
+    "As you are about to speak, the air in your lungs is forcibly taken away."
+
+    $ gt = renpy.get_game_runtime()
+    c "Though only [gt] minutes have passed for you, this world has waited far too long for a savior."
+
+    c "My power is weakening. I will not be able to suspend the catastrophe for much longer.."
+
+    c "Take my pocket watch; it will help you to return to the 'present.'"
+
+    pause (1.5)
+
+    c "Oh, and... Please take care of them, okay?"
+
+    "Hey wait!!"
+
+    hide chishiki onlayer screens with dissolve
+    call changetoforest()
+
+    show mizu onlayer screens zorder -1 at left
+    show asahi onlayer screens zorder -1
+    show laela onlayer screens zorder -2 at right
+    with Fade(0.5,1.0,0.5)
+
+    $ m = "Mizu"
+
+    m "... and so that's what's happened today. What about you girls?"
+
+    a "Well... about the usual. We went around trying to help everyone in town, but it seems like everyone is still hesitant to accept Laela."
+
+    l "Hesistant is an understatement... But it's okay. As long as I've got you and dear sister Asahi, I don't need anything else."
+
+    m "Now, now."
+
+    a "But Laela has so many good qualities. I'm a little upset that no one appreciates her."
+
+    l "It's because you outshine me in every way; and I'm happy about that."
+
+    a "This entire day has been Asahi this, Asahi that. But who's the smartest engineer in town? Who's the one that always fixes all of the cars and troubleshoots all of our electricity problems?"
+
+    m "True. Laela is amazingly smart, yet humble. Hardworking even without recognition."
+
+    l "P-please... don't get so worked up over my sake... But I'm very happy you think so."
+
+    m "..."
+
+    m "Fine... I guess we'll leave it there for now. By the way Asahi, are you still planning to go to that party?"
+
+    a "Yeah. I mean, it is my send-off party after all, arranged specifically for me."
+
+    #show mizu disappointed
+
+    m "Your always helping them. What have they ever done for you?"
+
+    m "You'd really rather spend your last few days with strangers than us?"
+
+    a "Come on it's not like that... You know I love you guys. But if I stay with you any longer, I don't think I'll have the courage to leave."
+
+    l "...I also don't want you to go... There has to be another way. If you just wait a little..."
+
+    a "Dear Laela... I'm sure we will see each other again after all of this is over. "
+
+    a """
+    Laela... There will certainly come a day when your talents and hard work are appreciated and rewarded. I already know you will one day be heralded as a hero, standing heads and shoulders above others.
+
+    They will look towards you for your leadership and you will certainly help them with a smile on your face.
+
+    Mizu... Thank you for your friendship towards Laela and myself over these past few years. I'm sure it has been tough to be friends with Laela when she is so wrongfully ostracized, but it really means the world to us.
+
+    Your work here is not yet finished. Even though I may be leaving, I'm sure you will find many more capable partners to take my place.
+
+    Please look after Laela during my absence.
+    """
+    #Show cry
+
+    a "I-I love you guys a-a lot... "
+
+    #Show happy
+    a "I can't be crying now... I should go now. Take care now."
+    
+    hide asahi onlayer screens with dissolve
+
+    hide mizu onlayer screens
+    hide laela onlayer screens
+    call changetotown()
+
+    show villager onlayer screens zorder -1 at right
+    show asahi onlayer screens zorder -1 at left 
+    with Fade(0.5,1.0,0.5)
+    # sad asahi
+
+    "Villager" "Why so glum Asahi? You're doing a great thing, something to be proud of!"
+
+    a "Aha... Sorry Marle... You even went through the trouble of organizing this party for me."
+
+    "Villager" "You're doing a great service for this small town. That being said{cps=10}... {/cps} I think many people here, myself included, will miss you dearly."
+
+    "Rowdy voice" "Hey Asahi! I think someone's looking for you in the convience store!"
+
+    a "Oh? I'll be there right away."
+
+    "Villager" "Still helping others even now, huh Asahi?"
+
+    hide asahi onlayer screens
+    hide villager onlayer screens
+    with dissolve
+
+    call WaitUntil("store")
+
+    show asahi onlayer screens zorder -1
+    
+    a "Hello..? Is anyone here..?"
+
+    show asahi onlayer screens zorder -1:
+        left_right(0.3, 0.5)
+        left_right(0.7,0.5)
+        ease 0.5 xalign 0.5
+
+    a "Maybe in the back..?"
+
+    hide asahi onlayer screens with dissolve
+
+    "{i}click...{/i}"
+
+    a "Huh..? Door's locked..."
+
+    a "Feeling a bit woozy..."
+
+    a "No... stop... my... clothes..."
+
+    menu:
+        "Stop right there!":
+            $ secretVariables.showStoreBackDoor = True
+            $ renpy.restart_interaction()
+
+    call WaitUntil("backstore")
+
+    show screen bg_backstore
+    show laela onlayer screens zorder -1 
+    with Fade(0.5,0.5,0.5)
+
+    "{cps=10}L-Laela...?"
+
+    c "We're out of time. Sending you back."
+
+    call changetobeach(transition = Fade(0.5,0.7,0.5))
+    $ secretVariables.showStoreBackDoor = False
+
+    "{i}You wake up to the familiar scent of salt carried by the wind. It's cold, other than Chishiki's pocket watch in you hand emitting a strange warmth. "
     $ Laela.progress = 2
     jump MGL
 
@@ -592,6 +773,7 @@ label mikaylaIntro:
 
                 There'll be a fight you don't wanna miss. Bring some food 'n water just in case. 
                 """
+                hide mikayla onlayer screens zorder -1
         
         "How about you prove your merit first?":
             # Smug eyes closed
@@ -792,7 +974,7 @@ label mikaylaStory1:
 
     #Sad laugh
     m """
-    We all thought she would be a pathetic little pushover. After all, what sane person would openly defy the Yellow Oni when she claimed her stomping grounds.
+    We all thought she would be a pathetic little pushover. After all, what sane person would openly defy the Yellow Oni gang when they claimed their stomping grounds.
 
     After all, nobody ever comes way out here in the sticks and her Pa was gone most of the time.
 
@@ -927,7 +1109,7 @@ label miraiIntro:
 
     m "Yes! I think the convenience store might have some food. Since the town is quite small, they're quite willing to help those in need."
 
-    m "Be careful with the store clerk though."
+    m "Be careful in that area though."
 
     hide mirai onlayer screens with dissolve
 

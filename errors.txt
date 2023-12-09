@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 384: expected statement.
-    With Fade(0.5,1.0,0.5)
-             ^
+File "game/rpylocations.rpy", line 69: The on statement is not a valid child of the add statement.
+    add "freezer.jpg" on "show" action With(Fade(0.5,0.5,0.5))
+                        ^
 
 Ren'Py Version: Ren'Py 8.1.1.23060707
-Mon Dec  4 15:15:45 2023
+Thu Dec  7 10:29:20 2023

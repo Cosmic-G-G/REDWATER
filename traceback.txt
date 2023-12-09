@@ -3,24 +3,36 @@
 While running game code:
   File "game/script.rpy", line 39, in script call
     call MGL #MAIN GAME LOOP
-  File "game/script.rpy", line 63, in script
+  File "game/script.rpy", line 686, in script call
+    call WaitUntil("backstore")
+  File "game/rpylabelfunctions.rpy", line 30, in script
     $ renpy.pause()
-  File "game/script.rpy", line 63, in <module>
+  File "game/rpylabelfunctions.rpy", line 30, in <module>
     $ renpy.pause()
-Exception: In DynamicImage '[person]': Could not find substitution 'person'.
+  File "game/rpylocations.rpy", line 66, in execute
+    screen bg_backstore():
+  File "game/rpylocations.rpy", line 66, in execute
+    screen bg_backstore():
+  File "game/rpylocations.rpy", line 70, in execute
+    add laela
+  File "game/rpylocations.rpy", line 70, in <module>
+    add laela
+NameError: name 'laela' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "game/script.rpy", line 39, in script call
     call MGL #MAIN GAME LOOP
-  File "game/script.rpy", line 63, in script
+  File "game/script.rpy", line 686, in script call
+    call WaitUntil("backstore")
+  File "game/rpylabelfunctions.rpy", line 30, in script
     $ renpy.pause()
   File "C:\Program Files\renpy-8.0.3-sdk\renpy\ast.py", line 1138, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "C:\Program Files\renpy-8.0.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 63, in <module>
+  File "game/rpylabelfunctions.rpy", line 30, in <module>
     $ renpy.pause()
   File "C:\Program Files\renpy-8.0.3-sdk\renpy\exports.py", line 1637, in pause
     rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
@@ -36,18 +48,25 @@ Full traceback:
     d.visit_all(callback, seen)
   File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 681, in visit_all
     d.visit_all(callback, seen)
-  [Previous line repeated 1 more time]
-  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 683, in visit_all
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\screen.py", line 476, in visit_all
     callback(self)
   File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\core.py", line 4052, in <lambda>
     root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\image.py", line 793, in per_interact
-    self.find_target()
-  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\image.py", line 669, in find_target
-    raise Exception("In DynamicImage %r: Could not find substitution '%s'." % (self.name, str(ke.args[0])))
-Exception: In DynamicImage '[person]': Could not find substitution 'person'.
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\screen.py", line 487, in per_interact
+    self.update()
+  File "C:\Program Files\renpy-8.0.3-sdk\renpy\display\screen.py", line 680, in update
+    self.screen.function(**self.scope)
+  File "game/rpylocations.rpy", line 66, in execute
+    screen bg_backstore():
+  File "game/rpylocations.rpy", line 66, in execute
+    screen bg_backstore():
+  File "game/rpylocations.rpy", line 70, in execute
+    add laela
+  File "game/rpylocations.rpy", line 70, in <module>
+    add laela
+NameError: name 'laela' is not defined
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.1.1.23060707
 P4 R4 D1 S3 1.0
-Mon Dec  4 17:07:11 2023
+Thu Dec  7 10:39:07 2023

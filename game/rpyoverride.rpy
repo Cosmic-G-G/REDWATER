@@ -9,4 +9,12 @@ init:
                     textbutton i.caption[3:] action None
                 else:
                     textbutton i.caption action i.action
+    
+    screen mundanechoice(items, cd):
+        timer cd repeat False action Return(None)
+        style_prefix "choice"
+
+        vbox:
+            for i in items:
+                textbutton i hovered Return(i) action NullAction()
                         #endregion
