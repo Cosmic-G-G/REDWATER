@@ -22,7 +22,7 @@ default Laela = UCharacter("Laela")
 default Mirai = UCharacter("Mirai")
 default Mikayla = UCharacter("Mikayla")
 default Chishiki = UCharacter("Chishiki")
-default PlayerVariables = PlayerVariables()
+define PlayerVariables = PlayerVariables()
 
 layeredimage mizu:
     attribute only null
