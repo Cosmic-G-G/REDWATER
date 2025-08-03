@@ -32,27 +32,11 @@ label start:
     jump MGL #MAIN GAME LOOP
 
 label MGL:
-    #python:
-    #    for c in [Mizu, Laela, Mirai, Mikayla, Chishiki]:
-    #        label_name = f"{c.name}_story_{c.progress}"
-    #        renpy.jump(label_name) if renpy.has_label(label_name) else None
-
     $ open_stories = get_open_stories()         # {"label_name": location}
     call WaitUntil(*tuple(open_stories.values())) # Wait until at start PlayerVariables.location of story
     $ story_name = next(k for k, v in open_stories.items() if v == PlayerVariables.location)
     $ renpy.jump(story_name) if renpy.has_label(story_name) else None
 
-    #if PlayerVariables.location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
-    #    jump mikaylaIntro
-    #if PlayerVariables.location == "forest" and Mikayla.progress == 1:
-    #    jump mikaylaStory1 # Not added to call stack due to local label jump
-    #if PlayerVariables.location == "park" and Chishiki.progress == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
-    #    jump chishikiIntro
-    #if PlayerVariables.location == "beach" and PlayerVariables.day == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
-    #    call endOfDay
-    #if PlayerVariables.location == "beach" and Laela.progress == 1:
-    #    jump laelaStory1
-    # Maybe put the day into the story label? Idk though might be too cluttered
 
     $ PlayerVariables.canMove = True
     $ renpy.pause()
