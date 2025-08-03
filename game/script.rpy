@@ -5,13 +5,7 @@
     import math
     import random
 
-#START
 label start:
-                            #FLAGS
-    $ hour = 0                                  # counter for each loop to not repeat stories
-    $ canMove = False                           # disables movement
-    $ inventory = []
-
                             #INTRO SCENE
     
     #INTRO SCENE
@@ -35,37 +29,38 @@ label start:
 
     call changeto("beach", transition=Fade(0.1,1.0,0.5))
     pause(1.0)
-                 
-    call MGL #MAIN GAME LOOP
-
-    return
+    jump MGL #MAIN GAME LOOP
 
 label MGL:
-    if location == 'beach' and Mizu.progress == 0: 
-        jump mizuIntro
-        #if exit or block the exit with mizu
-    if location == 'school' and Laela.progress == 0:
-        jump laelaIntro
-    if location == "classroom" and Mirai.progress == 0:
-        jump miraiIntro
-    if location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
-        jump mikaylaIntro
-    if location == "forest" and Mikayla.progress == 1:
-        jump mikaylaStory1 # Not added to call stack due to local label jump
-    if location == "park" and Chishiki.progress == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
-        jump chishikiIntro
-    if location == "beach" and hour == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
-        call endOfDay
-    if location == "beach" and Laela.progress == 1:
-        jump laelaStory1
+    #python:
+    #    for c in [Mizu, Laela, Mirai, Mikayla, Chishiki]:
+    #        label_name = f"{c.name}_story_{c.progress}"
+    #        renpy.jump(label_name) if renpy.has_label(label_name) else None
 
-    $ canMove = True
+    $ open_stories = get_open_stories()         # {"label_name": location}
+    call WaitUntil(*tuple(open_stories.values())) # Wait until at start PlayerVariables.location of story
+    $ story_name = next(k for k, v in open_stories.items() if v == PlayerVariables.location)
+    $ renpy.jump(story_name) if renpy.has_label(story_name) else None
+
+    #if PlayerVariables.location == "store" and Mikayla.progress == 0 and Laela.progress > 0:
+    #    jump mikaylaIntro
+    #if PlayerVariables.location == "forest" and Mikayla.progress == 1:
+    #    jump mikaylaStory1 # Not added to call stack due to local label jump
+    #if PlayerVariables.location == "park" and Chishiki.progress == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
+    #    jump chishikiIntro
+    #if PlayerVariables.location == "beach" and PlayerVariables.day == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2:
+    #    call endOfDay
+    #if PlayerVariables.location == "beach" and Laela.progress == 1:
+    #    jump laelaStory1
+    # Maybe put the day into the story label? Idk though might be too cluttered
+
+    $ PlayerVariables.canMove = True
     $ renpy.pause()
     $ renpy.block_rollback()
     jump MGL
 
 ##STORIES
-label mizuIntro:
+label Mizu_story_0:
     # $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
     $ m = Mizu
 
@@ -135,12 +130,13 @@ label mizuIntro:
     $ Mizu.progress = 1
     jump MGL
 
-label laelaIntro:
+label Laela_story_0:
     $ l = Laela
-    $ canMove = False
+    $ PlayerVariables.canMove = False
 
     hide screen bg_school with Dissolve(0.5)
     show school: # This type of transition is simple enough that does not need a function
+        anchor (0.5, 0.75) align (0.5, 0.75) 
         linear 2.0 zoom 2.0
         left_right(0.2, 1.0, 0.5)
         left_right(0.8, 1.0, 0.5)
@@ -254,27 +250,27 @@ label laelaIntro:
     pause(1.0)
     
     $ time = 15.00
-    show screen timer(0.1,'laelaIntro.endtimegame')
+    show screen timer(0.1,'Laela_story_0.endtimegame')
     
     call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom", transition=Dissolve(0.2))
 
-    if time > 0.0 and location == "classroom":
-        jump laelaIntro.endtimegame
+    if time > 0.0 and PlayerVariables.location == "classroom":
+        jump Laela_story_0.endtimegame
     jump MGL #Should not be here
 label .endtimegame:
     $ renpy.block_rollback()
     hide screen timer
     hide expression "[person]"  with Dissolve(0.1)
     $ time = -1.0
-    if location == "classroom":
+    if PlayerVariables.location == "classroom":
         "Dang... she's fast. Where did she go?"
     else:
         "Lost her... Maybe, I should head back to the {color=#0000ffff}school{/color} and keep exploring. Hopefully I can run into her there. "
     $ Laela.progress = 1
     jump MGL
 
-label laelaStory1:
-    $ canMove = False
+label Laela_story_1:
+    $ PlayerVariables.canMove = False
     $ l = "Laela"
     $ a = "Asahi"
     $ m = "Mikayla"
@@ -282,7 +278,7 @@ label laelaStory1:
         $ c = "Chishiki"
     else:
         $ c = "???"
-    #Maybe show inventory, chishiki's timepiece is lost
+    #Maybe show PlayerVariables.inventory, chishiki's timepiece is lost
     
     hide beach_night
     show laela:
@@ -352,11 +348,11 @@ label laelaStory1:
     hide asahi 
     with dissolve
 
-    $ canMove = True
-    while location != 'forest':
+    $ PlayerVariables.canMove = True
+    while PlayerVariables.location != 'forest':
         $ renpy.pause()
         $ renpy.block_rollback()
-    $ canMove = False
+    $ PlayerVariables.canMove = False
     
     show villager at right
     show asahi:
@@ -706,17 +702,21 @@ label laelaStory1:
     $ Laela.progress = 2
     jump MGL
 
-label mikaylaIntro:
-    $ canMove = False
+label Mikayla_story_0:
+    $ PlayerVariables.canMove = False
     $ m = "Punk"
     
+    #A background That just goes from top to bottom i think is better
     show store:
+        anchor (0.5, 0.6) align (0.5, 0.6)
         linear 2.0 zoom 1.5
         top_bottom(0.9)
     
     show mikayla: 
         xalign 0.5 yalign 3.0
         top_bottom(1.0)
+
+    show screen bg_store with Dissolve(0.2)
 
     # mean face
     m "What're you gawkin' at punk? Never seen a cute girl before?"
@@ -822,12 +822,12 @@ label mikaylaIntro:
 
     hide mikayla
 
-    $ canMove = True
+    $ PlayerVariables.canMove = True
     $ Mikayla.progress = 1
     jump MGL
 
-label mikaylaStory1:
-    $ canMove = False
+label Mikayla_story_1:
+    $ PlayerVariables.canMove = False
     $ m = "Mikayla"
     $ M = "Mizu"
 
@@ -928,7 +928,7 @@ label mikaylaStory1:
     show mikayla with moveoutright
     hide mikayla 
     
-    $ inventorylist = [(item, item) for item in inventory if item is not "bandage"] # screen prediction smh
+    $ inventorylist = [(item, item) for item in PlayerVariables.inventory if item is not "bandage"] # screen prediction smh
 
     M "Well I appreciate the visit, but if you're just here to see me, I'm afraid I don't have much hospitality to offer you."
 
@@ -963,9 +963,9 @@ label mikaylaStory1:
         # Surprised, sweet smile
         m "Thanks ya really know just what do to get my spirits up huh?"
         $ Mikayla.affection += 1
-        $ inventory.remove(present)
+        $ PlayerVariables.inventory.remove(present)
 
-        if "bandage" in inventory:
+        if "bandage" in PlayerVariables.inventory:
             m "Haha... you even brought bandages. Don't worry, only my heart hurts a little."
             $ Mikayla.affection += 1
     else:
@@ -1026,7 +1026,7 @@ label mikaylaStory1:
     hide mikayla  with moveoutbottom
     show leviathan with vpunch
 
-    $ combatManager.returnLabel = "mikaylaStory1.doneBattle"
+    $ combatManager.returnLabel = "Mikayla_story_1.doneBattle"
     $ combatManager.remove("all")
     $ combatManager.add(user,mikaylaFighter,mizuFighter,enemy)
 
@@ -1065,12 +1065,12 @@ label .doneBattle: #You must win this battle -> configure health such that you a
 
         hide mikayla  with dissolve
 
-        $ canMove = True
+        $ PlayerVariables.canMove = True
         $ Mikayla.progress = 2
         jump MGL
 
-label miraiIntro:
-    $ canMove = False
+label Mirai_story_0:
+    $ PlayerVariables.canMove = False
     $ m = "Girl by the window"
     
     show mirai:
@@ -1128,8 +1128,8 @@ label miraiIntro:
     $ Mirai.progress = 1
     jump MGL
 
-label chishikiIntro:
-    $ canMove = False
+label Chishiki_story_0:
+    $ PlayerVariables.canMove = False
     show chishiki
     $ c = "Girl reading in the park"
 
@@ -1169,8 +1169,8 @@ label chishikiIntro:
     jump MGL
 
 label endOfDay:
-    $ hour = 1
-    $ canMove = False
+    $ PlayerVariables.day = 1
+    $ PlayerVariables.canMove = False
     show beach_night
     "{i}I should document my daily events in case I need to refer to them.{/i}"
 
@@ -1218,4 +1218,4 @@ label endOfDay:
     
     "Guess I'm getting a little sleepy. I'll just... doze off here..."
     hide screen displayJournal
-    return
+    jump MGL

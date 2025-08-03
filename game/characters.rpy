@@ -1,4 +1,5 @@
 init python:
+
     class UCharacter(ADVCharacter): # May need to check if persistent data is saved
         def __init__(self, name, kind=None, **properties):
             self.name = name
@@ -7,9 +8,13 @@ init python:
             self.progress = 0
             self.affection = 0
             self.location = ""
-    
-    class SecretVariables():
+
+    class PlayerVariables():
         def __init__(self):
+            self.day = 0                                  # counter for each loop to not repeat stories
+            self.canMove = False                          # disables movement
+            self.inventory = []
+            self.visited = set()
             self.showStoreBackDoor = False
 
 default Mizu = UCharacter("Mizu")
@@ -17,7 +22,7 @@ default Laela = UCharacter("Laela")
 default Mirai = UCharacter("Mirai")
 default Mikayla = UCharacter("Mikayla")
 default Chishiki = UCharacter("Chishiki")
-default secretVariables = SecretVariables()
+default PlayerVariables = PlayerVariables()
 
 layeredimage mizu:
     attribute only null

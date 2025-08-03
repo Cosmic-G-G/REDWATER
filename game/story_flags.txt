@@ -1,0 +1,8 @@
+Mizu_story_0,beach,Mizu.progress=0
+Laela_story_0,school,Laela.progress=0
+Mirai_story_0,classroom,Mirai.progress=0
+Mikayla_story_0,store,Mikayla.progress=0,Laela.progress=1
+Mikayla_story_1,forest,Mikayla.progress=1
+Chishiki_story_0,park,Chishiki.progress=0,Mikayla.progress=2
+endOfDay,beach,PlayerVariables.day=0,Mikayla.progress=2
+Laela_story_1,beach,PlayerVariables.day=1,Laela.progress=1

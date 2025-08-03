@@ -130,7 +130,7 @@ init python:
             with open(renpy.loader.transfn("combatant_styling.txt"), "r") as cstyle:
                 reader = csv.reader(cstyle, delimiter = ':')
                 for row in reader:
-                    print(row)
+                    #print(row)
                     if row[0] == self.name:
                         self._naBar.update({
                             "color": tuple(map(int, (row[3], row[4], row[5], row[6]))),
@@ -206,7 +206,7 @@ init python:
 
         def Uevent(self, ev, x, y, st):
             if ev.type == 768:
-                print(self._saBar["allowSA"], ev.__dict__["unicode"], self._saBar["key"])
+                #print(self._saBar["allowSA"], ev.__dict__["unicode"], self._saBar["key"])
                 if self._saBar["allowSA"] and ev.__dict__["unicode"] == self._saBar["key"]:
                     self._saBar["allowSA"] = False
                     self.specialattack()

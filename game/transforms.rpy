@@ -5,7 +5,7 @@ init python:
         with open(renpy.loader.transfn("doors.txt"), "r") as doors:
             reader = csv.reader(doors, delimiter = '\t')
             for row in reader:
-                if row[0] == location and row[1] == to:
+                if row[0] == PlayerVariables.location and row[1] == to:
                     trans.xcenter = float(row[4])
                     trans.yalign =1.0
                     doors.close()

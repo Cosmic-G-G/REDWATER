@@ -1,36 +1,91 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 36, in script call
-    call changeto("beach", transition=Fade(0.1,1.0,0.5))
-  File "game/locations.rpy", line 118, in script
-    show screen expression "bg_[location]" zorder -100
-renpy.display.screen.ScreenNotFound: Screen 'bg_[location]' is not known.
+_pickle.PicklingError: Can't pickle <class 'store.PlayerVariables'>: it's not the same object as store.PlayerVariables
+Perhaps bad reduction in store.Laela.__getstate__()['show_function'] = <function show_display_say at 0x00000000066de980>
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "game/script.rpy", line 36, in script call
-    call changeto("beach", transition=Fade(0.1,1.0,0.5))
-  File "game/locations.rpy", line 118, in script
-    show screen expression "bg_[location]" zorder -100
-  File "renpy/ast.py", line 2231, in execute
-    self.call("execute")
-    ~~~~~~~~~^^^^^^^^^^^
-  File "renpy/ast.py", line 2195, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/statements.py", line 379, in call
-    return method(parsed, *args, **kwargs)
-           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/common/000statements.rpy", line 671, in execute_show_screen
-    renpy.show_screen(name, *args, **kwargs)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/screen.py", line 1355, in show_screen
-    raise ScreenNotFound(name[0])
-renpy.display.screen.ScreenNotFound: Screen 'bg_[location]' is not known.
+  File "renpy/common/00gamemenu.rpy", line 174, in script
+    $ ui.interact()
+  File "renpy/ast.py", line 1187, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1260, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/common/00gamemenu.rpy", line 174, in <module>
+    $ ui.interact()
+      ~~~~~~~~~~~^^
+  File "renpy/ui.py", line 304, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/core.py", line 2219, in interact
+    repeat, rv = self.interact_core(
+                 ~~~~~~~~~~~~~~~~~~^
+        preloads=preloads,
+        ^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )  # type: ignore
+    ^                
+  File "renpy/display/core.py", line 3302, in interact_core
+    rv = root_widget.event(ev, x, y, 0)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1284, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1284, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1284, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/screen.py", line 805, in event
+    rv = self.child.event(ev, x, y, st)
+         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1284, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1508, in event
+    rv = super(Window, self).event(ev, x, y, st)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 273, in event
+    rv = d.event(ev, x - xo, y - yo, st)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1284, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/layout.py", line 1284, in event
+    rv = i.event(ev, x - xo, y - yo, cst)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/behavior.py", line 1184, in event
+    return handle_click(self.clicked)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "renpy/display/behavior.py", line 1107, in handle_click
+    rv = run(action)
+         ~~~^^^^^^^^
+  File "renpy/display/behavior.py", line 404, in run
+    new_rv = run(i, *args, **kwargs)
+             ~~~^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/behavior.py", line 411, in run
+    return action(*args, **kwargs)
+           ~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/common/00action_file.rpy", line 415, in __call__
+    renpy.save(fn, extra_info=save_name)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/loadsave.py", line 184, in save
+    dump((roots, renpy.game.log), logf)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/compat/pickle.py", line 308, in dump
+    pickle.dump(o, f, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_pickle.PicklingError: Can't pickle <class 'store.PlayerVariables'>: it's not the same object as store.PlayerVariables
+Perhaps bad reduction in store.Laela.__getstate__()['show_function'] = <function show_display_say at 0x00000000066de980>
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.1.25072401
 P4 R4 D1 S3 1.0
-Fri Aug  1 12:45:59 2025
+Sun Aug  3 13:54:07 2025
