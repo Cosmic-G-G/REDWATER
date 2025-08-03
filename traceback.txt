@@ -2,35 +2,39 @@
 
 While running game code:
   File "game/script.rpy", line 36, in script call
-    call changeto("beach", transition=Fade(0.1,1.0,0.5))
-  File "game/locations.rpy", line 118, in script
-    show screen expression "bg_[location]" zorder -100
-renpy.display.screen.ScreenNotFound: Screen 'bg_[location]' is not known.
+    call WaitUntil(*tuple(open_stories.values())) # Wait until at start PlayerVariables.location of story
+  File "game/locations.rpy", line 88, in script
+    label WaitUntil(*to):
+  File "game/script.rpy", line 36, in <module>
+    call WaitUntil(*tuple(open_stories.values())) # Wait until at start PlayerVariables.location of story
+                          ^^^^^^^^^^^^^^^^^^^                                                            
+AttributeError: 'NoneType' object has no attribute 'values'
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
   File "game/script.rpy", line 36, in script call
-    call changeto("beach", transition=Fade(0.1,1.0,0.5))
-  File "game/locations.rpy", line 118, in script
-    show screen expression "bg_[location]" zorder -100
-  File "renpy/ast.py", line 2231, in execute
-    self.call("execute")
-    ~~~~~~~~~^^^^^^^^^^^
-  File "renpy/ast.py", line 2195, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/statements.py", line 379, in call
-    return method(parsed, *args, **kwargs)
-           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/common/000statements.rpy", line 671, in execute_show_screen
-    renpy.show_screen(name, *args, **kwargs)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/screen.py", line 1355, in show_screen
-    raise ScreenNotFound(name[0])
-renpy.display.screen.ScreenNotFound: Screen 'bg_[location]' is not known.
+    call WaitUntil(*tuple(open_stories.values())) # Wait until at start PlayerVariables.location of story
+  File "game/locations.rpy", line 88, in script
+    label WaitUntil(*to):
+  File "renpy/ast.py", line 1627, in execute
+    args, kwargs = self.arguments.evaluate()
+                   ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "renpy/parameter.py", line 513, in evaluate
+    value = renpy.python.py_eval(v, locals=scope)
+            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1292, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1285, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/script.rpy", line 36, in <module>
+    call WaitUntil(*tuple(open_stories.values())) # Wait until at start PlayerVariables.location of story
+                          ^^^^^^^^^^^^^^^^^^^                                                            
+AttributeError: 'NoneType' object has no attribute 'values'
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.1.25072401
 P4 R4 D1 S3 1.0
-Fri Aug  1 12:45:59 2025
+Sun Aug  3 14:33:36 2025

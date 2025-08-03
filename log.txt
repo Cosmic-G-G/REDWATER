@@ -1,47 +1,34 @@
-2025-08-01 18:48:05 UTC
+2025-08-03 20:33:56 UTC
 Windows-11-10.0.26100-SP0
 Ren'Py 8.4.1.25072401
 
-Early init took 36 ms
+Early init took 35 ms
 Loading error handling took 6 ms
-Loading script took 110 ms
-Loading save slot metadata took 31 ms
+Loading script took 97 ms
+Loading save slot metadata took 17 ms
 Loading persistent took 0 ms
-Running init code took 16 ms
-Loading analysis data took 19 ms
-Analyze and compile ATL took 2 ms
-Reloading save slot metadata took 7 ms
+Running init code took 28 ms
+Loading analysis data took 0 ms
+Analyze and compile ATL took 0 ms
+Reloading save slot metadata took 13 ms
 Backing up script files to 'C:\\Users\\willj\\AppData\\Roaming/RenPy/backups\\P4R4D1S3':
-Dump and make backups took 32 ms
+Dump and make backups took 39 ms
 Cleaning cache took 0 ms
 Making clean stores took 0 ms
-Initial gc took 48 ms
+Initial gc took 46 ms
 DPI scale factor: 1.250000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: b"Couldn't load nvlib." (can be ignored)
 Creating interface object took 2 ms
-Init translation took 0 ms
+Init translation took 1 ms
 Cleaning stores took 0 ms
 Load screen analysis took 0 ms
-Analyze screens took 6 ms
-Save screen analysis took 15 ms
+Analyze screens took 9 ms
+Save screen analysis took 13 ms
 Save pyanalysis took 0 ms
-Save bytecode took 24 ms
-Running _start took 1 ms
-['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
-['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
-['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
-['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
-['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
-['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
-['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
-['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
-['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
-['NAME', 'BASE_IMAGE', 'NORMALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALIMAGE', 'BAR_R', 'BAR_G', 'BAR_B', 'BAR_A', 'BAR_W', 'SPECIALKEY', 'NACOOLDOWN', 'SACOOLDOWN', '']
-['Mikayla', 'chibi_mikayla', 'normalattack', '250', '240', '190', '255', '10', 'brassknuckles', '250', '240', '190', '255', '10', 'b', '2', '5']
-['Mizu', 'chibi_mizu', 'normalattack', '255', '0', '0', '255', '10', 'toriigate', '255', '0', '0', '255', '10', 'g', '1.5', '6']
-['Player', 'chibi_player', 'normalattack', '0', '0', '0', '255', '10', 'normalattack', '0', '0', '0', '255', '10', 'None', '3', '10']
-Interface start took 1054 ms
+Save bytecode took 25 ms
+Running _start took 2 ms
+Interface start took 572 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
