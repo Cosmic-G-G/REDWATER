@@ -1,4 +1,24 @@
-#Characters
+init python:
+    class UCharacter(ADVCharacter): # May need to check if persistent data is saved
+        def __init__(self, name, kind=None, **properties):
+            self.name = name
+            super().__init__(self.name, kind, **properties)
+
+            self.progress = 0
+            self.affection = 0
+            self.location = ""
+    
+    class SecretVariables():
+        def __init__(self):
+            self.showStoreBackDoor = False
+
+default Mizu = UCharacter("Mizu")
+default Laela = UCharacter("Laela")
+default Mirai = UCharacter("Mirai")
+default Mikayla = UCharacter("Mikayla")
+default Chishiki = UCharacter("Chishiki")
+default secretVariables = SecretVariables()
+
 layeredimage mizu:
     attribute only null
 

@@ -2,9 +2,60 @@
 errors listed below, and try again.
 
 
-File "game/rpylocations.rpy", line 69: The on statement is not a valid child of the add statement.
-    add "freezer.jpg" on "show" action With(Fade(0.5,0.5,0.5))
-                        ^
+The label MoveTo is defined twice, at File "game/locations.rpy", line 115:
+label MoveTo(person, *locations, transition=None):
+and File "game/rpylabelfunctions.rpy", line 2:
 
-Ren'Py Version: Ren'Py 8.1.1.23060707
-Thu Dec  7 10:29:20 2023
+
+The label Battle is defined twice, at File "game/minigame_combat.rpy", line 280:
+label Battle:
+and File "game/rpylabelfunctions.rpy", line 15:
+
+
+The label WaitUntil is defined twice, at File "game/locations.rpy", line 128:
+label WaitUntil(to):
+and File "game/rpylabelfunctions.rpy", line 20:
+
+
+The label changetobeach is defined twice, at File "game/locations.rpy", line 17:
+label changetobeach(transition = None):
+and File "game/rpylocations.rpy", line 7:
+
+
+The label changetoforest is defined twice, at File "game/locations.rpy", line 29:
+label changetoforest(transition = None):
+and File "game/rpylocations.rpy", line 19:
+
+
+The label changetotown is defined twice, at File "game/locations.rpy", line 42:
+label changetotown(transition = None):
+and File "game/rpylocations.rpy", line 32:
+
+
+The label changetostore is defined twice, at File "game/locations.rpy", line 60:
+label changetostore(transition = None):
+and File "game/rpylocations.rpy", line 50:
+
+
+The label changetoschool is defined twice, at File "game/locations.rpy", line 73:
+label changetoschool(transition = None):
+and File "game/rpylocations.rpy", line 63:
+
+
+The label changetohallway is defined twice, at File "game/locations.rpy", line 85:
+label changetohallway(transition = None):
+and File "game/rpylocations.rpy", line 75:
+
+
+The label changetoclassroom is defined twice, at File "game/locations.rpy", line 96:
+label changetoclassroom(transition = None):
+and File "game/rpylocations.rpy", line 86:
+
+
+The label changetopark is defined twice, at File "game/locations.rpy", line 107:
+label changetopark(transition = None):
+and File "game/rpylocations.rpy", line 97:
+
+
+Ren'Py Version: Ren'Py 8.4.1.25072401
+Fri Aug  1 10:11:30 2025

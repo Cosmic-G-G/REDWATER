@@ -1,17 +1,5 @@
+# region Python
 init python:
-    import random
-
-    #region CLASSES
-    class UCharacter(ADVCharacter): # May need to check if persistent data is saved
-        def __init__(self, name, kind=None, **properties):
-            super().__init__(name, kind, **properties)
-            self.progress = 0
-            self.affection = 0
-
-    class Debug():
-        def __init__(self):
-            self.latest = None
-
     class CircularBar(renpy.Displayable):
         def __init__(self, color, center: tuple, dimension: tuple, barWidth, angle, colorBorder = 0, widthBorder = 0, **kwargs): #TODO priority-low: colorBorder widthBorder
             super(CircularBar, self).__init__(**kwargs)
@@ -279,21 +267,53 @@ init python:
         def getEntry(self):
             fullEntry = " ".join(self.entry)
             return fullEntry
+# endregion
 
-    class SecretVariables():
-        def __init__(self):
-            self.showStoreBackDoor = False
+# region Ren'py
 
-default Mizu = UCharacter("Mizu")
-default Laela = UCharacter("Laela")
-default Mirai = UCharacter("Mirai")
-default Mikayla = UCharacter("Mikayla")
-default Chishiki = UCharacter("Chishiki")
-default dbg = Debug()
 default combatManager = CombatManager()
 default user = Combatant("Player", 300, 30)
 default mikaylaFighter = MikaylaFighter("Mikayla", 400, 100)
 default mizuFighter = MizuFighter("Mizu", 350, 40)
 default enemy = Combatant("Player", 1500, 30, bAlly = False)
-default secretVariables = SecretVariables()
-                        #endregion
+
+label Battle:
+    $ renpy.pause()
+    $ renpy.block_rollback()
+    jump Battle
+
+screen combat():
+    tag combat
+    timer 0.1 repeat True action Show("combat")
+    on "hide" action Hide("combat")
+    add color("00000088")
+
+    for i, ally in enumerate(combatManager.allies, 1):
+        add ally.sprites:
+            pos ( i / ( len(combatManager.allies) + 1 ) , 0.6)
+        add CircularBar(ally.n["color"], (ally.scale*0.5, ally.scale*1.5), (ally.scale*0.5-ally.n["width"], ally.scale*0.5-ally.n["width"]), ally.n["width"], ally.n["angle"]):
+            pos ( i / ( len(combatManager.allies) + 1 ) , 0.6)
+        add CircularBar(ally.s["color"], (ally.scale*1.5, ally.scale*1.5), (ally.scale*0.5-ally.n["width"], ally.scale*0.5-ally.n["width"]), ally.s["width"], ally.s["angle"]):
+            pos ( i / ( len(combatManager.allies) + 1 ) , 0.6)
+        if ally.tookDamage["val"]:
+                bar value ally.hp range ally.maxhp:
+                    xmaximum 2*ally.scale
+                    pos ( i / ( len(combatManager.allies) + 1 ) , 0.6)
+    
+    for i, enemy in enumerate(combatManager.enemies , 1):
+        add enemy.sprites:
+            pos ( i / ( len(combatManager.enemies) + 1 ) , 0.2)
+        add CircularBar(enemy.n["color"], (enemy.scale*0.5, enemy.scale*1.5), (enemy.scale*0.5-enemy.n["width"], enemy.scale*0.5-enemy.n["width"]), enemy.n["width"], enemy.n["angle"]):
+            pos ( i / ( len(combatManager.enemies) + 1 ) , 0.2)
+        add CircularBar(enemy.s["color"], (enemy.scale*1.5, enemy.scale*1.5), (enemy.scale*0.5-enemy.n["width"], enemy.scale*0.5-enemy.n["width"]), enemy.s["width"], enemy.s["angle"]):
+            pos ( i / ( len(combatManager.enemies) + 1 ) , 0.2)
+        if enemy.tookDamage["val"]:
+            bar value enemy.hp range enemy.maxhp:
+                xmaximum 2*enemy.scale
+                pos ( i / ( len(combatManager.enemies) + 1 ) , 0.2)
+    python:
+        if combatManager.allies == [] or combatManager.enemies == []:
+            renpy.hide_screen("combat")
+            ui.close()
+            renpy.jump(combatManager.returnLabel)
+#endregion

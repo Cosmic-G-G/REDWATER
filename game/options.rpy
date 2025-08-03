@@ -4,6 +4,7 @@
 ## them. Lines beginning with a single '#' mark are commented-out code, and you
 ## may want to uncomment them when appropriate.
 
+# region Default Options
 
 ## Basics ######################################################################
 
@@ -151,6 +152,11 @@ define config.save_directory = "P4R4D1S3-1693495103"
 ## The icon displayed on the taskbar or dock.
 
 define config.window_icon = "gui/window_icon.png"
+#endregion
+
+# region Custom Config
+
+# endregion
 
 
 ## Build configuration #########################################################

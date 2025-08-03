@@ -3,13 +3,13 @@
     import csv
     import pygame
     import math
+    import random
 
 #START
 label start:
                             #FLAGS
     $ hour = 0                                  # counter for each loop to not repeat stories
     $ canMove = False                           # disables movement
-    $ locationsvisited = []
     $ inventory = []
 
                             #INTRO SCENE
@@ -33,7 +33,7 @@ label start:
     #Tentacle breaking window
     "Oh sh--!"
 
-    call changetobeach(transition = Fade(0.1,1.0,0.5))
+    call changeto("beach", transition=Fade(0.1,1.0,0.5))
     pause(1.0)
                  
     call MGL #MAIN GAME LOOP
@@ -66,30 +66,37 @@ label MGL:
 
 ##STORIES
 label mizuIntro:
-    $ m = Mizu
     # $ m = Character("mizu") #callback=functools.partial(has_exited, targetbg = '') or callback=default
-    
-    show mizu onlayer screens zorder -1:
+    $ m = Mizu
+
+    show mizu:
         function ondoor(to="forest")
     with Fade(0.5,1.0,0.5)
 
-    m "...You're sure that's all you remember?"
-    m "You are indeed very far from home."
+    #Concerned
+    m "...So that's all you can remember?"
+
+    "Yes. That monster was the last thing I saw before I blacked out."
+
+    "If we're not too far from the mainland, maybe someone can find me?"
+
+    #Sad
+    m "You are{cps=2}...{cps=40} {i}very{/i} far from home."
 
     menu: 
-        "How do I leave?":
-            "How do I-- {nw}"
-            "How do I-- {fast}{w=0.5}{i}Growwwlll{/i}"
+        "Then, how do I leave?":
+            "Then, how do I leave? {w=1.5}{nw}"
+            "Then, how do I-- {fast}{w=1}{size=+20}{i}Growwwlll{/i}"
 
-    m "Heh.. We must first sate the appetite of that monster in your belly!" #FORESHADOWING???? crazy
+    #Laugh
+    m "Hehe.." 
+    m "We must first sate the appetite of that monster in your belly!" #FORESHADOWING???? crazy
     m "Follow me!"
     
     window hide
-    hide mizu onlayer screens with dissolve         # Please hide sprite before using MoveTo, and show sprite after (the sprite used in MoveTo is nonreferencable outside MoveTo)
-
-    call MoveTo("mizu", "forest","town","store")    # May need to change canMove in function (William)
-    
-    show mizu onlayer screens zorder -1 with dissolve
+    hide mizu with dissolve
+    call MoveTo("mizu", "forest", "town", "store")
+    show mizu with dissolve
 
     m "Here we are! Take anything you want... after all..."
 
@@ -123,8 +130,7 @@ label mizuIntro:
     """
     show screen mapicon
 
-    $ canMove = True
-    hide mizu onlayer screens zorder -1
+    hide mizu
 
     $ Mizu.progress = 1
     jump MGL
@@ -142,7 +148,7 @@ label laelaIntro:
     "... Is that a person over there?"
 
     # maybe hide her behind a rock or something
-    show laela onlayer screens zorder -1 with dissolve:
+    show laela with dissolve:
         xysize (247,341)
         align (0.6, 0.8)
 
@@ -155,14 +161,14 @@ label laelaIntro:
 
     #show laela sighing
     pause(1.0)
-    hide laela onlayer screens zorder -1 with dissolve
+    hide laela with dissolve
 
     show school:
         linear 0.4 zoom 1.0
         pause(0.2)
     show screen bg_school with Dissolve(0.2)
 
-    show laela onlayer screens zorder -1 with Dissolve(0.2)
+    show laela with Dissolve(0.2)
 
     "Timid girl" "H-hello...{w}{cps=2}...{/cps}"
     # her eyes shift
@@ -237,10 +243,10 @@ label laelaIntro:
     l "I'm sorry for being so useless!"
 
     pause(0.5)
-    show laela onlayer screens zorder -1:
+    show laela:
         linear 0.5 xcenter 0.1
     l "I'm sorry, {size=*0.8}I'm sorry, {size=*0.6}I'm sorry, {size=*0.4}I'm sorry, {size=*0.2}I'm sorry,"
-    hide laela onlayer screens zorder -1
+    hide laela
 
     "Hey wait!"
     pause(0.5)
@@ -250,7 +256,7 @@ label laelaIntro:
     $ time = 15.00
     show screen timer(0.1,'laelaIntro.endtimegame')
     
-    call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom", dissolvetime=0.1)
+    call MoveTo("laela","town", "store", "town", "forest","beach","forest","town","school","hallway","classroom", transition=Dissolve(0.2))
 
     if time > 0.0 and location == "classroom":
         jump laelaIntro.endtimegame
@@ -258,7 +264,7 @@ label laelaIntro:
 label .endtimegame:
     $ renpy.block_rollback()
     hide screen timer
-    hide expression "[person]" onlayer screens with Dissolve(0.1)
+    hide expression "[person]"  with Dissolve(0.1)
     $ time = -1.0
     if location == "classroom":
         "Dang... she's fast. Where did she go?"
@@ -279,17 +285,17 @@ label laelaStory1:
     #Maybe show inventory, chishiki's timepiece is lost
     
     hide beach_night
-    show laela onlayer screens zorder -1:
+    show laela:
         align (0.5,0.5)
         blur 100.0
     with Fade(0.5,2.0,0.5)
     pause(2.0)
-    show asahi onlayer screens zorder -1 with Fade(0.5,1.0,0.5):
+    show asahi with Fade(0.5,1.0,0.5):
         align (0.5, 0.5)
         blur 100.0
         ease 3.0 blur 0
     "???" "Hello down there~ Hellooo~"
-    hide laela onlayer screens
+    hide laela 
     
     menu:
         "Ack.. So bright...": 
@@ -325,8 +331,8 @@ label laelaStory1:
 
     "What the..?"
 
-    show laela onlayer screens zorder -1 at right
-    show asahi onlayer screens zorder -1:
+    show laela at right
+    show asahi:
         ease 0.5 xalign 0.0
     with moveinbottom
 
@@ -342,8 +348,8 @@ label laelaStory1:
 
     l "Sure will."
 
-    hide laela onlayer screens
-    hide asahi onlayer screens
+    hide laela 
+    hide asahi 
     with dissolve
 
     $ canMove = True
@@ -352,10 +358,10 @@ label laelaStory1:
         $ renpy.block_rollback()
     $ canMove = False
     
-    show villager onlayer screens zorder -1 at right
-    show asahi onlayer screens zorder -1:
+    show villager at right
+    show asahi:
         align (0.4, 1.0)
-    show laela onlayer screens zorder -2 at left
+    show laela  zorder -2 at left
 
     "Villager" "Why if it isn't little Asahi. {w=1.0}As well as the other Laurent! {w=1.0}So nice to see you, Asahi."
 
@@ -370,23 +376,23 @@ label laelaStory1:
 
     a "You got it! Here, can you hold it sis? I'm pretty clumsy with important things."
 
-    hide asahi onlayer screens with dissolve
+    hide asahi  with dissolve
 
     "Villager" "Try not to lose it or damage it."
     l "..."
 
-    hide laela onlayer screens
-    hide villager onlayer screens
+    hide laela 
+    hide villager 
     with dissolve
 
     a "But first, let's get you that hot shower, sis..." #fanservice scene
 
-    call changetoclassroom()
+    call changeto("classroom")
 
-    show villager_teacher onlayer screens zorder -1 at left
-    show asahi onlayer screens zorder -1:
+    show villager_teacher at left
+    show asahi:
         xalign 0.6
-    show laela onlayer screens zorder -2 at right
+    show laela  zorder -2 at right
     with Fade(0.5,1.0,0.5)
 
     a "Heya Jon, got a letter here from your ma."
@@ -403,17 +409,17 @@ label laelaStory1:
 
     "Jon" "You're a lifesaver, Asahi."
 
-    hide villager_teacher onlayer screens with dissolve
+    hide villager_teacher  with dissolve
 
-    show asahi onlayer screens zorder -1:
+    show asahi:
         ease 0.8 xalign 0.4
-    show laela onlayer screens zorder -2:
+    show laela  zorder -2:
         ease 0.8 xalign 0.0
     
     pause(0.8)
-    show villager_youngstudent onlayer screens zorder -1 at right
+    show villager_youngstudent at right
 
-    show asahi onlayer screens zorder -1:
+    show asahi:
         left_right(0.4, 0.7)
 
     #show grossed
@@ -461,15 +467,15 @@ label laelaStory1:
 
     a "One more to go!"
 
-    hide villager_youngstudent onlayer screens with dissolve
+    hide villager_youngstudent  with dissolve
     
-    show asahi onlayer screens zorder -1:
+    show asahi:
         ease 0.8 xalign 0.4
-    show laela onlayer screens zorder -2:
+    show laela  zorder -2:
         ease 0.8 xalign 0.0
     
     pause(0.8)
-    show mikayla_young onlayer screens zorder -1 at right with dissolve
+    show mikayla_young at right with dissolve
 
     "Girl" "So you gonna help me or just gonna stare?"
 
@@ -479,7 +485,7 @@ label laelaStory1:
 
     m "Sure, I don't care."
 
-    show laela onlayer screens zorder -1
+    show laela
 
     l "R-really? Everyone seems to have... reservations."
 
@@ -491,7 +497,7 @@ label laelaStory1:
 
     m "Nevermind, just help me out."
 
-    show laela onlayer screens zorder -1:
+    show laela:
         left_right(0.7)
     # show laela like toriel suspicious face
     pause(1.0)
@@ -499,26 +505,26 @@ label laelaStory1:
     l "I don't think 'cuz the sea collectin debts, ya see' is a grammatically correct sentence{cps=10}... {/cps} What the heck is this report even on?"
 
     #show mikayla frustrated, maybe with a bounce or someting, or vpunch
-    show mikayla_young onlayer screens zorder -3 with vpunch
+    show mikayla_young  zorder -3 with vpunch
     m "AHHHH I DON'T FRIGGIN CARE ABOUT THIS STUPID ESSAY!"
 
-    show laela onlayer screens zorder -1:
+    show laela:
         left_right(0.55, 0.1)
     m "THAT FOUR EYES CAN TAKE MY PAPER AND SHOVE IT NEXT TO THE STICK UP HIS A----"
 
-    hide mikayla_young onlayer screens with moveoutleft
+    hide mikayla_young  with moveoutleft
 
     a "WOAH...Hey!!! Haha... sorry Jon, no luck... Should we chase her?"
 
     "Jon" "No use... That child is a dead end. Thanks anyways Asahi. Take care now."
 
-    hide laela onlayer screens
-    hide asahi onlayer screens
+    hide laela 
+    hide asahi 
     with dissolve
 
     call WaitUntil("hallway")
 
-    show chishiki onlayer screens zorder -1
+    show chishiki
 
     c "We're running out of time..."
 
@@ -564,12 +570,12 @@ label laelaStory1:
 
     "Hey wait!!"
 
-    hide chishiki onlayer screens with dissolve
-    call changetoforest()
+    hide chishiki  with dissolve
+    call changeto("forest")
 
-    show mizu onlayer screens zorder -1 at left
-    show asahi onlayer screens zorder -1
-    show laela onlayer screens zorder -2 at right
+    show mizu at left
+    show asahi
+    show laela  zorder -2 at right
     with Fade(0.5,1.0,0.5)
 
     $ m = "Mizu"
@@ -628,14 +634,14 @@ label laelaStory1:
     #Show happy
     a "I can't be crying now... I should go now. Take care now."
     
-    hide asahi onlayer screens with dissolve
+    hide asahi  with dissolve
 
-    hide mizu onlayer screens
-    hide laela onlayer screens
-    call changetotown()
+    hide mizu 
+    hide laela 
+    call changeto("town")
 
-    show villager onlayer screens zorder -1 at right
-    show asahi onlayer screens zorder -1 at left 
+    show villager at right
+    show asahi at left 
     with Fade(0.5,1.0,0.5)
     # sad asahi
 
@@ -651,24 +657,24 @@ label laelaStory1:
 
     "Villager" "Still helping others even now, huh Asahi?"
 
-    hide asahi onlayer screens
-    hide villager onlayer screens
+    hide asahi 
+    hide villager 
     with dissolve
 
     call WaitUntil("store")
 
-    show asahi onlayer screens zorder -1
+    show asahi
     
     a "Hello..? Is anyone here..?"
 
-    show asahi onlayer screens zorder -1:
+    show asahi:
         left_right(0.3, 0.5)
         left_right(0.7,0.5)
         ease 0.5 xalign 0.5
 
     a "Maybe in the back..?"
 
-    hide asahi onlayer screens with dissolve
+    hide asahi  with dissolve
 
     "{i}click...{/i}"
 
@@ -686,14 +692,14 @@ label laelaStory1:
     call WaitUntil("backstore")
 
     show screen bg_backstore
-    show laela onlayer screens zorder -1 
+    show laela 
     with Fade(0.5,0.5,0.5)
 
     "{cps=10}L-Laela...?"
 
     c "We're out of time. Sending you back."
 
-    call changetobeach(transition = Fade(0.5,0.7,0.5))
+    call changeto("beach", transition = Fade(0.5,0.7,0.5))
     $ secretVariables.showStoreBackDoor = False
 
     "{i}You wake up to the familiar scent of salt carried by the wind. It's cold, other than Chishiki's pocket watch in you hand emitting a strange warmth. "
@@ -708,7 +714,7 @@ label mikaylaIntro:
         linear 2.0 zoom 1.5
         top_bottom(0.9)
     
-    show mikayla onlayer screens zorder -1: 
+    show mikayla: 
         xalign 0.5 yalign 3.0
         top_bottom(1.0)
 
@@ -756,7 +762,7 @@ label mikaylaIntro:
     menu ilikeyourstylebrat:
         "How about you prove your strength first?":
             m "Alright big shot. Think you can take me? Let's go."
-            show screen combat onlayer screens
+            show screen combat 
             jump Battle
 
             label ilikeyourstylebrat.doneBattle:
@@ -773,7 +779,7 @@ label mikaylaIntro:
 
                 There'll be a fight you don't wanna miss. Bring some food 'n water just in case. 
                 """
-                hide mikayla onlayer screens zorder -1
+                hide mikayla
         
         "How about you prove your merit first?":
             # Smug eyes closed
@@ -793,7 +799,7 @@ label mikaylaIntro:
             """
             #looks down, maybe a bit embarassed
             m "But uhh... {w}Seems like my squad disbanded a while ago when I started {size=17}prea{size=15}chin' {size=12}'em {size=10}these {size=5}ideas..."
-            show mikayla onlayer screens zorder -1:
+            show mikayla:
                 bounce(50)
             # maybe show like smug or happy
             m "I mean! {w=0.5}I just so happen to have an opening that fits your particular set of skills."
@@ -802,17 +808,19 @@ label mikaylaIntro:
             m "Meet me at the forest shrine and we'll have a nice friendly 'negotiation' with her."
             pause(1.0)
             m "You... might wanna bring some bandages."
-            hide mikayla onlayer screens zorder -1
+            hide mikayla
 
     label dontlikeyourstyle:
         "What a character..."
         "Whatever.. I guess I'll get her things..."
 
-    $ ilst = ["waterbottle","greentea","melonpan","onigiri","bandage"]
-    $ rlst = [(renpy.random.random()*0.7+0.1, renpy.random.random()*0.7+0.1) for x in range(len(ilst))]
-    show screen storebuy(ilst, rlst)
+    $ item_dict = dict(zip(
+        ["waterbottle","greentea","melonpan","onigiri","bandage"],
+        [(renpy.random.random()*0.7+0.1, renpy.random.random()*0.7+0.1) for _ in range(5)]
+    ))
+    show screen storebuy(item_dict)
 
-    hide mikayla onlayer screens zorder -1
+    hide mikayla
 
     $ canMove = True
     $ Mikayla.progress = 1
@@ -823,7 +831,7 @@ label mikaylaStory1:
     $ m = "Mikayla"
     $ M = "Mizu"
 
-    show mikayla onlayer screens zorder -1
+    show mikayla
     # looks at you, becomes happy
     m "You made it!"
     # smug, with hand wiping nose
@@ -887,12 +895,12 @@ label mikaylaStory1:
     label afterNegotiation:
         m "'ight, time to show ya how strong I've really become over these past years.."
 
-        show mikayla onlayer screens zorder -1 with vpunch #maybe angry
+        show mikayla with vpunch #maybe angry
 
         m "Nuff of this. Get out here ya wuss. Said it was time for a rematch." # would like to use the p-wordussy here
     
-    show mizu onlayer screens zorder -1 at left
-    show mikayla onlayer screens zorder -1 at right
+    show mizu at left
+    show mikayla at right
 
     M "Oh hello, it's you. I hope you've found your way around?"
 
@@ -915,10 +923,10 @@ label mikaylaStory1:
 
     "..."
 
-    show mikayla onlayer screens zorder -1 with vpunch # also darken her forhead and hide eyes (you know the anime face)
+    show mikayla with vpunch # also darken her forhead and hide eyes (you know the anime face)
     pause(0.5)
-    show mikayla onlayer screens zorder -1 with moveoutright
-    hide mikayla onlayer screens
+    show mikayla with moveoutright
+    hide mikayla 
     
     $ inventorylist = [(item, item) for item in inventory if item is not "bandage"] # screen prediction smh
 
@@ -932,10 +940,10 @@ label mikaylaStory1:
                 "Nevermind.":
                     M "...Well, I have a few chores to do around the temple. Feel free to sit and enjoy the nice weather."
     
-    show mizu onlayer screens zorder -1 with moveoutleft
-    hide mizu onlayer screens
+    show mizu with moveoutleft
+    hide mizu 
 
-    show mikayla onlayer screens zorder -1 with moveinright #should be poofy eyed
+    show mikayla with moveinright #should be poofy eyed
 
     menu:
         "Hey, I'm really sorry...":
@@ -1015,8 +1023,8 @@ label mikaylaStory1:
     #Scared
     m "What... is that?"
     
-    hide mikayla onlayer screens with moveoutbottom
-    show leviathan onlayer screens zorder -1 with vpunch
+    hide mikayla  with moveoutbottom
+    show leviathan with vpunch
 
     $ combatManager.returnLabel = "mikaylaStory1.doneBattle"
     $ combatManager.remove("all")
@@ -1026,19 +1034,19 @@ label mikaylaStory1:
 
     M "OUT OF THE WAY!"
 
-    show mizu onlayer screens zorder -1 at left
+    show mizu at left
     M "I'll hold it off."
 
-    show mikayla onlayer screens zorder -1 at right
+    show mikayla at right
     m "Never again. We'll fight together."
 
-    show screen combat onlayer screens
+    show screen combat 
     jump Battle
     return
 label .doneBattle: #You must win this battle -> configure health such that you always win even by doing nothing
         $ combatManager.remove(("all"))
         "Sea monster" "{size=80}{i}SCREEECHHH{/i}{/size}"
-        hide leviathan onlayer screens with dissolve
+        hide leviathan  with dissolve
 
         m "Hah.. hah...I was... pretty good, don't'cha think?"
         M "Looks like we fought it off, for now"
@@ -1051,11 +1059,11 @@ label .doneBattle: #You must win this battle -> configure health such that you a
 
         M "I'm sorry. I need to leave."
 
-        hide mizu onlayer screens with dissolve
+        hide mizu  with dissolve
 
         m "Hey, sorry, but catch ya later?"
 
-        hide mikayla onlayer screens with dissolve
+        hide mikayla  with dissolve
 
         $ canMove = True
         $ Mikayla.progress = 2
@@ -1065,7 +1073,7 @@ label miraiIntro:
     $ canMove = False
     $ m = "Girl by the window"
     
-    show mirai onlayer screens zorder -1:
+    show mirai:
         function ondoor(to="hallway")
 
     "{i}You walk stumble into the abandoned classroom, falling onto the floor, and as you look up you're met with the cool gaze of the girl standing by the window.{/i}"
@@ -1111,7 +1119,7 @@ label miraiIntro:
 
     m "Be careful in that area though."
 
-    hide mirai onlayer screens with dissolve
+    hide mirai  with dissolve
 
     "Wait what do you mean?{w=0.1}"
 
@@ -1122,7 +1130,7 @@ label miraiIntro:
 
 label chishikiIntro:
     $ canMove = False
-    show chishiki onlayer screens zorder -1:
+    show chishiki
     $ c = "Girl reading in the park"
 
     "{i}You arrive at the park and notice a girl reading to herself. All ambient noises have suddenly ceased. {/i}"
@@ -1151,7 +1159,7 @@ label chishikiIntro:
     "Nice to meet you too. What are you doing out here all by yourself? Why aren't you with the others?"
     c "You'll see in due time. I'll see you again soon..."
     
-    hide chishiki onlayer screens with dissolve
+    hide chishiki  with dissolve
 
     "Huh? Wait!"
     "{i}How peculiar. I wonder what her deal is.{/i}"

@@ -1,4 +1,5 @@
-﻿################################################################################
+﻿# region default
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -229,7 +230,6 @@ style choice_button is default:
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
-
 
 ## Quick Menu screen ###########################################################
 ##
@@ -1503,3 +1503,33 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+#endregion
+
+
+#region overrides
+init:
+    screen choice(items):
+        style_prefix "choice"
+
+        vbox:
+            for i in items:
+                if i.caption[:3] == "<L>":
+                    textbutton i.caption[3:] action None
+                else:
+                    textbutton i.caption action i.action
+    
+    screen mundanechoice(items, cd):
+        timer cd repeat False action Return(None)
+        style_prefix "choice"
+
+        vbox:
+            for i in items:
+                textbutton i hovered Return(i) action NullAction()
+# endregion
+
+# region custom
+screen timer(step, tolabel):
+    zorder 2
+    timer step repeat If(time > 0, true=True, false=False) action If(time >= step, true=SetVariable('time',time-step), false=Jump(tolabel))
+    text "{ctime:.2f}".format(ctime = time) size 100
+# endregion
