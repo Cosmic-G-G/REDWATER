@@ -1,6 +1,6 @@
 game/*.rpyc
 game/cache/
-game/saves/auto*
-games/saves/navigation.json
-games/saves/persistent
+game/saves/
 /log.txt
+/errors.txt
+/traceback.txt
