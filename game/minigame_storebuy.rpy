@@ -5,7 +5,7 @@ init python:
 
         if drop.drag_name == "cart":
             #print(drags[0].drag_name)
-            PlayerVariables.inventory.append(drags[0].drag_name)
+            Player.inventory.append(drags[0].drag_name)
 
         if not item_dict:
             renpy.hide_screen("screenbuy")

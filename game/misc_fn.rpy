@@ -11,8 +11,8 @@ init python:
             return
 
         if event == "show":
-            #print(targetbg, PlayerVariables.location)
-            if PlayerVariables.location != targetbg:
+            #print(targetbg, Player.location)
+            if Player.location != targetbg:
                 renpy.return_statement()
     
     def default(event, interact=True, **kwargs):
@@ -43,7 +43,7 @@ init python:
         ret['Mikayla_story_0'] = 'store' if Mikayla.progress == 0 and Laela.progress > 0 else None
         ret['Mikayla_story_1'] = 'forest' if Mikayla.progress == 1 else None
         ret['Chishiki_story_0'] = 'park' if Chishiki.progress == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2 else None
-        ret['endOfDay'] = 'beach' if PlayerVariables.day == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2 else None
-        ret['Laela_story_1'] = 'beach' if PlayerVariables.day == 1 and Laela.progress == 1 else None
+        ret['endOfDay'] = 'beach' if Player.day == 0 and (0 not in (Laela.progress, Mirai.progress, Mizu.progress)) and Mikayla.progress == 2 else None
+        ret['Laela_story_1'] = 'beach' if Player.day == 1 and Laela.progress == 1 else None
         return ret
 #endregion

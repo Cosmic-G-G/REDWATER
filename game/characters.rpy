@@ -1,4 +1,4 @@
-init python:
+init python early:
 
     class UCharacter(ADVCharacter): # May need to check if persistent data is saved
         def __init__(self, name, kind=None, **properties):
@@ -9,7 +9,7 @@ init python:
             self.affection = 0
             self.location = ""
 
-    class PlayerVariables():
+    class PlayerVariables:
         def __init__(self):
             self.day = 0                                  # counter for each loop to not repeat stories
             self.canMove = False                          # disables movement
@@ -22,7 +22,7 @@ default Laela = UCharacter("Laela")
 default Mirai = UCharacter("Mirai")
 default Mikayla = UCharacter("Mikayla")
 default Chishiki = UCharacter("Chishiki")
-define PlayerVariables = PlayerVariables()
+default Player = PlayerVariables()
 
 layeredimage mizu:
     attribute only null
