@@ -2,6 +2,7 @@
     import functools
     import csv
     import pygame
+    import sys
     import math
     import random
 
@@ -737,7 +738,7 @@ label Mikayla_story_0:
             $ combatManager.returnLabel = "ilikeyourstylebrat.doneBattle" #IDK screen prediction is supppppeeerrr weird -> declare combat parameters ~3 pauses before the combat may *potentially* show
             $ combatManager.remove("all")
             $ combatManager.add(user)
-            $ mikaylaFighter.safechange()
+            $ mikaylaFighter.bAlly = False
             $ combatManager.add(mikaylaFighter)
 
             m "I'm Mikayla. How about you become my underling and we'll paint the town red!"
@@ -750,7 +751,7 @@ label Mikayla_story_0:
             jump Battle
 
             label ilikeyourstylebrat.doneBattle:
-                $ mikaylaFighter.safechange()
+                $ mikaylaFighter.bAlly = True
                 $ combatManager.remove("all")
                 m "Not bad kiddo. You've got guts."
                 #Thinking
