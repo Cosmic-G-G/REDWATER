@@ -70,15 +70,15 @@ label Mizu_story_0:
 
     #Laugh
     m "Hehe.." 
-    m "We must first sate the appetite of that monster in your belly!" #FORESHADOWING???? crazy
-    m "Follow me!"
+    m "We must first sate the appetite of that monster in your belly." #FORESHADOWING???? crazy
+    m "Follow me."
     
     window hide
     hide mizu with dissolve
     call MoveTo("mizu", "forest", "town", "store")
     show mizu with dissolve
 
-    m "Here we are! Take anything you want... after all..."
+    m "Here we are! Take anything you want.{size=-20} After all, there's no one left to." #Sadge
 
     menu:
         "I noticed on the way here...":
@@ -87,26 +87,45 @@ label Mizu_story_0:
             pass
     
     m "..."
-    m "{cps=20}Oh! This onigiri brand is super delish, have some!"
+    m "This onigiri brand is super delish--" # looks at the back (or reverse the sprite)
+
+    #bounce
+    m "Even if it's a bit past its prime. Try some?" 
 
     "Thanks. So anyway, where is everyone?"
+    # Mizu is getting a bit tired of your questions
 
-    m "{cps=40}This instant noodle is also one of my favorites,{nw}"
+    m "{cps=20}This instant noodle is also one of my favorites,{nw}"
     menu:
-        extend "{cps=60} it's got a great sauce and little chunks of fish! But in my opinion, the best part is the price! 
-        Whether you're a broke college student or just hurtin' for some cash you can't beat this deal!"
+        extend "{cps=40} it's got a great sauce and little chunks of fish. But in my opinion, the best part is the price! 
+        Whether you're a broke college student or just hurtin' for some cash you {i}can't{/i} beat this deal."
 
         "Is there a reason why you're not answering my questions":
-            m "..."
-    
-    "Why are you the only person I've seen on this island?"
+            m "{i}Sigh{/i}..."
+
+            "Why are you the only person I've seen on this island?"
+        
+        "(Let's not probe further)":
+            pass
 
     m """
-    ...I.. have to complete something.
+    ...It's a long story.
+
+    As for why I'm here, I can't bring myself to leave not until I've finished my mission. 
+    """
+
+    "Your mission?"
+
+    m "That beast you encountered on the way here." # Eyes closed
+
+    m "{size=+20}{b}I'll kill it." #eyes open, serious, or wide eyed, determined
+
+    m """
+    You can go around the city to see if you can find a way to contact the nearest authority. 
     
-    You can go around the city to see if you can find a way to contact the nearest municipality. I think there is a broadcasting station in the {color=#0000ffff}school{/color}.
+    I think there is a broadcasting station in the {color=#0000ffff}school{/color}.
     
-    Here is the lightrail map. I have to go now. Bye.
+    Here is the lightrail map. I hope you'll be able to get off this island safely. 
     """
     show screen mapicon
 
